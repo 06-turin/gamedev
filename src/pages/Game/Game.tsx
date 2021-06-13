@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
+import { Game } from 'components/organisms/Game';
 
-export const Game: FC = () => (
-  <div>
-    <h1>Game</h1>
-  </div>
+export const GameComponent: FC = () => (
+  <>
+    <Game />
+  </>
 );
