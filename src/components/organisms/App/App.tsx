@@ -1,14 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { FC } from 'react';
 
 import './App.css';
 
-class App extends PureComponent {
-  render() {
-    return (
-      <div>
-        <h1>Здесь будет игра</h1>
-      </div>
-    );
-  }
-}
+const App: FC = () => (
+  <div>
+    <h1>Здесь будет игра</h1>
+  </div>
+);
+
 export default App;
