@@ -38,7 +38,6 @@ export class Explosion implements IEntity {
     this.canvasCtx.fillRect(x, y, GRID, GRID);
     // orange background
     this.canvasCtx.fillStyle = 'orange';
-
     if (this.center || horizontal) {
       this.canvasCtx.fillRect(x, y + 6, GRID, GRID - 12);
     }
