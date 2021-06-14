@@ -55,7 +55,11 @@ class BattleField {
           && Math.random() < SOFT_WALL_PROBABILITY
         ) {
           cells[rIdx][cIdx] = EntitiesTypes.WALL_SOFT;
-        } else if (cell === EntitiesTypes.WALL) {
+        } else
+        if (cell === EntitiesTypes.EMPTY_REQUIRED) {
+          cells[rIdx][cIdx] = EntitiesTypes.EMPTY;
+        } else
+        if (cell === EntitiesTypes.WALL) {
           cells[rIdx][cIdx] = EntitiesTypes.WALL;
         }
       });
