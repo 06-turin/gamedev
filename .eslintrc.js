@@ -41,6 +41,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': ['error'],
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
+    'react/prop-types': 'off',
   },
   settings: {
     'import/resolver': {

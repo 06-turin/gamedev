@@ -61,15 +61,20 @@ export class Player implements IEntity {
   move(position: Position): void {
     const BF = getBattleField();
     if (BF.isCellEmpty(position)) {
+      // clear previous if no bomb there
+      if (BF.getCell(this.pos) !== EntitiesTypes.BOMB) {
+        BF.clearCell(this.pos);
+      }
       this.pos = position;
+      BF.setCell(this.pos, EntitiesTypes.PLAYER);
     }
   }
 
-  placeBomb(position: Position): void {
+  placeBomb(): void {
     if (this.bombs.length >= this.hasBombs) return;
 
     const BF = getBattleField();
-    if (BF.isCellEmpty(position)) {
+    if (BF.getCell(this.pos) === EntitiesTypes.PLAYER) {
       const bomb = new Bomb(this.canvasCtx, this.pos, this, this.bombBlownSize);
       BF.addEntity(bomb);
       BF.setCell(this.pos, EntitiesTypes.BOMB);
@@ -86,7 +91,7 @@ export class Player implements IEntity {
     } else if (event.key === 'ArrowLeft') {
       this.move({ x: this.pos.x - 1, y: this.pos.y });
     } else if (event.key === ' ') {
-      this.placeBomb(this.pos);
+      this.placeBomb();
     }
   };
 }

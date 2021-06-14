@@ -6,6 +6,7 @@ import { Explosion } from './Explosion';
 import { getBattleField } from './BattleField';
 import { Player } from './Player';
 import { Position } from '../types/PositionType';
+import { getGameFlow } from './GameFlow';
 
 export class Bomb implements IEntity {
   type = EntitiesTypes.BOMB;
@@ -87,9 +88,19 @@ export class Bomb implements IEntity {
 
         if (cell === EntitiesTypes.PLAYER) {
           // TODO GAME OVER
+          const GF = getGameFlow();
+          GF.ctx.stopGame();
         }
 
-        if (cell !== EntitiesTypes.EMPTY && cell !== EntitiesTypes.BOMB) {
+        if (cell === EntitiesTypes.WALL_SOFT) {
+          const GF = getGameFlow();
+          GF.ctx.increaseScore(1);
+        }
+
+        if (cell !== EntitiesTypes.EMPTY
+          && cell !== EntitiesTypes.BOMB
+          && cell !== EntitiesTypes.PLAYER
+        ) {
           return;
         }
       }
