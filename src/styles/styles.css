@@ -1,6 +1,19 @@
 @import "./constants.css";
+@import 'normalize.css';
+@import url('http://fonts.cdnfonts.com/css/pixeboy');
+
+html {
+  background-color: var(--appBackground);
+  font-family: 'Pixeboy', sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
 
 h1 {
   color: var(--errorRed);
   text-align: center;
+}
+
+.pt-10 {
+  padding-top: 10px;
 }
