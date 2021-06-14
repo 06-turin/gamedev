@@ -14,7 +14,7 @@ export const AppComponent: FC = () => (
     <Switch>
       <Route exact path="/">
         <div>
-          <h1>Здесь будет игра</h1>
+          <h1>Bomberman</h1>
         </div>
       </Route>
       <Route path="/login" component={Login} />

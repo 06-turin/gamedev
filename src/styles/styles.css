@@ -10,7 +10,7 @@ html {
 }
 
 h1 {
-  color: var(--errorRed);
+  color: var(--activityColor);
   text-align: center;
 }
 
