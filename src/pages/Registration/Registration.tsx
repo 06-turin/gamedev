@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-export const RegistrationComponent: FC = () => (
+export const Registration: FC = () => (
   <div>
     <h1>Registration</h1>
   </div>

@@ -1,20 +1,28 @@
-import React, { FC } from 'react';
-import classNames from 'classnames';
 import './styles.css';
-import { GDTextInputProps } from './types';
+import React, { FC } from 'react';
+import classnames from 'classnames';
 
-export const GDTextInputComponent: FC<GDTextInputProps> = (props) => {
-  const {
-    className, placeholder, title, id,
-  } = props;
+type GDTextInputProps = {
+  id: string
+  title: string
+  className?: string
+  placeholder?: string
+}
 
-  const inputClassName = classNames(['input-field_standard', className]);
+export const GDTextInput: FC<GDTextInputProps> = ({
+  className, placeholder, title, id,
+}) => {
   const titleString = `${title}:`;
-
   return (
-    <label htmlFor={id} className={classNames('input-label')}>
+    <label htmlFor={id} className={classnames('input-label')}>
       {titleString}
-      <input placeholder={placeholder} className={inputClassName} type="text" id={id} name={title} />
+      <input
+        placeholder={placeholder}
+        className={classnames(['input-field_standard', className])}
+        type="text"
+        id={id}
+        name={title}
+      />
 
     </label>
   );

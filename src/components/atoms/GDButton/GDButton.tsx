@@ -1,18 +1,23 @@
-import React, { FC } from 'react';
-import classNames from 'classnames';
-import { GDButtonProps } from './types';
 import './styles.css';
+import React, { FC, MouseEventHandler } from 'react';
+import classnames from 'classnames';
 
-export const GDButtonComponent: FC<GDButtonProps> = (props) => {
-  const {
-    title, onClick, styleOption, className,
-  } = props;
+type GDButtonProps = {
+  title: string
+  styleOption: 'primary' | 'secondary'
+  onClick: MouseEventHandler<HTMLButtonElement>
+  className?: string
+  size?: 's' | 'm' | 'l'
+}
 
-  const buttonClassNames = classNames(['btn', `btn-${styleOption}`, className]);
-
-  return (
-    <button type="button" onClick={onClick} className={buttonClassNames}>
-      {title}
-    </button>
-  );
-};
+export const GDButton: FC<GDButtonProps> = ({
+  title, onClick, styleOption, className, size = 'm',
+}) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={classnames(['btn', `btn-${styleOption}`, `size_${size}`, className])}
+  >
+    {title}
+  </button>
+);

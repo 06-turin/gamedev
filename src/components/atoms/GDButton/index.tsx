@@ -1,1 +1,1 @@
-export { GDButtonComponent as GDButton } from './GDButton';
+export { GDButton } from './GDButton';

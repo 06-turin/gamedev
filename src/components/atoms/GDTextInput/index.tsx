@@ -1,1 +1,1 @@
-export { GDTextInputComponent as GDTextInput } from './GDTextInput';
+export { GDTextInput } from './GDTextInput';
