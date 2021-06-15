@@ -1,6 +1,6 @@
 .input-label {
   color: var(--white);
-  font-size: 26px;
+  font-size: inherit;
   margin-bottom: 18px;
 }
 
@@ -13,7 +13,7 @@
   color: var(--white);
   text-transform: uppercase;
   font-family: var(--mainTextFontFamily);
-  font-size: 26px;
+  font-size: inherit;
 
   &:focus-visible {
     outline: none;
