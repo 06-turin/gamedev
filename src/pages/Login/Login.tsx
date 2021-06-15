@@ -1,7 +1,26 @@
 import React, { FC } from 'react';
+import { GDLogo } from 'components/atoms/GDLogo';
+import './styles.css';
+import { GDButton } from 'components/atoms/GDButton/GDButton';
+import { Form } from 'components/molecules/Form';
 
-export const Login: FC = () => (
-  <div>
-    <h1>Login</h1>
-  </div>
+const loginFormFields = [
+  { id: 'login', title: 'login' },
+  { id: 'password', title: 'password' },
+];
+
+export const LoginComponent: FC = () => (
+  <section className="page login-page">
+    <GDLogo />
+    <Form fields={loginFormFields} />
+    <GDButton className="button" title="boom !" styleOption="primary" size="l" isSubmit onClick={() => null} />
+    <div className="container">
+      <span className="text-label">no account ?</span>
+      <div className="link-container">
+        <GDButton className="link" title="register !" styleOption="secondary" size="l" onClick={() => null} />
+        <span className="text-label">or</span>
+        <GDButton className="link" title="just play !" styleOption="secondary" size="l" onClick={() => null} />
+      </div>
+    </div>
+  </section>
 );
