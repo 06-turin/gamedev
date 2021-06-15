@@ -12,6 +12,8 @@
   border-bottom: 2px solid var(--white);
   color: var(--white);
   text-transform: uppercase;
+  font-family: var(--mainTextFontFamily);
+  font-size: 26px;
 
   &:focus-visible {
     outline: none;

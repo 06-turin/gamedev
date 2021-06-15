@@ -2,7 +2,7 @@ import './styles.css';
 import React, { ChangeEventHandler, FC, FocusEventHandler } from 'react';
 import classnames from 'classnames';
 
-type GDTextInputProps = {
+export type GDTextInputProps = {
   id: string
   title: string
   className?: string
@@ -29,7 +29,6 @@ export const GDTextInput: FC<GDTextInputProps> = ({
         onChange={onChange}
         onBlur={onBlur}
       />
-
     </label>
   );
 };
