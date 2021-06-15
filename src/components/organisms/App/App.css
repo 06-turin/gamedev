@@ -15,6 +15,10 @@
   font-family: var(--mainTextFontFamily);
 }
 
+.main-font-family {
+  font-family: var(--mainTextFontFamily);
+}
+
 .page__header {
   display: flex;
   align-items: center;

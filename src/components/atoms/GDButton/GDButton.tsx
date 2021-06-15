@@ -7,7 +7,7 @@ type GDButtonProps = {
   styleOption: 'primary' | 'secondary'
   onClick: MouseEventHandler<HTMLButtonElement>
   className?: string
-  size?: 's' | 'm' | 'l',
+  size?: 's' | 'm' | 'l' | 'h',
   isSubmit?: boolean,
 }
 

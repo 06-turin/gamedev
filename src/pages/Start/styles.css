@@ -1,0 +1,13 @@
+.start-page {
+  justify-content: space-evenly;
+}
+
+.menu__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu__item {
+  margin: 0;
+  font-family: var(--mainTextFontFamily);
+}
