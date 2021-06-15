@@ -42,6 +42,7 @@ module.exports = {
     'no-shadow': 'off',
     '@typescript-eslint/no-shadow': ['error'],
     'react/prop-types': 'off',
+    'no-param-reassign': [2, { props: false }],
   },
   settings: {
     'import/resolver': {

@@ -1,9 +1,10 @@
+import React from 'react';
 import { getBattleField } from '../classes/BattleField';
 import { GRID, NUM_COLS, NUM_ROWS } from '../config';
 import { EntitiesTypes } from '../types/EntitiesTypes';
 import { getDrawWalls } from './getDrawWalls';
 
-export const getLoop = (canvas: HTMLCanvasElement) => {
+export const getLoop = (canvas: HTMLCanvasElement, requestRef: React.MutableRefObject<number>) => {
   const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
   let lastTimestamp: number; // timestamp of the last frame rendering
@@ -12,7 +13,7 @@ export const getLoop = (canvas: HTMLCanvasElement) => {
   const { wallCanvas, softWallCanvas } = getDrawWalls();
 
   const loop = (timestamp: number) => {
-    requestAnimationFrame(loop);
+    requestRef.current = requestAnimationFrame(loop);
 
     // clear canvas
     context.clearRect(0, 0, canvas.width, canvas.height);

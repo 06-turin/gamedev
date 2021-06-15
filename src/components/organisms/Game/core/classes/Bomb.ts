@@ -6,7 +6,7 @@ import { Explosion } from './Explosion';
 import { getBattleField } from './BattleField';
 import { Player } from './Player';
 import { Position } from '../types/PositionType';
-import { getGameFlow } from './GameFlow';
+import { gameService } from '../../services/gameService';
 
 export class Bomb implements IEntity {
   type = EntitiesTypes.BOMB;
@@ -59,6 +59,14 @@ export class Bomb implements IEntity {
     this.alive = false;
 
     const BF = getBattleField();
+
+    if (
+      this.owner.pos.x === this.pos.x
+      && this.owner.pos.y === this.pos.y
+    ) {
+      BF.gameOver(); return;
+    }
+
     BF.clearCell(this.pos);
 
     // create Explosions per each directions
@@ -87,19 +95,16 @@ export class Bomb implements IEntity {
         }
 
         if (cell === EntitiesTypes.PLAYER) {
-          // TODO GAME OVER
-          const GF = getGameFlow();
-          GF.ctx.stopGame();
+          BF.gameOver(); return;
         }
 
         if (cell === EntitiesTypes.WALL_SOFT) {
-          const GF = getGameFlow();
-          GF.ctx.increaseScore(1);
+          gameService.increaseScore(1);
         }
 
         if (cell !== EntitiesTypes.EMPTY
           && cell !== EntitiesTypes.BOMB
-          && cell !== EntitiesTypes.PLAYER
+          // && cell !== EntitiesTypes.PLAYER
         ) {
           return;
         }

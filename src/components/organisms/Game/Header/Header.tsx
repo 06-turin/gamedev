@@ -1,24 +1,19 @@
-import React, { useContext } from 'react';
-import { GameContext } from 'store/game/provider';
+import React, { FC } from 'react';
 
-export const Header = () => {
-  const {
-    state, startGame, stopGame, increaseScore,
-  } = useContext(GameContext);
+type Props = {
+  score: number,
+  timer: number
+}
+export const Header: FC<Props> = ({ score, timer }) => (
+  <>
+    <p>
+      Score:
+      {score}
+    </p>
+    <p>
+      Timer:
+      {timer}
+    </p>
 
-  const increase = () => {
-    increaseScore(1);
-  };
-
-  return (
-    <>
-      <div className="">
-        <button type="button" onClick={startGame}>Start</button>
-        <button type="button" onClick={stopGame}>Stop</button>
-        <button type="button" onClick={increase}>Increase</button>
-      </div>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
-
-    </>
-  );
-};
+  </>
+);

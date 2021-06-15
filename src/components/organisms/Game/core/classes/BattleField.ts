@@ -5,6 +5,7 @@ import { Explosion } from './Explosion';
 import { Player } from './Player';
 import { Position } from '../types/PositionType';
 import { IEntity } from '../interfaces/IEntity';
+import { gameService } from '../../services/gameService';
 
 const template = [
   ['W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'],
@@ -68,28 +69,28 @@ class BattleField {
     this.cells = cells;
   }
 
-  private checkIfInitialized() {
-    if (!this.isInitialized || this.cells.length === 0) { throw new Error('The BattleField is not initialized'); }
+  get ifInitialized() {
+    return !this.isInitialized || this.cells.length === 0;
   }
 
   getCell(position: Position): EntitiesTypes {
-    this.checkIfInitialized();
+    if (!this.isInitialized) return EntitiesTypes.EMPTY;
     return this.cells[position.y][position.x];
   }
 
   setCell(position: Position, instance: EntitiesTypes): void {
-    this.checkIfInitialized();
+    if (!this.isInitialized) return;
     this.cells[position.y][position.x] = instance;
   }
 
   isCellEmpty(position: Position): Boolean {
-    this.checkIfInitialized();
+    if (!this.isInitialized) return false;
     const cell = this.getCell(position);
     return typeof cell === 'undefined' || cell === EntitiesTypes.EMPTY;
   }
 
   clearCell(position: Position) {
-    this.checkIfInitialized();
+    if (!this.isInitialized) return;
     this.setCell(position, EntitiesTypes.EMPTY);
   }
 
@@ -122,13 +123,25 @@ class BattleField {
     return !owner ? bombs : bombs.filter((bomb) => bomb.owner === owner);
   }
 
+  findPlayers(): Player[] {
+    return this.entities.filter((entity) => entity.type === EntitiesTypes.PLAYER) as Player[];
+  }
+
   clearEntities(): void {
     this.entities = this.entities.filter((entity) => entity.alive);
   }
 
-  destroy() {
+  gameOver() {
+    this.destroy();
+    gameService.stopGame();
+  }
+
+  private destroy() {
+    this.findPlayers().forEach((p) => p.destroy());
     this.cells = [];
+    this.entities = [];
     this.isInitialized = false;
+    BattleField.instance = null;
   }
 }
 
