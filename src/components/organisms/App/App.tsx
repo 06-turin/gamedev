@@ -1,14 +1,15 @@
 import './App.css';
 import React, { FC } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { Forum } from 'pages/Forum';
+import { Forum } from 'pages/Forum/Forum';
 import { Game } from 'pages/Game/Game';
-import { LeaderBoard } from 'pages/LeaderBoard';
-import { Login } from 'pages/Login';
-import { Profile } from 'pages/Profile';
-import { Registration } from 'pages/Registration';
-import { Error } from 'pages/Error';
+import { LeaderBoard } from 'pages/LeaderBoard/LeaderBoard';
+import { Login } from 'pages/Login/Login';
+import { Profile } from 'pages/Profile/Profile';
+import { Registration } from 'pages/Registration/Registration';
+import { Error } from 'pages/Error/Error';
 import { LanguageSelector } from 'components/molecules/LanguageSelector';
+import { Main } from 'pages/Main/Main';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 
 export const App: FC = () => (
@@ -19,11 +20,7 @@ export const App: FC = () => (
 
     <ErrorBoundary>
       <Switch>
-        <Route exact path="/">
-          <div>
-            <h1>Здесь будет игра</h1>
-          </div>
-        </Route>
+        <Route exact path="/" component={Main} />
         <Route path="/login" component={Login} />
         <Route path="/registration" component={Registration} />
         <Route path="/forum" component={Forum} />

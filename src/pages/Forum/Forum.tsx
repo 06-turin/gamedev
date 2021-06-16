@@ -1,19 +1,20 @@
 import './Forum.css';
-import React, { FC, useCallback } from 'react';
-import { GDButton } from 'components/atoms/GDButton/GDButton';
+import React, { FC, useCallback, useState } from 'react';
+import { GDButton } from 'components/atoms/GDButton';
 import classNames from 'classnames';
 import { GDTextInput } from 'components/atoms/GDTextInput';
 import { useTranslation } from 'react-i18next';
 
 export const Forum: FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
-  // TODO: Delete all showcase functions when Forum page is ready
+  // TODO: Delete all showcase functions and state when Forum page is ready
+  const [showcaseIsBroken, showcaseSetIsBroken] = useState(false);
+
   const showcaseButtonClick = useCallback((buttonId: number) => () => {
     // eslint-disable-next-line no-console
     console.log(`click ${buttonId}`);
-    i18n.changeLanguage('en');
-  }, [i18n]);
+  }, []);
 
   const showcaseHandleInputChange = useCallback((e) => {
     // eslint-disable-next-line no-console
@@ -25,8 +26,21 @@ export const Forum: FC = () => {
     console.log(e.target.value);
   }, []);
 
+  const showcaseHandleBreakingEverything = useCallback(() => {
+    showcaseSetIsBroken(true);
+  }, []);
+
+  const showcaseRenderingError = useCallback(() => {
+    if (showcaseIsBroken) {
+      throw new Error('crash!');
+    }
+    return <></>;
+  }, [showcaseIsBroken]);
+
   return (
     <div>
+      {showcaseRenderingError()}
+
       <h1>{t('forum')}</h1>
 
       <div className={classNames('form-container')}>
@@ -48,7 +62,14 @@ export const Forum: FC = () => {
         <GDButton
           title={t('back')}
           styleOption="secondary"
-          onClick={showcaseButtonClick(2)}
+          onClick={showcaseButtonClick(1)}
+          size="m"
+        />
+
+        <GDButton
+          title={t('break_everything')}
+          styleOption="secondary"
+          onClick={showcaseHandleBreakingEverything}
           size="m"
         />
       </div>
