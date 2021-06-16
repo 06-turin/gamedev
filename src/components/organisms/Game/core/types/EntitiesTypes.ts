@@ -4,6 +4,6 @@ export enum EntitiesTypes {
   BOMB = 'B',
   EMPTY = ' ',
   EMPTY_REQUIRED = 'x',
-  EXPLOSION = 'x',
+  EXPLOSION = 'X',
   PLAYER = 'p',
 }
