@@ -35,7 +35,9 @@ export class BattleField {
   private entities: IEntity[] = [];
 
   constructor() {
-    if (BattleField.instance) return BattleField.instance;
+    if (BattleField.instance) {
+      return BattleField.instance;
+    }
     BattleField.instance = this;
   }
 
