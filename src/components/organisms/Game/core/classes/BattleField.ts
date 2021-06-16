@@ -71,10 +71,6 @@ export class BattleField {
     this.cells = cells;
   }
 
-  get ifInitialized() {
-    return !this.isInitialized || this.cells.length === 0;
-  }
-
   getCell(position: Position): EntitiesTypes {
     if (!this.isInitialized) return EntitiesTypes.EMPTY;
     return this.cells[position.y][position.x];
