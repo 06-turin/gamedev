@@ -24,7 +24,7 @@ const template = [
 /**
  * Singleton
  */
-class BattleField {
+export class BattleField {
   static instance: BattleField | null = null;
 
   private isInitialized: Boolean = false;

@@ -7,13 +7,13 @@ import { getLoop } from '../core/helpers/getLoop';
 
 export const Canvas: FC = React.memo(() => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const requestRef = useRef(0);
 
   const gameCtx = useContext(GameContext);
   const GF = getGameFlow(gameCtx);
 
   useEffect(() => {
-    const BF = getBattleField();
+    const game = new Game(canvasRef);
+    game.start();
 
     const context = canvasRef.current?.getContext(
       '2d',
