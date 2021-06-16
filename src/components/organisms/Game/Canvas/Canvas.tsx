@@ -4,9 +4,8 @@ import { getBattleField } from '../core/classes/BattleField';
 import { getGameFlow } from '../core/classes/GameFlow';
 import { Player } from '../core/classes/Player';
 import { getLoop } from '../core/helpers/getLoop';
-import './Canvas.css';
 
-const CanvasComponent: React.FC<{}> = () => {
+export const Canvas: FC = React.memo(() => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const requestRef = useRef(0);
 
@@ -42,12 +41,10 @@ const CanvasComponent: React.FC<{}> = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="canvasContainer"
+      className="canvas-container"
       width="960"
       height="704"
       id="game"
     />
   );
-};
-
-export default React.memo(CanvasComponent);
+});

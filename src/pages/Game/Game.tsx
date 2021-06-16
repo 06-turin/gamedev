@@ -1,8 +1,6 @@
-import React, { FC } from 'react';
-import { Game } from 'components/organisms/Game';
+import React from 'react';
+import { Game as GameComponent } from 'components/organisms/Game/Game';
 
-export const GameComponent: FC = () => (
-  <>
-    <Game />
-  </>
+export const Game = () => (
+  <GameComponent />
 );
