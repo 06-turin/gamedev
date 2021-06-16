@@ -1,8 +1,8 @@
 import './Forum.css';
 import React, { FC, useCallback, useState } from 'react';
-import { GDButton } from 'components/atoms/GDButton';
+import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
-import { GDTextInput } from 'components/atoms/GDTextInput';
+import { GDTextInput } from 'components/atoms/GDTextInput/GDTextInput';
 import { useTranslation } from 'react-i18next';
 
 export const Forum: FC = () => {
