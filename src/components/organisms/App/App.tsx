@@ -8,7 +8,7 @@ import { Login } from 'pages/Login/Login';
 import { Profile } from 'pages/Profile/Profile';
 import { Registration } from 'pages/Registration/Registration';
 import { Error } from 'pages/Error/Error';
-import { LanguageSelector } from 'components/molecules/LanguageSelector';
+import { LanguageSelector } from 'components/molecules/LanguageSelector/LanguageSelector';
 import { Main } from 'pages/Main/Main';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 
