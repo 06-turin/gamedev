@@ -1,40 +1,16 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import { GameContext } from 'store/game/context';
-import { getBattleField } from '../core/classes/BattleField';
-import { getGameFlow } from '../core/classes/GameFlow';
-import { Player } from '../core/classes/Player';
-import { getLoop } from '../core/helpers/getLoop';
+import './Canvas.css'
+import React, { FC, useEffect, useRef } from 'react';
+import { Game } from '../core/classes/Game';
 
 export const Canvas: FC = React.memo(() => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  const gameCtx = useContext(GameContext);
-  const GF = getGameFlow(gameCtx);
 
   useEffect(() => {
     const game = new Game(canvasRef);
     game.start();
 
-    const context = canvasRef.current?.getContext(
-      '2d',
-    ) as CanvasRenderingContext2D;
-
-    context.fillStyle = 'blue';
-    context.fillRect(10, 10, 100, 100);
-
-    BF.init();
-
-    BF.addEntity(new Player(context));
-
-    GF.ctx.startGame();
-
-    if (canvasRef.current) {
-      const { loop } = getLoop(canvasRef.current, requestRef);
-      requestRef.current = requestAnimationFrame(loop);
-    }
-
     return () => {
-      cancelAnimationFrame(requestRef.current);
+      game.end();
     };
   }, []);
 
