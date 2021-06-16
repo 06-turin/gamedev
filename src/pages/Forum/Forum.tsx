@@ -62,7 +62,7 @@ export const Forum: FC = () => {
         <GDButton
           title={t('back')}
           styleOption="secondary"
-          onClick={showcaseButtonClick(1)}
+          onClick={showcaseButtonClick(2)}
           size="m"
         />
 
