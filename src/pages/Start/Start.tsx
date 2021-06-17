@@ -1,8 +1,8 @@
+import './styles.css';
 import React, { FC } from 'react';
 import logoImage from 'assets/images/logo_img_base.png';
 import { GDLogo } from 'components/atoms/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
-import './styles.css';
 
 export const Start: FC = () => (
   <section className="page start-page">

@@ -1,7 +1,7 @@
+import './styles.css';
 import React, { FC } from 'react';
 import { GDTextInput, GDTextInputProps } from 'components/atoms/GDTextInput/GDTextInput';
 import classnames from 'classnames';
-import './styles.css';
 
 type FormProps = {
   fields: GDTextInputProps[]

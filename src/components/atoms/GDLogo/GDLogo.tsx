@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
 import './styles.css';
+import React, { FC } from 'react';
 
 type GDLogoProps = {
   logImage: string

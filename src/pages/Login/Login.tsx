@@ -1,6 +1,6 @@
+import './styles.css';
 import React, { FC } from 'react';
 import { GDLogo } from 'components/atoms/GDLogo';
-import './styles.css';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form';
 import logoImage from 'assets/images/logo_img_base.png';

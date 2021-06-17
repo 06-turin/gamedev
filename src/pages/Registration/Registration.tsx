@@ -1,7 +1,7 @@
+import './styles.css';
 import React, { FC } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form';
-import './styles.css';
 
 const loginFormFields = [
   { id: 'first_name', title: 'name' },
