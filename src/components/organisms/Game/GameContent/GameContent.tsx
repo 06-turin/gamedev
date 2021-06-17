@@ -4,15 +4,23 @@ import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useTranslation } from 'react-i18next';
 import { gameService, GameStatus } from '../services/gameService';
 import { Canvas as CanvasComponent } from '../Canvas/Canvas';
+import { GameContentStage } from './GameContentStage';
+import { GameContentContinue } from './GameContentContinue';
+import { GameContentGameOver } from './GameContentGameOver';
 
 type GameContentProps = {
   gameStatus: GameStatus,
+  stage: number
 }
-export const GameContent: FC<GameContentProps> = ({ gameStatus }) => {
+export const GameContent: FC<GameContentProps> = ({ gameStatus, stage }) => {
   const { t } = useTranslation();
 
   const startGameHandler = () => {
     gameService.startGame();
+  };
+
+  const nextStageGameHandler = () => {
+    gameService.startGame(false);
   };
 
   const content = useMemo(() => {
@@ -21,26 +29,26 @@ export const GameContent: FC<GameContentProps> = ({ gameStatus }) => {
       case GameStatus.NOT_STARTED:
         return <GDButton title={t('start_game')} size="l" onClick={startGameHandler} />;
 
+      case GameStatus.SHOW_STAGE:
+        return <GameContentStage stage={stage} />;
+
       case GameStatus.IN_PROGRESS:
-        return <CanvasComponent />;
+        return <CanvasComponent key={Date.now()} />;
+
+      case GameStatus.STAGE_COMPLETED:
+        return <GameContentContinue onContinue={nextStageGameHandler} />;
 
       case GameStatus.FINISHED:
-        return (
-          <div className="game-over-wrapper">
-            <p>Game over</p>
-            <GDButton
-              title={t('play_again')}
-              size="m"
-              onClick={startGameHandler}
-            />
-          </div>
-        );
+        return <GameContentGameOver onStartAgain={startGameHandler} />;
     }
-  }, [gameStatus, t]);
+  }, [gameStatus, stage, t]);
 
   return (
+
     <div className="game-content">
-      {content}
+      <div className="content-wrapper">
+        {content}
+      </div>
     </div>
   );
 };

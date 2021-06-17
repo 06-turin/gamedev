@@ -9,7 +9,7 @@ export const GameFooter: FC = () => {
   const history = useHistory();
 
   const backClickHandler = () => {
-    history.push('/');
+    history.push('/start');
   };
 
   return (

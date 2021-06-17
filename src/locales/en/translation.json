@@ -17,5 +17,8 @@
     "play_again": "play again",
     "bombs": "bombs",
     "timer": "timer",
-    "score": "score"
+    "score": "score",
+    "stage": "stage",
+    "victory": "victory",
+    "continue": "continue"
 }

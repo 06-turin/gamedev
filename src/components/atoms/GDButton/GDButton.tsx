@@ -14,7 +14,7 @@ export type GDButtonProps = {
 export const GDButton: FC<GDButtonProps> = ({
   title,
   onClick,
-  styleOption,
+  styleOption = 'primary',
   className,
   size = 'm',
   type = 'button',
