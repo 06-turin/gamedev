@@ -10,7 +10,7 @@ const loginFormFields = [
   { id: 'password', title: 'password' },
 ];
 
-export const LoginComponent: FC = () => (
+export const Login: FC = () => (
   <div className="page login-page">
     <GDLogo logoImage={logoImage} />
     <Form fields={loginFormFields} />

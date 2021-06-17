@@ -13,7 +13,7 @@ const loginFormFields = [
   { id: 'verify_password', title: 'repeat', type: 'password' },
 ];
 
-export const RegistrationComponent: FC = () => (
+export const Registration: FC = () => (
   <div className="page">
     <div className="page__header">
       <h1 className="page__title">registration</h1>
