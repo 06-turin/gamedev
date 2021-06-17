@@ -2,6 +2,7 @@ import './styles.css';
 import React, { FC } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
+import { GDBar } from 'components/atoms/GDBar/GDBar';
 
 const loginFormFields = [
   { id: 'first_name', title: 'name' },
@@ -15,9 +16,7 @@ const loginFormFields = [
 
 export const Registration: FC = () => (
   <div className="page">
-    <div className="page__header">
-      <h1 className="page__title">registration</h1>
-    </div>
+    <GDBar title="registration" type="header" />
     <Form className="register-form" fields={loginFormFields} />
     <GDButton
       className="page__footer-item"
@@ -26,7 +25,7 @@ export const Registration: FC = () => (
       size="l"
       onClick={() => null}
     />
-    <div className="page__footer">
+    <GDBar type="footer">
       <GDButton
         className="page__footer-item"
         title="back"
@@ -34,6 +33,6 @@ export const Registration: FC = () => (
         size="l"
         onClick={() => null}
       />
-    </div>
+    </GDBar>
   </div>
 );
