@@ -15,13 +15,25 @@ const loginFormFields = [
 
 export const RegistrationComponent: FC = () => (
   <section className="page">
-    <header className="page__header">
+    <div className="page__header">
       <h1 className="page__title">registration</h1>
-    </header>
+    </div>
     <Form className="register-form" fields={loginFormFields} />
-    <GDButton className="page__footer-item" title="submit" styleOption="primary" size="l" onClick={() => null} />
-    <footer className="page__footer">
-      <GDButton className="page__footer-item" title="back" styleOption="secondary" size="l" onClick={() => null} />
-    </footer>
+    <GDButton
+      className="page__footer-item"
+      title="submit"
+      styleOption="primary"
+      size="l"
+      onClick={() => null}
+    />
+    <div className="page__footer">
+      <GDButton
+        className="page__footer-item"
+        title="back"
+        styleOption="secondary"
+        size="l"
+        onClick={() => null}
+      />
+    </div>
   </section>
 );
