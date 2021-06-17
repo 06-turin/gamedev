@@ -18,18 +18,56 @@ export const App: FC = () => (
       <LanguageSelector />
     </ErrorBoundary>
 
-    <ErrorBoundary>
-      <Switch>
-        <Route exact path="/" component={Main} />
-        <Route path="/login" component={Login} />
-        <Route path="/registration" component={Registration} />
-        <Route path="/forum" component={Forum} />
-        <Route path="/game" component={Game} />
-        <Route path="/leaderboard" component={LeaderBoard} />
-        <Route path="/profile" component={Profile} />
-        <Route path="*" component={Error} />
-      </Switch>
-    </ErrorBoundary>
+    <Switch>
+      <Route exact path="/">
+        <ErrorBoundary>
+          <Main />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="/login">
+        <ErrorBoundary>
+          <Login />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="/registration">
+        <ErrorBoundary>
+          <Registration />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="/forum">
+        <ErrorBoundary>
+          <Forum />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="/game">
+        <ErrorBoundary>
+          <Game />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="/leaderboard">
+        <ErrorBoundary>
+          <LeaderBoard />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="/profile">
+        <ErrorBoundary>
+          <Profile />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="*">
+        <ErrorBoundary>
+          <Error />
+        </ErrorBoundary>
+      </Route>
+
+    </Switch>
 
   </BrowserRouter>
 );

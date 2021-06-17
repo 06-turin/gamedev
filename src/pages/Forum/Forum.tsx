@@ -30,12 +30,12 @@ export const Forum: FC = () => {
     showcaseSetIsBroken(true);
   }, []);
 
-  const showcaseRenderingError = useCallback(() => {
+  const showcaseRenderingError = () => {
     if (showcaseIsBroken) {
       throw new Error('crash!');
     }
     return <></>;
-  }, [showcaseIsBroken]);
+  };
 
   return (
     <div>
