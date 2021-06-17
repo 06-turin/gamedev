@@ -1,6 +1,6 @@
 import './styles.css';
 import React, { FC } from 'react';
-import { GDButton } from 'components/atoms/GDButton/GDButton';
+import { GDButton } from 'components/atoms/GDButton';
 import { Form } from 'components/molecules/Form';
 
 const loginFormFields = [
