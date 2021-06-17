@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { GDButton, GDButtonProps } from 'components/atoms/GDButton';
+import { GDButton, GDButtonProps } from 'components/atoms/GDButton/GDButton';
 import classnames from 'classnames';
 
 // TODO: вынести типы size и styleOption
