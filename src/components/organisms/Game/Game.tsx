@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import { GameHeader } from './GameHeader/GameHeader';
 import { GameContent } from './GameContent/GameContent';
@@ -6,7 +6,7 @@ import { GameFooter } from './GameFooter/GameFooter';
 import { useObservable } from './core/hooks/useObservable';
 import { gameService } from './services/gameService';
 
-export const Game = () => {
+export const Game: FC = () => {
   const status = useObservable(gameService.status);
   const score = useObservable(gameService.score);
   const timer = useObservable(gameService.timer);
