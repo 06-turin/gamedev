@@ -5,4 +5,6 @@
   --mainTextFontFamily: 'Pixeboy';
   --notActiveColor: #b0b0b0;
   --mainBackColor: #000;
+  --mainTextWeight: 700;
+  --subTextWeight: 500;
 }
