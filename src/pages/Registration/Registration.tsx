@@ -31,7 +31,6 @@ export const Registration: FC<RegistrationPageProps> = ({ className }) => {
       <GDBar title={t('registration')} type="header" />
       <Form className="register-form" fields={loginFormFields} />
       <GDButton
-        className="page__footer-item"
         title={t('submit')}
         styleOption="primary"
         size="l"
@@ -39,7 +38,6 @@ export const Registration: FC<RegistrationPageProps> = ({ className }) => {
       />
       <GDBar type="footer">
         <GDButton
-          className="page__footer-item"
           title={t('back')}
           styleOption="secondary"
           size="l"

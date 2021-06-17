@@ -36,5 +36,7 @@
     "password": "password",
     "repeat": "repeat",
     "settings": "settings",
-    "play": "play"
+    "play": "play",
+    "avatar": "avatar",
+    "edit": "edit"
 }
