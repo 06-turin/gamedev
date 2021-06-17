@@ -3,6 +3,10 @@ import React, { FC } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
 import { GDBar } from 'components/atoms/GDBar/GDBar';
+import { DefaultPageProps } from 'components/organisms/App/types';
+import classnames from 'classnames';
+
+export type RegistrationPageProps = DefaultPageProps;
 
 const loginFormFields = [
   { id: 'first_name', title: 'name' },
@@ -14,8 +18,8 @@ const loginFormFields = [
   { id: 'verify_password', title: 'repeat', type: 'password' },
 ];
 
-export const Registration: FC = () => (
-  <div className="page">
+export const Registration: FC<RegistrationPageProps> = ({ className }) => (
+  <div className={classnames(['page', className])}>
     <GDBar title="registration" type="header" />
     <Form className="register-form" fields={loginFormFields} />
     <GDButton

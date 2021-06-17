@@ -4,18 +4,21 @@ import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
 import logoImage from 'assets/images/logo_img_base.png';
+import { DefaultPageProps } from 'components/organisms/App/types';
+import classnames from 'classnames';
 
 const loginFormFields = [
   { id: 'login', title: 'login' },
   { id: 'password', title: 'password' },
 ];
 
-export const Login: FC = () => (
-  <div className="page login-page">
+export type LoginPageProps = DefaultPageProps;
+
+export const Login: FC<LoginPageProps> = ({ className }) => (
+  <div className={classnames(['page', 'login-page', className])}>
     <GDLogo logoImage={logoImage} />
     <Form fields={loginFormFields} />
     <GDButton
-      className="login-page__button"
       title="boom !"
       styleOption="primary"
       size="l"

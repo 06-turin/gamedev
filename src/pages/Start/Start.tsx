@@ -5,8 +5,12 @@ import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Menu } from 'components/molecules/Menu/Menu';
 import { useHistory } from 'react-router-dom';
+import { DefaultPageProps } from 'components/organisms/App/types';
+import classnames from 'classnames';
 
-export const Start: FC = () => {
+export type StartPageProps = DefaultPageProps;
+
+export const Start: FC<StartPageProps> = ({ className }) => {
   const history = useHistory();
   const onPlayClickHandler = () => history.push('/game');
 
@@ -18,7 +22,7 @@ export const Start: FC = () => {
   ];
 
   return (
-    <div className="page start-page">
+    <div className={classnames(['page', 'start-page', className])}>
       <GDLogo logoImage={logoImage} />
       <GDButton
         className="main-font-family"

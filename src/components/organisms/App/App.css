@@ -12,9 +12,5 @@
   max-height: 1024px;
   background-color: var(--appBackground);
   color: var(--mainTextColor);
-  font-family: var(--mainTextFontFamily);
-}
-
-.main-font-family {
-  font-family: var(--mainTextFontFamily);
+  font-family: var(--mainTextFontFamily), Serif;
 }
