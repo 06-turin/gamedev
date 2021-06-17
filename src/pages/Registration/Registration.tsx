@@ -5,12 +5,13 @@ import { Form } from 'components/molecules/Form/Form';
 import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { DefaultPageProps } from 'components/organisms/App/types';
 import classnames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 export type RegistrationPageProps = DefaultPageProps;
 
 const loginFormFields = [
   { id: 'first_name', title: 'name' },
-  { id: 'second_name', title: 'last name' },
+  { id: 'second_name', title: 'last_name' },
   { id: 'email', title: 'e-mail', type: 'email' },
   { id: 'phone', title: 'phone', type: 'tel' },
   { id: 'login', title: 'login' },
@@ -18,25 +19,33 @@ const loginFormFields = [
   { id: 'verify_password', title: 'repeat', type: 'password' },
 ];
 
-export const Registration: FC<RegistrationPageProps> = ({ className }) => (
-  <div className={classnames(['page', className])}>
-    <GDBar title="registration" type="header" />
-    <Form className="register-form" fields={loginFormFields} />
-    <GDButton
-      className="page__footer-item"
-      title="submit"
-      styleOption="primary"
-      size="l"
-      onClick={() => null}
-    />
-    <GDBar type="footer">
+export const Registration: FC<RegistrationPageProps> = ({ className }) => {
+  const { t } = useTranslation();
+
+  loginFormFields.forEach((field) => {
+    field.title = t(field.title);
+  });
+
+  return (
+    <div className={classnames(['page', className])}>
+      <GDBar title={t('registration')} type="header" />
+      <Form className="register-form" fields={loginFormFields} />
       <GDButton
         className="page__footer-item"
-        title="back"
-        styleOption="secondary"
+        title={t('submit')}
+        styleOption="primary"
         size="l"
         onClick={() => null}
       />
-    </GDBar>
-  </div>
-);
+      <GDBar type="footer">
+        <GDButton
+          className="page__footer-item"
+          title={t('back')}
+          styleOption="secondary"
+          size="l"
+          onClick={() => null}
+        />
+      </GDBar>
+    </div>
+  );
+};

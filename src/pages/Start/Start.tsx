@@ -7,10 +7,12 @@ import { Menu } from 'components/molecules/Menu/Menu';
 import { useHistory } from 'react-router-dom';
 import { DefaultPageProps } from 'components/organisms/App/types';
 import classnames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 export type StartPageProps = DefaultPageProps;
 
 export const Start: FC<StartPageProps> = ({ className }) => {
+  const { t } = useTranslation();
   const history = useHistory();
   const onPlayClickHandler = () => history.push('/game');
 
@@ -21,12 +23,15 @@ export const Start: FC<StartPageProps> = ({ className }) => {
     { title: 'forum', onClick: () => null },
   ];
 
+  items.forEach((item) => {
+    item.title = t(item.title);
+  });
+
   return (
     <div className={classnames(['page', 'start-page', className])}>
       <GDLogo logoImage={logoImage} />
       <GDButton
-        className="main-font-family"
-        title="play !"
+        title={`${t('play')} !`}
         size="h"
         styleOption="secondary"
         onClick={onPlayClickHandler}
@@ -39,8 +44,7 @@ export const Start: FC<StartPageProps> = ({ className }) => {
         itemsClassName="start-page__menu-item"
       />
       <GDButton
-        className="main-font-family"
-        title="logout"
+        title={t('logout')}
         styleOption="secondary"
         size="l"
         onClick={() => null}
