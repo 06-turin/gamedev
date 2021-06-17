@@ -43,5 +43,7 @@
     "nick_name": "никнейм",
     "remove_avatar": "удалить аватар",
     "upload_avatar": "загрузить аватар",
-    "change_password": "изменить пароль"
+    "change_password": "изменить пароль",
+    "new_password": "новый пароль",
+    "password_edit": "изменение пароля"
 }

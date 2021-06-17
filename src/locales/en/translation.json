@@ -43,5 +43,7 @@
     "nickname": "nickname",
     "remove_avatar": "remove avatar",
     "upload_avatar": "upload avatar",
-    "change_password": "change password"
+    "change_password": "change password",
+    "new_password": "new password",
+    "password_edit": "password edit"
 }
