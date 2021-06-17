@@ -8,7 +8,7 @@ type GDButtonProps = {
   onClick: MouseEventHandler<HTMLButtonElement>
   className?: string
   size?: 's' | 'm' | 'l' | 'h',
-  isSubmit?: boolean,
+  type?: 'submit' | 'reset' | 'button';
 }
 
 export const GDButton: FC<GDButtonProps> = ({
@@ -17,10 +17,10 @@ export const GDButton: FC<GDButtonProps> = ({
   styleOption,
   className,
   size = 'm',
-  isSubmit = false,
+  type = 'button',
 }) => (
   <button
-    type={isSubmit ? 'submit' : 'button'}
+    type={type}
     onClick={onClick}
     className={classnames(['btn', `btn-${styleOption}`, `size_${size}`, className])}
   >
