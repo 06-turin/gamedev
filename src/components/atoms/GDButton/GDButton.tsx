@@ -4,8 +4,8 @@ import classNames from 'classnames';
 
 export type GDButtonProps = {
   title: string
-  styleOption: 'primary' | 'secondary'
-  onClick: MouseEventHandler<HTMLButtonElement>
+  styleOption?: 'primary' | 'secondary'
+  onClick?: MouseEventHandler<HTMLButtonElement>
   className?: string
   size?: 's' | 'm' | 'l' | 'h',
   type?: 'submit' | 'reset' | 'button';
