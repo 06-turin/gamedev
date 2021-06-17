@@ -14,7 +14,7 @@ const loginFormFields = [
 ];
 
 export const RegistrationComponent: FC = () => (
-  <section className="page">
+  <div className="page">
     <div className="page__header">
       <h1 className="page__title">registration</h1>
     </div>
@@ -35,5 +35,5 @@ export const RegistrationComponent: FC = () => (
         onClick={() => null}
       />
     </div>
-  </section>
+  </div>
 );

@@ -5,7 +5,7 @@ import { GDLogo } from 'components/atoms/GDLogo';
 import { GDButton } from 'components/atoms/GDButton';
 
 export const Start: FC = () => (
-  <section className="page start-page">
+  <div className="page start-page">
     <GDLogo logImage={logoImage} />
     <GDButton
       className="main-font-family play-button"
@@ -51,5 +51,5 @@ export const Start: FC = () => (
       size="l"
       onClick={() => null}
     />
-  </section>
+  </div>
 );

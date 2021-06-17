@@ -11,7 +11,7 @@ const loginFormFields = [
 ];
 
 export const LoginComponent: FC = () => (
-  <section className="page login-page">
+  <div className="page login-page">
     <GDLogo logImage={logoImage} />
     <Form fields={loginFormFields} />
     <GDButton
@@ -42,5 +42,5 @@ export const LoginComponent: FC = () => (
         />
       </div>
     </div>
-  </section>
+  </div>
 );
