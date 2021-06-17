@@ -2,7 +2,7 @@ import './styles.css';
 import React, { FC, MouseEventHandler } from 'react';
 import classnames from 'classnames';
 
-type GDButtonProps = {
+export type GDButtonProps = {
   title: string
   styleOption: 'primary' | 'secondary'
   onClick: MouseEventHandler<HTMLButtonElement>
