@@ -1,10 +1,8 @@
 :root {
-  --errorRed: #d41f1f;
-  --white: #fff;
-  --appBackground: #000;
   --activityColor: #ff6b00;
   --dangerColor: #d41f1f;
   --mainTextColor: #fff;
   --mainTextFontFamily: 'Pixeboy';
   --notActiveColor: #b0b0b0;
+  --mainBackColor: #000;
 }
