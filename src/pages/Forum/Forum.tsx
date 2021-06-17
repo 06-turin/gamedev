@@ -1,5 +1,5 @@
 import './Forum.css';
-import React, { FC, useCallback, useState } from 'react';
+import React, { ChangeEventHandler, FC, useState } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { GDTextInput } from 'components/atoms/GDTextInput/GDTextInput';
@@ -11,24 +11,24 @@ export const Forum: FC = () => {
   // TODO: Delete all showcase functions and state when Forum page is ready
   const [showcaseIsBroken, showcaseSetIsBroken] = useState(false);
 
-  const showcaseButtonClick = useCallback((buttonId: number) => () => {
+  const showcaseButtonClick = (buttonId: number) => () => {
     // eslint-disable-next-line no-console
     console.log(`click ${buttonId}`);
-  }, []);
+  };
 
-  const showcaseHandleInputChange = useCallback((e) => {
+  const showcaseHandleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     // eslint-disable-next-line no-console
     console.log(e.target.value);
-  }, []);
+  };
 
-  const showcaseHandleInputBlur = useCallback((e) => {
+  const showcaseHandleInputBlur: ChangeEventHandler<HTMLInputElement> = (e) => {
     // eslint-disable-next-line no-console
     console.log(e.target.value);
-  }, []);
+  };
 
-  const showcaseHandleBreakingEverything = useCallback(() => {
+  const showcaseHandleBreakingEverything = () => {
     showcaseSetIsBroken(true);
-  }, []);
+  };
 
   const showcaseRenderingError = () => {
     if (showcaseIsBroken) {
