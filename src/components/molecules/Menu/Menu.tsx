@@ -8,6 +8,7 @@ export type MenuProps = {
   itemsStyleOption: GDButtonStyleOption
   itemsSize?: GDSizeOption
   itemsClassName?: string
+  direction?: 'vertical' | 'horizontal'
   className?: string
 }
 
@@ -15,13 +16,14 @@ export const Menu: FC<MenuProps> = ({
   items,
   itemsClassName,
   itemsStyleOption,
-  itemsSize,
+  itemsSize = 'l',
+  direction = 'vertical',
   className,
 }) => (
-  <div className={classnames(['menu', className])}>
+  <div className={classnames(['menu', `menu-${direction}`, className])}>
     {items.map(({ title, onClick }) => (
       <GDButton
-        className={itemsClassName}
+        className={classnames(['menu__item', itemsClassName])}
         title={title}
         size={itemsSize}
         styleOption={itemsStyleOption}

@@ -8,7 +8,7 @@ import { BackButton } from 'components/molecules/BackButton/BackButton';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 
-export type ProfilePageProps = DefaultPageProps
+export type ProfilePageProps = DefaultPageProps;
 
 export const Profile: FC<ProfilePageProps> = ({ className }) => {
   const { t } = useTranslation();

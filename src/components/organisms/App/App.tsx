@@ -12,6 +12,7 @@ import { Start } from 'pages/Start/Start';
 import { LanguageSelector } from 'components/molecules/LanguageSelector/LanguageSelector';
 import { Main } from 'pages/Main/Main';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
+import { ProfileEdit } from 'pages/ProfileEdit/ProfileEdit';
 
 export const App: FC = () => (
   <BrowserRouter>
@@ -68,13 +69,17 @@ export const App: FC = () => (
         </ErrorBoundary>
       </Route>
 
+      <Route path="/profile-edit">
+        <ErrorBoundary>
+          <ProfileEdit />
+        </ErrorBoundary>
+      </Route>
+
       <Route path="*">
         <ErrorBoundary>
           <Error />
         </ErrorBoundary>
       </Route>
-
     </Switch>
-
   </BrowserRouter>
 );
