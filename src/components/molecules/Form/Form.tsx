@@ -10,7 +10,7 @@ type FormProps = {
 
 export const Form: FC<FormProps> = ({ fields, className }) => (
   <form className={classnames(['form', className])}>
-    {fields.map((field) => <GDTextInput id={field.id} title={field.title} />)}
-    <label className="form__error-label">validation error !</label>
+    {fields.map(({ id, title }) => <GDTextInput id={id} title={title} />)}
+    <span className="form__error-label">validation error !</span>
   </form>
 );

@@ -14,7 +14,7 @@ export const LoginComponent: FC = () => (
   <section className="page login-page">
     <GDLogo logImage={logoImage} />
     <Form fields={loginFormFields} />
-    <GDButton className="button" title="boom !" styleOption="primary" size="l" isSubmit onClick={() => null} />
+    <GDButton className="button" title="boom !" styleOption="primary" size="l" type="submit" onClick={() => null} />
     <div className="container">
       <span className="text-label">no account ?</span>
       <div className="link-container">
