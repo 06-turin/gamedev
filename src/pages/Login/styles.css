@@ -3,26 +3,26 @@
   font-family: var(--mainTextFontFamily);
 }
 
-.button {
+.login-page__button {
   font-family: var(--mainTextFontFamily);
 }
 
-.text-label {
+.login-page__text-label {
   font-size: 25px;
 }
 
-.container {
+.login-page__signup-container {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.link {
+.login-page__link {
   font-size: 35px;
   font-family: var(--mainTextFontFamily);
 }
 
-.link-container {
+.login-page__link-container {
   display: flex;
   justify-content: center;
   align-items: baseline;

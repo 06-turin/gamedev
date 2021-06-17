@@ -12,29 +12,29 @@ const loginFormFields = [
 
 export const LoginComponent: FC = () => (
   <div className="page login-page">
-    <GDLogo logImage={logoImage} />
+    <GDLogo logoImage={logoImage} />
     <Form fields={loginFormFields} />
     <GDButton
-      className="button"
+      className="login-page__button"
       title="boom !"
       styleOption="primary"
       size="l"
       type="submit"
       onClick={() => null}
     />
-    <div className="container">
-      <span className="text-label">no account ?</span>
-      <div className="link-container">
+    <div className="login-page__signup-container">
+      <span className="login-page__text-label">no account ?</span>
+      <div className="login-page__link-container">
         <GDButton
-          className="link"
+          className="login-page__link"
           title="register !"
           styleOption="secondary"
           size="l"
           onClick={() => null}
         />
-        <span className="text-label">or</span>
+        <span className="login-page__text-label">or</span>
         <GDButton
-          className="link"
+          className="login-page__link"
           title="just play !"
           styleOption="secondary"
           size="l"

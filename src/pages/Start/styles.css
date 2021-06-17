@@ -2,12 +2,12 @@
   justify-content: space-evenly;
 }
 
-.menu__container {
+.start-page__menu {
   display: flex;
   flex-direction: column;
 }
 
-.menu__item {
+.start-page__menu-item {
   margin: 0;
   font-family: var(--mainTextFontFamily);
 }
