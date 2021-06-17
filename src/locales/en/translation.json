@@ -14,5 +14,8 @@
     "error": "error",
     "start_game": "start game",
     "game_over": "game over",
-    "play_again": "play again"
+    "play_again": "play again",
+    "bombs": "bombs",
+    "timer": "timer",
+    "score": "score"
 }

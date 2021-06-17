@@ -10,10 +10,11 @@ export const Game: FC = () => {
   const status = useObservable(gameService.status);
   const score = useObservable(gameService.score);
   const timer = useObservable(gameService.timer);
+  const bombs = useObservable(gameService.bombs);
 
   return (
     <div className="game-container">
-      <GameHeader score={score} timer={timer} />
+      <GameHeader score={score} timer={timer} bombs={bombs} />
       <GameContent gameStatus={status} />
       <GameFooter />
     </div>

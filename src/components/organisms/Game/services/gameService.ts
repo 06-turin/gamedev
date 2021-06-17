@@ -11,7 +11,9 @@ class GameService {
 
     readonly score = new Observable(0);
 
-    readonly timer = new Observable(0)
+    readonly timer = new Observable(0);
+
+    readonly bombs = new Observable(0);
 
     private timerID: number = 0;
 
@@ -29,6 +31,10 @@ class GameService {
 
     increaseScore(payload: number) {
       this.score.set(this.score.get() + payload);
+    }
+
+    setBombs(payload: number) {
+      this.bombs.set(payload);
     }
 
     private startTimer() {

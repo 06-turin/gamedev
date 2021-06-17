@@ -57,6 +57,7 @@ export class Bomb implements IEntity {
     if (!this.alive) return;
 
     this.alive = false;
+    this.owner.addBombToPlayer();
 
     const BF = getBattleField();
 

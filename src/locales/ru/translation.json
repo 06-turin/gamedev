@@ -14,5 +14,8 @@
     "type_your_login": "введите логин",
     "start_game": "начать игру",
     "game_over": "игра закончена",
-    "play_again": "играть снова"
+    "play_again": "играть снова",
+    "bombs": "бомбы",
+    "timer": "время",
+    "score": "счет"
 }
