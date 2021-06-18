@@ -1,13 +1,3 @@
-/* .render-error {
-  display: flex;
-
-  &__text: {
-    font-size: 32px;
-    color: var(--activityColor);
-    text-align: center;
-  }
-} */
-
 .render-error {
   &__text {
     font-size: 32px;
