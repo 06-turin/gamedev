@@ -4,9 +4,7 @@ import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useTranslation } from 'react-i18next';
 import { gameService, GameStatus } from '../services/gameService';
 import { Canvas as CanvasComponent } from '../Canvas/Canvas';
-import { GameContentStage } from './GameContentStage';
-import { GameContentContinue } from './GameContentContinue';
-import { GameContentGameOver } from './GameContentGameOver';
+import { GameContentInside } from './GameContentInside';
 
 type GameContentProps = {
   gameStatus: GameStatus,
@@ -23,6 +21,8 @@ export const GameContent: FC<GameContentProps> = ({ gameStatus, stage }) => {
     gameService.startGame(false);
   };
 
+  const stageText = `${t('stage')}: ${stage}`;
+
   const content = useMemo(() => {
     switch (gameStatus) {
       default:
@@ -30,18 +30,18 @@ export const GameContent: FC<GameContentProps> = ({ gameStatus, stage }) => {
         return <GDButton title={t('start_game')} size="l" onClick={startGameHandler} />;
 
       case GameStatus.SHOW_STAGE:
-        return <GameContentStage stage={stage} />;
+        return <GameContentInside text={stageText} />;
 
       case GameStatus.IN_PROGRESS:
         return <CanvasComponent key={Date.now()} />;
 
       case GameStatus.STAGE_COMPLETED:
-        return <GameContentContinue onContinue={nextStageGameHandler} />;
+        return <GameContentInside text={t('victory')} buttonText={t('continue')} onButtonClick={nextStageGameHandler} />;
 
       case GameStatus.FINISHED:
-        return <GameContentGameOver onStartAgain={startGameHandler} />;
+        return <GameContentInside text={t('game_over')} buttonText={t('play_again')} onButtonClick={startGameHandler} />;
     }
-  }, [gameStatus, stage, t]);
+  }, [gameStatus, stageText, t]);
 
   return (
 
