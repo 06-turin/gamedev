@@ -7,6 +7,7 @@ import logoImage from 'assets/images/logo_img_base.png';
 import { DefaultPageProps } from 'components/organisms/App/types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 const loginFormFields = [
   { id: 'login', title: 'login' },
@@ -17,6 +18,7 @@ export type LoginPageProps = DefaultPageProps;
 
 export const Login: FC<LoginPageProps> = ({ className }) => {
   const { t } = useTranslation();
+  const history = useHistory();
 
   return (
     <div className={classnames(['page', 'login-page', className])}>
@@ -27,7 +29,7 @@ export const Login: FC<LoginPageProps> = ({ className }) => {
         styleOption="primary"
         size="l"
         type="submit"
-        onClick={() => null}
+        onClick={() => history.push('/start')}
       />
       <div className="login-page__signup-container">
         <span className="login-page__text-label">no account ?</span>
@@ -37,7 +39,7 @@ export const Login: FC<LoginPageProps> = ({ className }) => {
             title={`${t('register')} !`}
             styleOption="secondary"
             size="l"
-            onClick={() => null}
+            onClick={() => history.push('/registration')}
           />
           <span className="login-page__text-label">{t('or')}</span>
           <GDButton
@@ -45,7 +47,7 @@ export const Login: FC<LoginPageProps> = ({ className }) => {
             title={`${t('just_play')} !`}
             styleOption="secondary"
             size="l"
-            onClick={() => null}
+            onClick={() => history.push('/start')}
           />
         </div>
       </div>

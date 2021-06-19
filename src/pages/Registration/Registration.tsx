@@ -6,6 +6,7 @@ import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { DefaultPageProps } from 'components/organisms/App/types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import {BackButton} from "components/molecules/BackButton/BackButton";
 
 export type RegistrationPageProps = DefaultPageProps;
 
@@ -37,12 +38,7 @@ export const Registration: FC<RegistrationPageProps> = ({ className }) => {
         onClick={() => null}
       />
       <GDBar type="footer">
-        <GDButton
-          title={t('back')}
-          styleOption="secondary"
-          size="l"
-          onClick={() => null}
-        />
+        <BackButton />
       </GDBar>
     </div>
   );

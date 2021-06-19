@@ -7,11 +7,13 @@ import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
+import { useHistory } from 'react-router-dom';
 
 export type ProfilePageProps = DefaultPageProps;
 
 export const Profile: FC<ProfilePageProps> = ({ className }) => {
   const { t } = useTranslation();
+  const history = useHistory();
 
   return (
     <div className={classnames(['page', className])}>
@@ -31,7 +33,7 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
           </div>
         </div>
 
-        <GDButton title={t('edit')} styleOption="primary" onClick={() => null} />
+        <GDButton title={t('edit')} styleOption="primary" onClick={() => history.push('/profile-edit')} />
       </div>
 
       <GDBar type="footer">

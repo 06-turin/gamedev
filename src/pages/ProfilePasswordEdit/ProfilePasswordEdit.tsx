@@ -22,13 +22,15 @@ export const ProfilePasswordEdit: FC<ProfilePasswordEditPageProps> = ({ classNam
     field.title = t(field.title);
   });
 
+  const submitHandler = () => console.log('Password edit form submitted');
+
   return (
     <div className={classnames(['page', className])}>
       <GDBar type="header" title={t('password_edit')} />
 
       <div className="page__content">
         <Form fields={editProfilePasswordFields} />
-        <GDButton title={t('submit')} styleOption="primary" onClick={() => null} />
+        <GDButton title={t('submit')} styleOption="primary" onClick={submitHandler} />
       </div>
 
       <GDBar type="footer">

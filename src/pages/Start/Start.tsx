@@ -17,10 +17,10 @@ export const Start: FC<StartPageProps> = ({ className }) => {
   const onPlayClickHandler = () => history.push('/game');
 
   const items = [
-    { title: 'settings', onClick: () => null },
-    { title: 'profile', onClick: () => null },
-    { title: 'leaderboard', onClick: () => null },
-    { title: 'forum', onClick: () => null },
+    { title: 'settings', onClick: () => history.push('/') },
+    { title: 'profile', onClick: () => history.push('/profile') },
+    { title: 'leaderboard', onClick: () => history.push('/leaderboard') },
+    { title: 'forum', onClick: () => history.push('/') },
   ];
 
   items.forEach((item) => {
@@ -47,7 +47,7 @@ export const Start: FC<StartPageProps> = ({ className }) => {
         title={t('logout')}
         styleOption="secondary"
         size="l"
-        onClick={() => null}
+        onClick={() => history.push('/login')}
       />
     </div>
   );
