@@ -8,7 +8,6 @@ import { Login } from 'pages/Login/Login';
 import { Profile } from 'pages/Profile/Profile';
 import { Registration } from 'pages/Registration/Registration';
 import { Error } from 'pages/Error/Error';
-import { Start } from 'pages/Start/Start';
 import { LanguageSelector } from 'components/molecules/LanguageSelector/LanguageSelector';
 import { Main } from 'pages/Main/Main';
 import { ProfileEdit } from 'pages/ProfileEdit/ProfileEdit';
@@ -40,9 +39,9 @@ export const App: FC = () => (
         </ErrorBoundary>
       </Route>
 
-      <Route path="/start">
+      <Route path="/main">
         <ErrorBoundary>
-          <Start />
+          <Main />
         </ErrorBoundary>
       </Route>
 
@@ -87,7 +86,6 @@ export const App: FC = () => (
           <Error />
         </ErrorBoundary>
       </Route>
-
     </Switch>
   </BrowserRouter>
 );

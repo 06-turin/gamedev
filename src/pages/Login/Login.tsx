@@ -29,7 +29,7 @@ export const Login: FC<LoginPageProps> = ({ className }) => {
         styleOption="primary"
         size="l"
         type="submit"
-        onClick={() => history.push('/start')}
+        onClick={() => history.push('/main')}
       />
       <div className="login-page__signup-container">
         <span className="login-page__text-label">no account ?</span>
@@ -47,7 +47,7 @@ export const Login: FC<LoginPageProps> = ({ className }) => {
             title={`${t('just_play')} !`}
             styleOption="secondary"
             size="l"
-            onClick={() => history.push('/start')}
+            onClick={() => history.push('/main')}
           />
         </div>
       </div>
