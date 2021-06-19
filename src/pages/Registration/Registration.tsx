@@ -3,12 +3,9 @@ import React, { FC } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
 import { GDBar } from 'components/atoms/GDBar/GDBar';
-import { DefaultPageProps } from 'components/organisms/App/types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
-
-export type RegistrationPageProps = DefaultPageProps;
 
 const loginFormFields = [
   { id: 'first_name', title: 'name' },
@@ -20,7 +17,7 @@ const loginFormFields = [
   { id: 'verify_password', title: 'repeat', type: 'password' },
 ];
 
-export const Registration: FC<RegistrationPageProps> = ({ className }) => {
+export const Registration: FC<{className?: string}> = ({ className }) => {
   const { t } = useTranslation();
 
   loginFormFields.forEach((field) => {

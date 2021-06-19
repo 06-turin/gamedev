@@ -1,13 +1,10 @@
 import React, { FC } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { DefaultPageProps } from 'components/organisms/App/types';
 import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
-
-export type ProfilePasswordEditPageProps = DefaultPageProps;
 
 const editProfilePasswordFields = [
   { id: 'password', title: 'password', type: 'password' },
@@ -15,7 +12,7 @@ const editProfilePasswordFields = [
   { id: 'verify_password', title: 'repeat', type: 'password' },
 ];
 
-export const ProfilePasswordEdit: FC<ProfilePasswordEditPageProps> = ({ className }) => {
+export const ProfilePasswordEdit: FC<{className?: string}> = ({ className }) => {
   const { t } = useTranslation();
 
   editProfilePasswordFields.forEach((field) => {

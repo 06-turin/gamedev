@@ -5,13 +5,10 @@ import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Menu } from 'components/molecules/Menu/Menu';
 import { useHistory } from 'react-router-dom';
-import { DefaultPageProps } from 'components/organisms/App/types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
-export type StartPageProps = DefaultPageProps;
-
-export const Main: FC<StartPageProps> = ({ className }) => {
+export const Main: FC<{className?: string}> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const onPlayClickHandler = () => history.push('/game');

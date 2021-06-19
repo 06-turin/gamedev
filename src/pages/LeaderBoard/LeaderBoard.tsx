@@ -2,11 +2,8 @@ import './styles.css';
 import React, { FC } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { DefaultPageProps } from 'components/organisms/App/types';
 import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
-
-export type LeaderBoardPageProps = DefaultPageProps;
 
 const leaderBoard = [
   { nickname: 'nick', score: 10000000 },
@@ -22,7 +19,7 @@ const leaderBoard = [
 const dotCharacter = '. ';
 const dotCount = 30;
 
-export const LeaderBoard: FC<LeaderBoardPageProps> = ({ className }) => {
+export const LeaderBoard: FC<{className?: string}> = ({ className }) => {
   const { t } = useTranslation();
   const dots = new Array(dotCount + 1).join(dotCharacter);
 

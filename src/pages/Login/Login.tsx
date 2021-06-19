@@ -4,7 +4,6 @@ import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
 import logoImage from 'assets/images/logo_img_base.png';
-import { DefaultPageProps } from 'components/organisms/App/types';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -14,9 +13,7 @@ const loginFormFields = [
   { id: 'password', title: 'password' },
 ];
 
-export type LoginPageProps = DefaultPageProps;
-
-export const Login: FC<LoginPageProps> = ({ className }) => {
+export const Login: FC<{className?: string}> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
 

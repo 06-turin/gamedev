@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { DefaultPageProps } from 'components/organisms/App/types';
 import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
@@ -9,9 +8,7 @@ import { Form } from 'components/molecules/Form/Form';
 import { Menu } from 'components/molecules/Menu/Menu';
 import { useHistory } from 'react-router-dom';
 
-export type ProfileEditPageProps = DefaultPageProps;
-
-export const ProfileEdit: FC<ProfileEditPageProps> = ({ className }) => {
+export const ProfileEdit: FC<{className?: string}> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
 

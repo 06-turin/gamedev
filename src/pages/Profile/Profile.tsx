@@ -2,16 +2,13 @@ import './styles.css';
 import React, { FC } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { DefaultPageProps } from 'components/organisms/App/types';
 import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useHistory } from 'react-router-dom';
 
-export type ProfilePageProps = DefaultPageProps;
-
-export const Profile: FC<ProfilePageProps> = ({ className }) => {
+export const Profile: FC<{className?: string}> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
