@@ -4,27 +4,29 @@
   justify-content: center;
   padding-top: 90px;
 
-  &__bomb-image {
-    height: 0.9em;
-    margin-left: 6px;
-    margin-bottom: -20px;
-    margin-right: -20px;
-  }
+  &-info {
+    &__bomb-image {
+      height: 0.9em;
+      margin-left: 6px;
+      margin-bottom: -20px;
+      margin-right: -20px;
+    }
 
-  &__helptext {
-    font-size: 62px;
-    color: var(--mainTextColor);
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+    &__helptext {
+      font-size: 62px;
+      color: var(--mainTextColor);
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
 
-  &__number {
-    font-size: 182px;
-    color: var(--mainTextColor);
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    &__number {
+      font-size: 182px;
+      color: var(--mainTextColor);
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
   }
 
   &__footer {

@@ -23,32 +23,32 @@ export const Error: FC<ErrorProps> = ({ errNumber }) => {
     <div className={classNames('error-page')}>
 
       {errNumber === 404 ? (
-        <>
-          <h2 className={classNames('error-page__helptext')}>{t('on_no')}</h2>
-          <h1 className={classNames('error-page__number')}>
+        <div className={classNames('error-page-info')}>
+          <h2 className={classNames('error-page-info__helptext')}>{t('on_no')}</h2>
+          <h1 className={classNames('error-page-info__number')}>
             4
-            <img className="error-page__bomb-image" src={bombImage} alt="logo" />
+            <img className="error-page-info__bomb-image" src={bombImage} alt="logo" />
             4
           </h1>
-          <h2 className={classNames('error-page__helptext')}>{t('this_page_was_destroyed')}</h2>
-        </>
+          <h2 className={classNames('error-page-info__helptext')}>{t('this_page_was_destroyed')}</h2>
+        </div>
       ) : (
-        <>
-          <h2 className={classNames('error-page__helptext')}>{t('oops')}</h2>
-          <h2 className={classNames('error-page__helptext')}>{t('something_went_wrong')}</h2>
+        <div className={classNames('error-page-info')}>
+          <h2 className={classNames('error-page-info__helptext')}>{t('oops')}</h2>
+          <h2 className={classNames('error-page-info__helptext')}>{t('something_went_wrong')}</h2>
 
           {errorCanShowBomb ? (
-            <h1 className={classNames('error-page__number')}>
+            <h1 className={classNames('error-page-info__number')}>
               {`${errNumber}`[0]}
-              <img className="error-page__bomb-image" src={bombImage} alt="logo" />
+              <img className="error-page-info__bomb-image" src={bombImage} alt="logo" />
               {`${errNumber}`[2]}
             </h1>
           ) : (
-            <h1 className={classNames('error-page__number')}>{errNumber}</h1>
+            <h1 className={classNames('error-page-info__number')}>{errNumber}</h1>
           )}
 
-          <h2 className={classNames('error-page__helptext')}>{t('we_are_looking_to_see_what_happened')}</h2>
-        </>
+          <h2 className={classNames('error-page-info__helptext')}>{t('we_are_looking_to_see_what_happened')}</h2>
+        </div>
       )}
 
       <div className={classNames('error-page__footer')}>
