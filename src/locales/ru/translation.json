@@ -46,5 +46,6 @@
     "change_password": "изменить пароль",
     "new_password": "новый пароль",
     "password_edit": "изменение пароля",
-    "logout": "выйти"
+    "logout": "выйти",
+    "no_account": "нет аккаунта"
 }
