@@ -9,11 +9,11 @@
 .bar-header {}
 
 .bar-footer {
-    margin-top: auto;
+  margin-top: auto;
 }
 
 .bar-hidden {
-    display: none;
+  display: none;
 }
 
 .bar__title {
