@@ -43,3 +43,23 @@ export type SignUpRequest = {
 export type SignUpResponse = {
   id: number
 }
+
+export type UserResponse = {
+  id: number,
+  first_name: string | null,
+  second_name: string | null,
+  display_name: string | null,
+  login: string,
+  email: string,
+  phone: string,
+  avatar: string | null,
+}
+
+export type UserRequest = {
+  first_name:string | null,
+  second_name:string | null,
+  display_name:string | null,
+  login:string,
+  email:string,
+  phone:string,
+}

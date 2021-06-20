@@ -5,12 +5,8 @@ import React, {
 import { GDTextInput, GDTextInputProps } from 'components/atoms/GDTextInput';
 import { GDButton } from 'components/atoms/GDButton';
 import classnames from 'classnames';
+import { getFormData } from 'utils/getFormData';
 import { FormFields, SubmitFormMethod } from './types';
-
-const getFormData = (formData: FormData) => [...formData.entries()]
-  .reduce(
-    (obj, pair) => Object.assign(obj, { [pair[0]]: pair[1] }), {},
-  );
 
 type FormProps = {
   fields: FormFields,

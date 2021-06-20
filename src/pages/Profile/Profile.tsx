@@ -1,11 +1,13 @@
 import './styles.css';
-import React, { FC } from 'react';
-import classnames from 'classnames';
+import React, { FC, useEffect, useState } from 'react';
+import { GDButton } from 'components/atoms/GDButton';
 import { useTranslation } from 'react-i18next';
-import { BackButton } from 'components/molecules/BackButton/BackButton';
-import avatarDummy from 'assets/images/logo_img_base.png';
-import { GDButton } from 'components/atoms/GDButton/GDButton';
+import { authAPI } from 'api/auth';
 import { useHistory } from 'react-router-dom';
+import { UserResponse } from 'api/types';
+import { FormProfile } from 'components/organisms/FormProfile/FormProfile';
+import { usersAPI } from 'api/users';
+import { SubmitedProfileData } from 'components/organisms/FormProfile/types';
 
 export type ProfilePageProps = {
   className?: string
@@ -15,29 +17,64 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
+  const [profile, setProfile] = useState({} as UserResponse);
+
+  const fetchProfile = async () => {
+    try {
+      const result = await authAPI.getUserInfo();
+      setProfile(() => result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!authAPI.isAuth()) {
+      history.replace('/start');
+    }
+    fetchProfile();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const pageTitle = t('profile');
+
+  const submitHandler = async (data: SubmitedProfileData) => {
+    try {
+      await usersAPI.update(data);
+      setSuccessMessage(t('updated_successfully'));
+      setErrorMessage('');
+    } catch (error) {
+      setSuccessMessage('');
+      setErrorMessage(error.message);
+    }
+  };
+
+  const backHandler = () => {
+    history.goBack();
+  };
+
   return (
-    <div className={classnames(['page', className])}>
-      <h1 className="page__title">{t('profile')}</h1>
-
-      <div className="page__content">
-        <div className="profile-page__info">
-          <div className="profile-page__avatar-container">
-            <img className="profile-page__avatar" src={avatarDummy} alt={t('avatar')} />
-          </div>
-          <div className="profile-page__info-container">
-            <span className="profile-page__nick-name">nick</span>
-            <span className="profile-page__name">name</span>
-            <span className="profile-page__last-name">last-name</span>
-            <span className="profile-page__phone">1-234-567-890</span>
-            <span className="profile-page__email">e-mail@mail.com</span>
-          </div>
-        </div>
-
-        <GDButton title={t('edit')} styleOption="primary" onClick={() => history.push('/profile-edit')} />
+    <div className="page">
+      <div className="page__header">
+        <h1 className="page__title">{pageTitle}</h1>
       </div>
-
-      <div className="page__footer-buttons">
-        <BackButton />
+      <FormProfile
+        user={profile}
+        onSubmit={submitHandler}
+        success={successMessage}
+        error={errorMessage}
+      />
+      <div className="page__footer">
+        <GDButton
+          className="page__footer-item"
+          title="back"
+          styleOption="secondary"
+          size="l"
+          onClick={backHandler}
+        />
       </div>
     </div>
   );

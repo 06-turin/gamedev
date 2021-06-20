@@ -7,7 +7,7 @@ import { Form } from 'components/molecules/Form';
 import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
 import { SubmitFormMethod } from 'components/molecules/Form/types';
-import { auth } from 'api/auth';
+import { authAPI } from 'api/auth';
 import { LoginFormFields } from './types';
 
 const loginFormFields: LoginFormFields = {
@@ -20,16 +20,17 @@ export const Login: FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (auth.isAuth()) {
+    if (authAPI.isAuth()) {
       history.replace('/start');
     }
-  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [errorMessage, setErrorMessage] = useState('');
 
   const submitHandler: SubmitFormMethod<LoginFormFields> = async (data) => {
     try {
-      await auth.login(data);
+      await authAPI.login(data);
       setErrorMessage('');
       // TODO store user
       history.replace('/start');

@@ -4,7 +4,7 @@ import { GDButton } from 'components/atoms/GDButton';
 import { Form } from 'components/molecules/Form';
 import { SubmitFormMethod } from 'components/molecules/Form/types';
 import { useTranslation } from 'react-i18next';
-import { auth } from 'api/auth';
+import { authAPI } from 'api/auth';
 import { useHistory } from 'react-router-dom';
 import { RefistrationFormFields } from './types';
 
@@ -23,16 +23,17 @@ export const Registration: FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (auth.isAuth()) {
+    if (authAPI.isAuth()) {
       history.replace('/start');
     }
-  });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [errorMessage, setErrorMessage] = useState('');
 
   const submitHandler: SubmitFormMethod<RefistrationFormFields> = async (data) => {
     try {
-      const response = await auth.register(data);
+      const response = await authAPI.register(data);
       if (response.id) {
         setErrorMessage('');
         // TODO store user
@@ -53,13 +54,15 @@ export const Registration: FC = () => {
     />
   );
 
+  const pageTitle = t('registration');
+
   const backHandler = () => {
     history.goBack();
   };
   return (
     <div className="page">
       <div className="page__header">
-        <h1 className="page__title">registration</h1>
+        <h1 className="page__title">{pageTitle}</h1>
       </div>
       {registerForm}
       <div className="page__footer">

@@ -24,3 +24,9 @@
   align-self: center;
   color: var(--dangerColor);
 }
+
+.form__success-label {
+  justify-self: center;
+  align-self: center;
+  color: var(--successColor);
+}

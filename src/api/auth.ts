@@ -3,10 +3,16 @@ import { AUTH_TOKEN_NAME } from 'config';
 import { is } from 'typescript-is';
 import { callApi } from './api-wrapper';
 import {
-  LogOutResponse, SignInRequest, SignInResponse, ERROR_RESPONSE_DATA, SignUpRequest, SignUpResponse,
+  ERROR_RESPONSE_DATA,
+  LogOutResponse,
+  SignInRequest,
+  SignInResponse,
+  SignUpRequest,
+  SignUpResponse,
+  UserResponse,
 } from './types';
 
-export const auth = {
+export const authAPI = {
   login: async (data: SignInRequest): Promise<SignInResponse> => {
     try {
       const response = await callApi({
@@ -69,23 +75,21 @@ export const auth = {
     const token = localStorage.getItem(AUTH_TOKEN_NAME);
     return Boolean(token);
   },
+
+  getUserInfo: async (): Promise<UserResponse> => {
+    try {
+      const response = await callApi({
+        method: 'get',
+        url: '/auth/user',
+        authRequired: true,
+      });
+
+      if (response.data && is<UserResponse>(response.data)) {
+        return response.data;
+      }
+      throw new Error(ERROR_RESPONSE_DATA);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
 };
-
-// export { auth }
-
-// export const ;
-
-// export const logout = async () => {
-//   const response = await callApi({
-//     method: 'post',
-//     url: '/auth/logout',
-//     authRequired: false,
-//   });
-
-//   if (is<LogOutResponse>(response.data)) {
-//     console.log('~ response.data', response.data);
-//     return response.data as LogOutResponse;
-//   }
-
-//   throw new Error('Invalid response data!');
-// };

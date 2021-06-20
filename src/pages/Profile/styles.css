@@ -57,3 +57,7 @@
 .profile-page__email {
   grid-area: email;
 }
+
+.profile-form {
+  margin-top: auto;
+}
