@@ -7,7 +7,7 @@
   padding: 1rem;
 
   &.is-invalid {
-    border: 2px solid var(--dangerColor)
+    border: 2px solid var(--dangerColor);
   }
 }
 
