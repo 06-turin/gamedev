@@ -5,7 +5,7 @@ import React, {
 import { GDTextInput, GDTextInputProps } from 'components/atoms/GDTextInput';
 import { GDButton } from 'components/atoms/GDButton';
 import classnames from 'classnames';
-import { FormFields, SubmitDataFn } from './types';
+import { FormFields, SubmitFormMethod } from './types';
 
 const getFormData = (formData: FormData) => [...formData.entries()]
   .reduce(
@@ -16,7 +16,7 @@ type FormProps = {
   fields: FormFields,
   className?: string,
   textSubmitButton?: string,
-  onSubmit?: SubmitDataFn<any>,
+  onSubmit?: SubmitFormMethod<any>,
   error?: string,
 }
 
@@ -36,7 +36,13 @@ export const Form: FC<FormProps> = ({
   }, [fields]);
 
   const fieldsList = Object.values(fields)
-    .map((props: GDTextInputProps) => <GDTextInput {...props} key={props.id} />);
+    .map((props: GDTextInputProps) => (
+      <GDTextInput
+        {...props}
+        name={props.name ?? props.id}
+        key={props.id}
+      />
+    ));
 
   const errorMessage = error ? <span className="form__error-label">{error}</span> : '';
 
@@ -61,7 +67,10 @@ export const Form: FC<FormProps> = ({
   };
 
   return (
-    <form className={classnames(['form', className, isInvalid ? 'is-invalid' : ''])} onSubmit={submitHandler}>
+    <form
+      className={classnames(['form', className, isInvalid ? 'is-invalid' : ''])}
+      onSubmit={submitHandler}
+    >
       {fieldsList}
       {errorMessage}
       {submitButton}

@@ -1,6 +1,6 @@
+import { SignInRequest } from 'api/types';
 import { GDTextInputProps } from 'components/atoms/GDTextInput';
 
 export type LoginFormFields = {
-  login: GDTextInputProps,
-  password: GDTextInputProps,
+  [Property in keyof SignInRequest]: GDTextInputProps
 }

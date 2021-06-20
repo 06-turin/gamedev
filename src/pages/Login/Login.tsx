@@ -6,7 +6,7 @@ import { GDButton } from 'components/atoms/GDButton';
 import { Form } from 'components/molecules/Form';
 import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
-import { SubmitDataFn } from 'components/molecules/Form/types';
+import { SubmitFormMethod } from 'components/molecules/Form/types';
 import { auth } from 'api/auth';
 import { LoginFormFields } from './types';
 
@@ -27,7 +27,7 @@ export const Login: FC = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const submitHandler: SubmitDataFn<LoginFormFields> = async (data) => {
+  const submitHandler: SubmitFormMethod<LoginFormFields> = async (data) => {
     try {
       await auth.login(data);
       setErrorMessage('');

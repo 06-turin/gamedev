@@ -3,7 +3,7 @@ import { AUTH_TOKEN_NAME } from 'config';
 import { is } from 'typescript-is';
 import { callApi } from './api-wrapper';
 import {
-  LogOutResponse, SignInRequest, SignInResponse, ERROR_RESPONSE_DATA,
+  LogOutResponse, SignInRequest, SignInResponse, ERROR_RESPONSE_DATA, SignUpRequest, SignUpResponse,
 } from './types';
 
 export const auth = {
@@ -36,6 +36,27 @@ export const auth = {
 
       if (response.data && is<LogOutResponse>(response.data)) {
         localStorage.removeItem(AUTH_TOKEN_NAME);
+        return response.data;
+      }
+      throw new Error(ERROR_RESPONSE_DATA);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  register: async (data: SignUpRequest): Promise<SignUpResponse> => {
+    try {
+      const response = await callApi({
+        method: 'post',
+        url: '/auth/signup',
+        data,
+        authRequired: true,
+      });
+
+      if (response.data && is<SignUpResponse>(response.data)) {
+        if (response.data.id) {
+          localStorage.setItem(AUTH_TOKEN_NAME, 'OK');
+        }
         return response.data;
       }
       throw new Error(ERROR_RESPONSE_DATA);

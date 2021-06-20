@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Method } from 'axios';
 
 export const ERROR_RESPONSE_DATA = 'Invalid response data!';
@@ -29,3 +30,16 @@ export type SignInRequest = {
 export type SignInResponse = 'OK'
 
 export type LogOutResponse = 'OK'
+
+export type SignUpRequest = {
+  first_name: string,
+  second_name: string,
+  login: string,
+  email: string,
+  password: string,
+  phone: string
+}
+
+export type SignUpResponse = {
+  id: number
+}
