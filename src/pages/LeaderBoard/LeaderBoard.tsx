@@ -19,7 +19,11 @@ const leaderBoard = [
 const dotCharacter = '. ';
 const dotCount = 30;
 
-export const LeaderBoard: FC<{className?: string}> = ({ className }) => {
+export type LeaderBoardPageProps = {
+  className?: string
+}
+
+export const LeaderBoard: FC<LeaderBoardPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const dots = new Array(dotCount + 1).join(dotCharacter);
 

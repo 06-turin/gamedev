@@ -13,7 +13,11 @@ const loginFormFields = [
   { id: 'password', title: 'password' },
 ];
 
-export const Login: FC<{className?: string}> = ({ className }) => {
+export type LoginPageProps = {
+  className?: string
+}
+
+export const Login: FC<LoginPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
 

@@ -12,7 +12,11 @@ const editProfilePasswordFields = [
   { id: 'verify_password', title: 'repeat', type: 'password' },
 ];
 
-export const ProfilePasswordEdit: FC<{className?: string}> = ({ className }) => {
+export type ProfilePasswordPageProps = {
+  className?: string
+}
+
+export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className }) => {
   const { t } = useTranslation();
 
   editProfilePasswordFields.forEach((field) => {

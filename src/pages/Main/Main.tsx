@@ -8,7 +8,11 @@ import { useHistory } from 'react-router-dom';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
-export const Main: FC<{className?: string}> = ({ className }) => {
+export type MainPageProps = {
+  className?: string
+}
+
+export const Main: FC<MainPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const onPlayClickHandler = () => history.push('/game');

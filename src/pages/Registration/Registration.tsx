@@ -17,7 +17,11 @@ const loginFormFields = [
   { id: 'verify_password', title: 'repeat', type: 'password' },
 ];
 
-export const Registration: FC<{className?: string}> = ({ className }) => {
+export type RegistrationPageProps = {
+  className?: string
+}
+
+export const Registration: FC<RegistrationPageProps> = ({ className }) => {
   const { t } = useTranslation();
 
   loginFormFields.forEach((field) => {

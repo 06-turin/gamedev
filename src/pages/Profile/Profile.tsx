@@ -8,7 +8,11 @@ import avatarDummy from 'assets/images/logo_img_base.png';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useHistory } from 'react-router-dom';
 
-export const Profile: FC<{className?: string}> = ({ className }) => {
+export type ProfilePageProps = {
+  className?: string
+}
+
+export const Profile: FC<ProfilePageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
 

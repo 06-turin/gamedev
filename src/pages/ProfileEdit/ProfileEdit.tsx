@@ -8,7 +8,11 @@ import { Form } from 'components/molecules/Form/Form';
 import { Menu } from 'components/molecules/Menu/Menu';
 import { useHistory } from 'react-router-dom';
 
-export const ProfileEdit: FC<{className?: string}> = ({ className }) => {
+export type ProfileEditPageProps = {
+  className?: string
+}
+
+export const ProfileEdit: FC<ProfileEditPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
