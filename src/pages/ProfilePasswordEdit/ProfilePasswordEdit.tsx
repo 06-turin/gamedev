@@ -5,12 +5,7 @@ import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
-
-const editProfilePasswordFields = [
-  { id: 'password', title: 'password', type: 'password' },
-  { id: 'password', title: 'new_password', type: 'password' },
-  { id: 'verify_password', title: 'repeat', type: 'password' },
-];
+import { editProfilePasswordFields } from 'pages/ProfilePasswordEdit/constants';
 
 export type ProfilePasswordPageProps = {
   className?: string

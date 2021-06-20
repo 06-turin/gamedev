@@ -7,6 +7,7 @@ import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
 import { Menu } from 'components/molecules/Menu/Menu';
 import { useHistory } from 'react-router-dom';
+import { editProfileFields } from 'pages/ProfileEdit/constants';
 
 export type ProfileEditPageProps = {
   className?: string
@@ -15,14 +16,6 @@ export type ProfileEditPageProps = {
 export const ProfileEdit: FC<ProfileEditPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
-
-  const editProfileFields = [
-    { id: 'first_name', title: 'name' },
-    { id: 'second_name', title: 'last_name' },
-    { id: 'nick_name', title: 'nickname' },
-    { id: 'email', title: 'e-mail', type: 'email' },
-    { id: 'phone', title: 'phone', type: 'tel' },
-  ];
 
   const editProfileMenuItems = [
     { title: 'remove_avatar', onClick: () => null },
