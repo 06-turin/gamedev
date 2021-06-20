@@ -2,7 +2,6 @@ import './styles.css';
 import React, { FC } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
-import { GDBar } from 'components/atoms/GDBar/GDBar';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
@@ -30,7 +29,7 @@ export const Registration: FC<RegistrationPageProps> = ({ className }) => {
 
   return (
     <div className={classnames(['page', className])}>
-      <GDBar title={t('registration')} type="header" />
+      <h1 className="page__title">{t('registration')}</h1>
       <Form className="register-form" fields={loginFormFields} />
       <GDButton
         title={t('submit')}
@@ -38,9 +37,10 @@ export const Registration: FC<RegistrationPageProps> = ({ className }) => {
         size="l"
         onClick={() => null}
       />
-      <GDBar type="footer">
+
+      <div className="page__footer-buttons">
         <BackButton />
-      </GDBar>
+      </div>
     </div>
   );
 };

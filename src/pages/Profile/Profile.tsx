@@ -2,7 +2,6 @@ import './styles.css';
 import React, { FC } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
@@ -18,7 +17,7 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
 
   return (
     <div className={classnames(['page', className])}>
-      <GDBar type="header" title={t('profile')} />
+      <h1 className="page__title">{t('profile')}</h1>
 
       <div className="page__content">
         <div className="profile-page__info">
@@ -37,9 +36,9 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
         <GDButton title={t('edit')} styleOption="primary" onClick={() => history.push('/profile-edit')} />
       </div>
 
-      <GDBar type="footer">
+      <div className="page__footer-buttons">
         <BackButton />
-      </GDBar>
+      </div>
     </div>
   );
 };

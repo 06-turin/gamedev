@@ -2,7 +2,6 @@ import './styles.css';
 import React, { FC } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 
 const leaderBoard = [
@@ -33,7 +32,7 @@ export const LeaderBoard: FC<LeaderBoardPageProps> = ({ className }) => {
 
   return (
     <div className={classnames(['page', className])}>
-      <GDBar type="header" title={t('leaderboard')} />
+      <h1 className="page__title">{t('leaderboard')}</h1>
 
       <div className="page__content">
         <ul className="leaderboard-page__list">
@@ -47,9 +46,9 @@ export const LeaderBoard: FC<LeaderBoardPageProps> = ({ className }) => {
         </ul>
       </div>
 
-      <GDBar type="footer">
+      <div className="page__footer-buttons">
         <BackButton />
-      </GDBar>
+      </div>
     </div>
   );
 };

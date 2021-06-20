@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { GDBar } from 'components/atoms/GDBar/GDBar';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
@@ -33,7 +32,7 @@ export const ProfileEdit: FC<ProfileEditPageProps> = ({ className }) => {
 
   return (
     <div className={classnames(['page', className])}>
-      <GDBar type="header" title={t('profile_edit')} />
+      <h1 className="page__title">{t('profile_edit')}</h1>
 
       <div className="page__content">
         <Form fields={formFields} />
@@ -41,9 +40,9 @@ export const ProfileEdit: FC<ProfileEditPageProps> = ({ className }) => {
         <GDButton title={t('submit')} styleOption="primary" onClick={submitHandler} />
       </div>
 
-      <GDBar type="footer">
+      <div className="page__footer-buttons">
         <BackButton />
-      </GDBar>
+      </div>
     </div>
   );
 };
