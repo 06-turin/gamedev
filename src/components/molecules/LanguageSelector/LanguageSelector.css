@@ -8,7 +8,7 @@
 .language-selector__button {
   padding: 6px 16px 4px;
   border: none;
-  border: 2px solid var(--mainBackColor);
+  border: 2px solid var(--appBackgroundColor);
   margin-right: 6px;
   box-shadow: none;
   background-color: var(--notActiveColor);
@@ -20,7 +20,7 @@
     cursor: pointer;
     background-color: var(--mainTextColor);
     border-color: var(--activityColor);
-    color: var(--mainBackColor);
+    color: var(--appBackgroundColor);
   }
 
   &_active {
