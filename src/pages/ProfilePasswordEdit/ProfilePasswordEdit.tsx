@@ -13,19 +13,17 @@ export type ProfilePasswordPageProps = {
 
 export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className }) => {
   const { t } = useTranslation();
-
-  editProfilePasswordFields.forEach((field) => {
-    field.title = t(field.title);
-  });
-
   const submitHandler = () => console.log('Password edit form submitted');
+  const formFields = editProfilePasswordFields.map(({ id, type, title}) => {
+    return { id, type, title: t(title) };
+  });
 
   return (
     <div className={classnames(['page', className])}>
       <GDBar type="header" title={t('password_edit')} />
 
       <div className="page__content">
-        <Form fields={editProfilePasswordFields} />
+        <Form fields={formFields} />
         <GDButton title={t('submit')} styleOption="primary" onClick={submitHandler} />
       </div>
 

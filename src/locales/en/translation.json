@@ -45,5 +45,6 @@
     "upload_avatar": "upload avatar",
     "change_password": "change password",
     "new_password": "new password",
-    "password_edit": "password edit"
+    "password_edit": "password edit",
+    "logout": "logout"
 }

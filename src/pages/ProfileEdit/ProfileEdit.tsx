@@ -23,9 +23,7 @@ export const ProfileEdit: FC<ProfileEditPageProps> = ({ className }) => {
     { title: 'change_password', onClick: () => history.push('/profile-password-edit') },
   ];
 
-  editProfileFields.forEach((field) => {
-    field.title = t(field.title);
-  });
+  const formFields = editProfileFields.map(({ id, title }) => ({ id, title: t(title) }));
 
   editProfileMenuItems.forEach((item) => {
     item.title = t(item.title);
@@ -38,7 +36,7 @@ export const ProfileEdit: FC<ProfileEditPageProps> = ({ className }) => {
       <GDBar type="header" title={t('profile_edit')} />
 
       <div className="page__content">
-        <Form fields={editProfileFields} />
+        <Form fields={formFields} />
         <Menu items={editProfileMenuItems} itemsStyleOption="secondary" />
         <GDButton title={t('submit')} styleOption="primary" onClick={submitHandler} />
       </div>

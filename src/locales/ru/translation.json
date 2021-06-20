@@ -40,10 +40,11 @@
     "avatar": "фото профиля",
     "edit": "редактировать",
     "profile_edit": "редактирование профиля",
-    "nick_name": "никнейм",
+    "nickname": "никнейм",
     "remove_avatar": "удалить аватар",
     "upload_avatar": "загрузить аватар",
     "change_password": "изменить пароль",
     "new_password": "новый пароль",
-    "password_edit": "изменение пароля"
+    "password_edit": "изменение пароля",
+    "logout": "выйти"
 }
