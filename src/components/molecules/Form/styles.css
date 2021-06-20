@@ -4,6 +4,19 @@
   align-items: flex-end;
   white-space: nowrap;
   font-size: 38px;
+  padding: 1rem;
+
+  &.is-invalid {
+    border: 2px solid var(--dangerColor)
+  }
+}
+
+.form__input {
+  font-family: var(--mainTextFontFamily);
+}
+
+.form_submit__button {
+  align-self: center;
 }
 
 .form__error-label {

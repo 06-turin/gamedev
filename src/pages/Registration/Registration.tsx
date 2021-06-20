@@ -6,15 +6,15 @@ import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 
-const loginFormFields = [
-  { id: 'first_name', title: 'name' },
-  { id: 'second_name', title: 'last_name' },
-  { id: 'email', title: 'e-mail', type: 'email' },
-  { id: 'phone', title: 'phone', type: 'tel' },
-  { id: 'login', title: 'login' },
-  { id: 'password', title: 'password', type: 'password' },
-  { id: 'verify_password', title: 'repeat', type: 'password' },
-];
+const loginFormFields = {
+  first_name: { id: 'first_name', title: 'name' },
+  second_name: { id: 'second_name', title: 'last name' },
+  email: { id: 'email', title: 'e-mail', type: 'email' },
+  phone: { id: 'phone', title: 'phone', type: 'tel' },
+  login: { id: 'login', title: 'login' },
+  password: { id: 'password', title: 'password', type: 'password' },
+  verify_password: { id: 'verify_password', title: 'repeat', type: 'password' },
+};
 
 export type RegistrationPageProps = {
   className?: string

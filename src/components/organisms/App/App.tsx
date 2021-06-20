@@ -1,6 +1,8 @@
 import './App.css';
 import React, { FC, useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter, Route, Switch, Redirect,
+} from 'react-router-dom';
 import { Forum } from 'pages/Forum/Forum';
 import { Game } from 'pages/Game/Game';
 import { LeaderBoard } from 'pages/LeaderBoard/LeaderBoard';
@@ -33,6 +35,7 @@ export const App: FC = () => {
 
         <Switch>
           <Route exact path="/">
+            <Redirect to="/login" />
             <ErrorBoundary>
               <Main />
             </ErrorBoundary>

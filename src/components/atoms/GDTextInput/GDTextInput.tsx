@@ -11,7 +11,8 @@ export type GDTextInputProps = {
   placeholder?: string
   value?: string
   onChange?: ChangeEventHandler<HTMLInputElement>
-  onBlur?: FocusEventHandler<HTMLInputElement>
+  onBlur?: FocusEventHandler<HTMLInputElement>,
+  isInvalid?: Boolean
 }
 
 export const GDTextInput: FC<GDTextInputProps> = ({
