@@ -39,12 +39,6 @@ export const App: FC = () => (
         </ErrorBoundary>
       </Route>
 
-      <Route path="/main">
-        <ErrorBoundary>
-          <Main />
-        </ErrorBoundary>
-      </Route>
-
       <Route path="/forum">
         <ErrorBoundary>
           <Forum />
