@@ -4,7 +4,7 @@ import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { dummyTopicTitle, dummyPosts } from 'pages/Topic/constants';
 
 export type TopicPageProps = {
@@ -13,7 +13,7 @@ export type TopicPageProps = {
 
 export const Topic: FC<TopicPageProps> = ({ className }) => {
   const { t } = useTranslation();
-  // const history = useHistory();
+  const history = useHistory();
 
   return (
     <div className={classNames(['page', className])}>
@@ -44,7 +44,7 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
 
       <div className="page__footer-buttons">
         <BackButton />
-        <GDButton title={t('new_post')} styleOption="secondary" size="l" />
+        <GDButton title={t('new_post')} styleOption="secondary" size="l" onClick={() => history.push('/new-post')} />
       </div>
     </div>
   );

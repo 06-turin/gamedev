@@ -54,5 +54,7 @@
     "views": "views",
     "last_reply": "last reply",
     "start_new_topic": "start new topic",
-    "new_post": "new post"
+    "new_post": "new post",
+    "type_your_message_here": "type your message here",
+    "post": "post"
 }
