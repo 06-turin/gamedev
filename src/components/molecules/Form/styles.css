@@ -19,14 +19,22 @@
   align-self: center;
 }
 
-.form__error-label {
+.form__label {
   justify-self: center;
   align-self: center;
-  color: var(--dangerColor);
-}
+  margin-top: 1rem;
+  font-size: 38px;
 
-.form__success-label {
-  justify-self: center;
-  align-self: center;
-  color: var(--successColor);
+  &__success {
+    color: var(--successColor);
+  }
+  &__error {
+    color: var(--dangerColor);
+  }
+  &__warning {
+    color: var(--warningColor);
+  }
+  &__default {
+    color: var(--white);
+  }
 }

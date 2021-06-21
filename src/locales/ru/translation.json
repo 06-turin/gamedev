@@ -62,6 +62,12 @@
     "second_name": "фамилия",
     "display_name": "ник",
     "phone": "телефон",
-    "updated_successfully":"данные успешно обновлены"
+    "updated_successfully":"данные успешно обновлены",
+    "no_account_?":"еще нет аккаунта?",
+    "register_!":"зарегистрируйся!",
+    "just_play_!":"чисто поиграть!",
+    "or":"или",
+    "loading...":"загрузка..."
+
 
 }

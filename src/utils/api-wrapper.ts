@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { API_BASE_URL, AUTH_TOKEN_NAME } from 'config';
-import { ApiRequestProps, ResponseStatus, ApiResponse } from './types';
+import { ApiRequestProps, ResponseStatus, ApiResponse } from '../api/types';
 
 const axiosInstance = axios.create({});
 

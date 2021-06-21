@@ -4,20 +4,21 @@ import React, {
 } from 'react';
 import { GDTextInput, GDTextInputProps } from 'components/atoms/GDTextInput';
 import { GDButton } from 'components/atoms/GDButton';
-import classnames from 'classnames';
 import { getFormData } from 'utils/getFormData';
-import { FormFields, SubmitFormMethod } from './types';
+import classNames from 'classnames';
+import { FormFields, FormMessageStatus, SubmitFormMethod } from './types';
 
 type FormProps = {
   fields: FormFields,
   className?: string,
   textSubmitButton?: string,
   onSubmit?: SubmitFormMethod<any>,
-  error?: string,
+  message?: string,
+  messageClass?: FormMessageStatus
 }
 
 export const Form: FC<FormProps> = ({
-  fields, className, textSubmitButton, onSubmit, error,
+  fields, className, textSubmitButton, onSubmit, message, messageClass = FormMessageStatus.default,
 }) => {
   const [isInvalid, setIsInvalid] = useState(false);
 
@@ -40,7 +41,7 @@ export const Form: FC<FormProps> = ({
       />
     ));
 
-  const errorMessage = error ? <span className="form__error-label">{error}</span> : '';
+  const messageComp = message ? <span className={classNames(['form__label', `form__label__${messageClass}`])}>{message}</span> : '';
 
   const submitButton = textSubmitButton
     ? (
@@ -64,12 +65,12 @@ export const Form: FC<FormProps> = ({
 
   return (
     <form
-      className={classnames(['form', className, isInvalid ? 'is-invalid' : ''])}
+      className={classNames(['form', className, isInvalid ? 'is-invalid' : ''])}
       onSubmit={submitHandler}
     >
       {fieldsList}
-      {errorMessage}
       {submitButton}
+      {messageComp}
     </form>
   );
 };

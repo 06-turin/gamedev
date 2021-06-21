@@ -1,7 +1,6 @@
-// import to from 'await-to-js';
 import { AUTH_TOKEN_NAME } from 'config';
 import { is } from 'typescript-is';
-import { callApi } from './api-wrapper';
+import { callApi } from '../utils/api-wrapper';
 import {
   ERROR_RESPONSE_DATA,
   LogOutResponse,

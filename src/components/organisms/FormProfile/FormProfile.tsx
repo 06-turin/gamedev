@@ -9,6 +9,7 @@ import { GDTextInput } from 'components/atoms/GDTextInput/GDTextInput';
 import { useTranslation } from 'react-i18next';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { getFormData } from 'utils/getFormData';
+import { FormMessageStatus } from 'components/molecules/Form/types';
 import { SubmitedProfileData } from './types';
 
 const fields = [
@@ -23,17 +24,16 @@ const fields = [
 type FormProfileProps = {
   user: UserResponse
   onSubmit: (data: SubmitedProfileData) => void,
-  success?: string,
-  error?: string,
+  message?: string,
+  messageClass?: FormMessageStatus,
 }
 
 export const FormProfile: FC<FormProfileProps> = ({
-  onSubmit, user, error, success,
+  onSubmit, user, message, messageClass = FormMessageStatus.default,
 }) => {
   const { t } = useTranslation();
 
-  const successMessage = success ? <span className="form__success-label">{success}</span> : '';
-  const errorMessage = error ? <span className="form__error-label">{error}</span> : '';
+  const messageComp = message ? <span className={classNames(['form__label', `form__label__${messageClass}`])}>{message}</span> : '';
 
   const [profile, setProfile] = useState(user);
   useEffect(() => {
@@ -83,9 +83,8 @@ export const FormProfile: FC<FormProfileProps> = ({
       onSubmit={submitHandler}
     >
       {inputList}
-      {successMessage}
-      {errorMessage}
       {submitButton}
+      {messageComp}
     </form>
   );
 };

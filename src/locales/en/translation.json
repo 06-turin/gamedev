@@ -62,5 +62,9 @@
     "first_name": "first name",
     "second_name": "second name",
     "display_name": "display name",
-    "updated_successfully":"updated successfully"
+    "updated_successfully":"updated successfully",
+    "no_account_?":"no account ?",
+    "register_!":"register !",
+    "just_play_!":"just play !",
+    "loading...":"loading..."
 }

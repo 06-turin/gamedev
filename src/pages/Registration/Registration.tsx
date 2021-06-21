@@ -1,11 +1,12 @@
 import './styles.css';
 import React, { FC, useEffect, useState } from 'react';
 import { GDButton } from 'components/atoms/GDButton';
-import { Form } from 'components/molecules/Form';
-import { SubmitFormMethod } from 'components/molecules/Form/types';
+import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
 import { useTranslation } from 'react-i18next';
 import { authAPI } from 'api/auth';
 import { useHistory } from 'react-router-dom';
+import { useApiRequestFactory } from 'utils/api-factory';
+import { Form } from 'components/molecules/Form/Form';
 import { RefistrationFormFields } from './types';
 
 const registerFormFields: RefistrationFormFields = {
@@ -21,6 +22,7 @@ const registerFormFields: RefistrationFormFields = {
 export const Registration: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const { request: register } = useApiRequestFactory(authAPI.register);
 
   useEffect(() => {
     if (authAPI.isAuth()) {
@@ -33,7 +35,7 @@ export const Registration: FC = () => {
 
   const submitHandler: SubmitFormMethod<RefistrationFormFields> = async (data) => {
     try {
-      const response = await authAPI.register(data);
+      const response = await register(data);
       if (response.id) {
         setErrorMessage('');
         // TODO store user
@@ -50,7 +52,8 @@ export const Registration: FC = () => {
       fields={registerFormFields}
       textSubmitButton={t('submit')}
       onSubmit={submitHandler}
-      error={errorMessage}
+      message={errorMessage}
+      messageClass={FormMessageStatus.error}
     />
   );
 

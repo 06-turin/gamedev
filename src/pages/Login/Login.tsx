@@ -3,11 +3,12 @@ import React, { FC, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { GDLogo } from 'components/atoms/GDLogo';
 import { GDButton } from 'components/atoms/GDButton';
-import { Form } from 'components/molecules/Form';
+import { Form } from 'components/molecules/Form/Form';
 import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
-import { SubmitFormMethod } from 'components/molecules/Form/types';
+import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
 import { authAPI } from 'api/auth';
+import { useApiRequestFactory } from 'utils/api-factory';
 import { LoginFormFields } from './types';
 
 const loginFormFields: LoginFormFields = {
@@ -28,9 +29,11 @@ export const Login: FC = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
+  const { request: login } = useApiRequestFactory(authAPI.login);
+
   const submitHandler: SubmitFormMethod<LoginFormFields> = async (data) => {
     try {
-      await authAPI.login(data);
+      await login(data);
       setErrorMessage('');
       // TODO store user
       history.replace('/start');
@@ -44,27 +47,32 @@ export const Login: FC = () => {
       fields={loginFormFields}
       textSubmitButton={t('boom !')}
       onSubmit={submitHandler}
-      error={errorMessage}
+      message={errorMessage}
+      messageClass={FormMessageStatus.error}
     />
   );
 
+  const textNoAccount = t('no_account_?');
+  const textRegister = t('register_!');
+  const textJustPlay = t('just_play_!');
+
   const actionComponent = (
     <div className="login-page__signup-container">
-      <span className="login-page__text-label">no account ?</span>
+      <span className="login-page__text-label">{textNoAccount}</span>
       <div className="login-page__link-container">
         <Link to="/registration">
           <GDButton
             className="login-page__link"
-            title="register !"
+            title={textRegister}
             styleOption="secondary"
             size="l"
           />
         </Link>
-        <span className="login-page__text-label">or</span>
+        <span className="login-page__text-label">{t('or')}</span>
         <Link to="/game">
           <GDButton
             className="login-page__link"
-            title="just play !"
+            title={textJustPlay}
             styleOption="secondary"
             size="l"
           />

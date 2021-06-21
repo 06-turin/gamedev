@@ -8,6 +8,9 @@ import { UserResponse } from 'api/types';
 import { FormProfile } from 'components/organisms/FormProfile/FormProfile';
 import { usersAPI } from 'api/users';
 import { SubmitedProfileData } from 'components/organisms/FormProfile/types';
+import { useApiRequestFactory } from 'utils/api-factory';
+import { FormMessageStatus } from 'components/molecules/Form/types';
+import classNames from 'classnames';
 
 export type ProfilePageProps = {
   className?: string
@@ -19,9 +22,12 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
 
   const [profile, setProfile] = useState({} as UserResponse);
 
+  const { request: getUserInfo, isLoading } = useApiRequestFactory(authAPI.getUserInfo);
+  const { request: updateUser, isLoading: isUpdating } = useApiRequestFactory(usersAPI.update);
+
   const fetchProfile = async () => {
     try {
-      const result = await authAPI.getUserInfo();
+      const result = await getUserInfo();
       setProfile(() => result);
     } catch (error) {
       console.error(error);
@@ -36,25 +42,28 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [formMessage, setFormMessage] = useState('');
+  const [formMessageStatus, setFormMessageStatus] = useState(FormMessageStatus.default);
 
   const pageTitle = t('profile');
 
   const submitHandler = async (data: SubmitedProfileData) => {
+    setFormMessage('');
     try {
-      await usersAPI.update(data);
-      setSuccessMessage(t('updated_successfully'));
-      setErrorMessage('');
+      await updateUser(data);
+      setFormMessage(t('updated_successfully'));
+      setFormMessageStatus(FormMessageStatus.success);
     } catch (error) {
-      setSuccessMessage('');
-      setErrorMessage(error.message);
+      setFormMessage(error.message);
+      setFormMessageStatus(FormMessageStatus.error);
     }
   };
 
   const backHandler = () => {
     history.goBack();
   };
+
+  const loader = isLoading || isUpdating ? <span className={classNames(['form__label', 'form__label__warning'])}>{t('loading...')}</span> : '';
 
   return (
     <div className="page">
@@ -64,9 +73,10 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
       <FormProfile
         user={profile}
         onSubmit={submitHandler}
-        success={successMessage}
-        error={errorMessage}
+        message={formMessage}
+        messageClass={formMessageStatus}
       />
+      {loader}
       <div className="page__footer">
         <GDButton
           className="page__footer-item"
