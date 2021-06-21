@@ -12,6 +12,7 @@ import { LanguageSelector } from 'components/molecules/LanguageSelector/Language
 import { Main } from 'pages/Main/Main';
 import { ProfileEdit } from 'pages/ProfileEdit/ProfileEdit';
 import { ProfilePasswordEdit } from 'pages/ProfilePasswordEdit/ProfilePasswordEdit';
+import { Topic } from 'pages/Topic/Topic';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 
 export const App: FC = () => (
@@ -72,6 +73,12 @@ export const App: FC = () => (
       <Route path="/profile-password-edit">
         <ErrorBoundary>
           <ProfilePasswordEdit />
+        </ErrorBoundary>
+      </Route>
+
+      <Route path="/topic">
+        <ErrorBoundary>
+          <Topic />
         </ErrorBoundary>
       </Route>
 

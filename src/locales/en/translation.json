@@ -52,5 +52,7 @@
     "author": "author",
     "posts": "posts",
     "views": "views",
-    "last_reply": "last reply"
+    "last_reply": "last reply",
+    "start_new_topic": "start new topic",
+    "new_post": "new post"
 }
