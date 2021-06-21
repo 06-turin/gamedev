@@ -16,6 +16,9 @@ html {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  background-color: var(--appBackground);
+  font-family: 'Pixeboy', 'Russo One', sans-serif;
+  box-sizing: border-box;
 }
 
 h1 {

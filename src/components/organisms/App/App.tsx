@@ -8,18 +8,18 @@ import { Login } from 'pages/Login/Login';
 import { Profile } from 'pages/Profile/Profile';
 import { Registration } from 'pages/Registration/Registration';
 import { Error } from 'pages/Error/Error';
-import { LanguageSelector } from 'components/molecules/LanguageSelector/LanguageSelector';
-import { Main } from 'pages/Main/Main';
 import { ProfileEdit } from 'pages/ProfileEdit/ProfileEdit';
 import { ProfilePasswordEdit } from 'pages/ProfilePasswordEdit/ProfilePasswordEdit';
 import { Topic } from 'pages/Topic/Topic';
 import { NewPost } from 'pages/NewPost/NewPost';
+import { Main } from 'pages/Main/Main';
+import { NavHeader } from 'components/organisms/NavHeader/NavHeader';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 
 export const App: FC = () => (
   <BrowserRouter>
     <ErrorBoundary>
-      <LanguageSelector />
+      <NavHeader />
     </ErrorBoundary>
 
     <Switch>
