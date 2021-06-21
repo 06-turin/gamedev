@@ -7,4 +7,9 @@
   --appBackgroundColor: #000;
   --mainTextWeight: 700;
   --subTextWeight: 500;
+
+  --largeFontSize: 73px;
+  --mediumFontSize: 38px;
+  --smallFontSize: 32px;
+  --xsmallFontSize: 18px;
 }

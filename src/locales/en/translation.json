@@ -47,5 +47,10 @@
     "new_password": "new password",
     "password_edit": "password edit",
     "logout": "logout",
-    "no_account": "no account"
+    "no_account": "no account",
+    "topic": "topic",
+    "author": "author",
+    "posts": "posts",
+    "views": "views",
+    "last_reply": "last reply"
 }
