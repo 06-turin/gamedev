@@ -14,8 +14,8 @@
 }
 
 .app-container.alt-theme {
-  --appBackgroundColor: rgb(226, 226, 226);
-  --activityColor: rgb(122, 192, 65);
+  --appBackgroundColor: #e2e2e2;
+  --activityColor: #7ac041;
   --dangerColor: #e70404;
-  --mainTextColor: rgb(0, 0, 0);
+  --mainTextColor: #000;
 }
