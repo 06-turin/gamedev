@@ -22,7 +22,7 @@
 .form__label {
   justify-self: center;
   align-self: center;
-  margin-top: 1rem;
+  margin: 0 auto;
   font-size: 38px;
 
   &__success {

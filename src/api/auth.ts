@@ -2,6 +2,7 @@ import { AUTH_TOKEN_NAME } from 'config';
 import { is } from 'typescript-is';
 import { callApi } from '../utils/api-wrapper';
 import {
+  apiURL,
   ERROR_RESPONSE_DATA,
   LogOutResponse,
   SignInRequest,
@@ -16,7 +17,7 @@ export const authAPI = {
     try {
       const response = await callApi({
         method: 'post',
-        url: '/auth/signin',
+        url: `${apiURL.auth}/signin`,
         data,
         authRequired: true,
       });
@@ -35,7 +36,7 @@ export const authAPI = {
     try {
       const response = await callApi({
         method: 'post',
-        url: '/auth/logout',
+        url: `${apiURL.auth}/logout`,
         authRequired: false,
       });
 
@@ -53,7 +54,7 @@ export const authAPI = {
     try {
       const response = await callApi({
         method: 'post',
-        url: '/auth/signup',
+        url: `${apiURL.auth}/signup`,
         data,
         authRequired: true,
       });
@@ -79,7 +80,7 @@ export const authAPI = {
     try {
       const response = await callApi({
         method: 'get',
-        url: '/auth/user',
+        url: `${apiURL.auth}/user`,
         authRequired: true,
       });
 

@@ -10,11 +10,7 @@ import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/t
 import { authAPI } from 'api/auth';
 import { useApiRequestFactory } from 'utils/api-factory';
 import { LoginFormFields } from './types';
-
-const loginFormFields: LoginFormFields = {
-  login: { id: 'login', title: 'login' },
-  password: { id: 'password', title: 'password', type: 'password' },
-};
+import { loginFormFields } from './constants';
 
 export const Login: FC = () => {
   const { t } = useTranslation();

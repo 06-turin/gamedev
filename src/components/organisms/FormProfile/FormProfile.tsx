@@ -13,11 +13,10 @@ import { FormMessageStatus } from 'components/molecules/Form/types';
 import { SubmitedProfileData } from './types';
 
 const fields = [
-  'login',
-  'email',
+  'display_name',
   'first_name',
   'second_name',
-  'display_name',
+  'email',
   'phone',
 ];
 
@@ -26,6 +25,7 @@ type FormProfileProps = {
   onSubmit: (data: SubmitedProfileData) => void,
   message?: string,
   messageClass?: FormMessageStatus,
+  isLoading?: Boolean
 }
 
 export const FormProfile: FC<FormProfileProps> = ({
@@ -33,7 +33,14 @@ export const FormProfile: FC<FormProfileProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const messageComp = message ? <span className={classNames(['form__label', `form__label__${messageClass}`])}>{message}</span> : '';
+  const messageComp = (
+    <p
+      className={classNames(['form__label', `form__label__${messageClass}`])}
+      style={message ? { visibility: 'visible' } : { visibility: 'hidden' }}
+    >
+      {message || 'hidden'}
+    </p>
+  );
 
   const [profile, setProfile] = useState(user);
   useEffect(() => {
@@ -45,7 +52,7 @@ export const FormProfile: FC<FormProfileProps> = ({
       className="form_submit__button"
       title={t('save')}
       styleOption="primary"
-      size="l"
+      size="m"
       type="submit"
     />
   );
@@ -83,8 +90,8 @@ export const FormProfile: FC<FormProfileProps> = ({
       onSubmit={submitHandler}
     >
       {inputList}
-      {submitButton}
       {messageComp}
+      {submitButton}
     </form>
   );
 };

@@ -6,4 +6,4 @@ export type ProfileFormFields = {
   [Property in keyof UserResponse]?: GDTextInputProps
 }
 
-export type SubmitedProfileData = Pick<UserResponse, 'login' | 'first_name' | 'second_name' | 'email' | 'phone' | 'display_name'>
+export type SubmitedProfileData = Pick<UserResponse, 'first_name' | 'second_name' | 'email' | 'phone' | 'display_name'>

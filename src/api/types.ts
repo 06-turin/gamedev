@@ -1,6 +1,11 @@
 /* eslint-disable camelcase */
 import { Method } from 'axios';
 
+export enum apiURL {
+  auth = '/auth',
+  users = '/user'
+}
+
 export const ERROR_RESPONSE_DATA = 'Invalid response data!';
 
 export type ApiRequestProps = {
@@ -16,6 +21,7 @@ export enum ResponseStatus {
   SUCCESS,
   FAILED
 }
+
 export type ApiResponse = {
   status: ResponseStatus
   data?: any,
@@ -62,4 +68,15 @@ export type UserRequest = {
   login:string,
   email:string,
   phone:string,
+}
+
+export type ChangePasswordRequest = {
+  oldPassword: string,
+  newPassword: string
+}
+
+export type ChangePasswordResponse = 'OK'
+
+export type ChangeAvatarRequest = {
+  avatar: File
 }

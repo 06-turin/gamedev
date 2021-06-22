@@ -8,16 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { useApiRequestFactory } from 'utils/api-factory';
 import { Form } from 'components/molecules/Form/Form';
 import { RefistrationFormFields } from './types';
-
-const registerFormFields: RefistrationFormFields = {
-  login: { id: 'login', title: 'login' },
-  email: { id: 'email', title: 'e-mail', type: 'email' },
-  first_name: { id: 'first_name', title: 'first name' },
-  second_name: { id: 'second_name', title: 'last name' },
-  phone: { id: 'phone', title: 'phone', type: 'tel' },
-  password: { id: 'password', title: 'password', type: 'password' },
-  verify_password: { id: 'verify_password', title: 'repeat', type: 'password' },
-};
+import { registerFormFields } from './constants';
 
 export const Registration: FC = () => {
   const { t } = useTranslation();

@@ -28,7 +28,7 @@ export const Menu: FC<MenuProps> = ({
         size={itemsSize}
         styleOption={itemsStyleOption}
         onClick={onClick}
-        key={`menu-item-${title}`}
+        key={title}
       />
     ))}
   </div>

@@ -1,16 +1,15 @@
 import './styles.css';
 import React, { FC, useEffect, useState } from 'react';
-import { GDButton } from 'components/atoms/GDButton';
+import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { authAPI } from 'api/auth';
+import { BackButton } from 'components/molecules/BackButton/BackButton';
+import avatarDummy from 'assets/images/logo_img_base.png';
+import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useHistory } from 'react-router-dom';
 import { UserResponse } from 'api/types';
-import { FormProfile } from 'components/organisms/FormProfile/FormProfile';
-import { usersAPI } from 'api/users';
-import { SubmitedProfileData } from 'components/organisms/FormProfile/types';
+import { authAPI } from 'api/auth';
 import { useApiRequestFactory } from 'utils/api-factory';
-import { FormMessageStatus } from 'components/molecules/Form/types';
-import classNames from 'classnames';
+import { resourcesAPI } from 'api/resources';
 
 export type ProfilePageProps = {
   className?: string
@@ -22,8 +21,7 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
 
   const [profile, setProfile] = useState({} as UserResponse);
 
-  const { request: getUserInfo, isLoading } = useApiRequestFactory(authAPI.getUserInfo);
-  const { request: updateUser, isLoading: isUpdating } = useApiRequestFactory(usersAPI.update);
+  const { request: getUserInfo } = useApiRequestFactory(authAPI.getUserInfo);
 
   const fetchProfile = async () => {
     try {
@@ -42,49 +40,31 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [formMessage, setFormMessage] = useState('');
-  const [formMessageStatus, setFormMessageStatus] = useState(FormMessageStatus.default);
-
-  const pageTitle = t('profile');
-
-  const submitHandler = async (data: SubmitedProfileData) => {
-    setFormMessage('');
-    try {
-      await updateUser(data);
-      setFormMessage(t('updated_successfully'));
-      setFormMessageStatus(FormMessageStatus.success);
-    } catch (error) {
-      setFormMessage(error.message);
-      setFormMessageStatus(FormMessageStatus.error);
-    }
-  };
-
-  const backHandler = () => {
-    history.goBack();
-  };
-
-  const loader = isLoading || isUpdating ? <span className={classNames(['form__label', 'form__label__warning'])}>{t('loading...')}</span> : '';
+  const avatarSrc = profile.avatar ? resourcesAPI.getResourceURL(profile.avatar) : avatarDummy;
 
   return (
-    <div className="page">
-      <div className="page__header">
-        <h1 className="page__title">{pageTitle}</h1>
+    <div className={classnames(['page', className])}>
+      <h1 className="page__title">{t('profile')}</h1>
+
+      <div className="page__content">
+        <div className="profile-page__info">
+          <div className="profile-page__avatar-container">
+            <img className="profile-page__avatar" src={avatarSrc} alt={t('avatar')} />
+          </div>
+          <div className="profile-page__info-container">
+            <span className="profile-page__nick-name">{profile.login}</span>
+            <span className="profile-page__name">{profile.first_name}</span>
+            <span className="profile-page__last-name">{profile.second_name}</span>
+            <span className="profile-page__phone">{profile.phone}</span>
+            <span className="profile-page__email">{profile.email}</span>
+          </div>
+        </div>
+
+        <GDButton title={t('edit')} styleOption="primary" onClick={() => history.push('/profile-edit')} />
       </div>
-      <FormProfile
-        user={profile}
-        onSubmit={submitHandler}
-        message={formMessage}
-        messageClass={formMessageStatus}
-      />
-      {loader}
-      <div className="page__footer">
-        <GDButton
-          className="page__footer-item"
-          title="back"
-          styleOption="secondary"
-          size="l"
-          onClick={backHandler}
-        />
+
+      <div className="page__footer-buttons">
+        <BackButton />
       </div>
     </div>
   );
