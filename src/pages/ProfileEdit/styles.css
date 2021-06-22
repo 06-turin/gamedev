@@ -4,6 +4,6 @@
 
 .profile__upload_avatar__label {
   > input {
-    display: none
+    display: none;
   }
 }

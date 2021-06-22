@@ -34,7 +34,7 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
 
   useEffect(() => {
     if (!authAPI.isAuth()) {
-      history.replace('/start');
+      history.replace('/login');
     }
     fetchProfile();
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -2,8 +2,8 @@ import './styles.css';
 import React, {
   FC, FormEventHandler, useEffect, useState,
 } from 'react';
-import { GDTextInput, GDTextInputProps } from 'components/atoms/GDTextInput';
-import { GDButton } from 'components/atoms/GDButton';
+import { GDTextInput, GDTextInputProps } from 'components/atoms/GDTextInput/GDTextInput';
+import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { getFormData } from 'utils/getFormData';
 import classNames from 'classnames';
 import { FormFields, FormMessageStatus, SubmitFormMethod } from './types';

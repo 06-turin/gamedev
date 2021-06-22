@@ -1,7 +1,7 @@
 import './App.css';
 import React, { FC, useState } from 'react';
 import {
-  BrowserRouter, Route, Switch, Redirect,
+  BrowserRouter, Route, Switch,
 } from 'react-router-dom';
 import { Forum } from 'pages/Forum/Forum';
 import { Game } from 'pages/Game/Game';
@@ -35,7 +35,6 @@ export const App: FC = () => {
 
         <Switch>
           <Route exact path="/">
-            <Redirect to="/login" />
             <ErrorBoundary>
               <Main />
             </ErrorBoundary>

@@ -1,6 +1,6 @@
 import './styles.css';
 import React, { FC, useEffect, useState } from 'react';
-import { GDButton } from 'components/atoms/GDButton';
+import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
 import { useTranslation } from 'react-i18next';
 import { authAPI } from 'api/auth';
@@ -17,7 +17,7 @@ export const Registration: FC = () => {
 
   useEffect(() => {
     if (authAPI.isAuth()) {
-      history.replace('/start');
+      history.replace('/');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -30,7 +30,7 @@ export const Registration: FC = () => {
       if (response.id) {
         setErrorMessage('');
         // TODO store user
-        history.replace('/start');
+        history.replace('/');
       }
     } catch (error) {
       setErrorMessage(error.message);

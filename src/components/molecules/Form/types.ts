@@ -1,4 +1,4 @@
-import { GDTextInputProps } from 'components/atoms/GDTextInput';
+import { GDTextInputProps } from 'components/atoms/GDTextInput/GDTextInput';
 
 export type FormFields = {
   [key: string]: GDTextInputProps,

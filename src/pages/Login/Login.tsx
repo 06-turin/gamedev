@@ -1,8 +1,8 @@
 import './styles.css';
 import React, { FC, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { GDLogo } from 'components/atoms/GDLogo';
-import { GDButton } from 'components/atoms/GDButton';
+import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
+import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
 import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,7 @@ export const Login: FC = () => {
 
   useEffect(() => {
     if (authAPI.isAuth()) {
-      history.replace('/start');
+      history.replace('/');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -32,7 +32,7 @@ export const Login: FC = () => {
       await login(data);
       setErrorMessage('');
       // TODO store user
-      history.replace('/start');
+      history.replace('/');
     } catch (error) {
       setErrorMessage(error.message);
     }

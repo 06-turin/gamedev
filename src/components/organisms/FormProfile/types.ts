@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { UserResponse } from 'api/types';
-import { GDTextInputProps } from 'components/atoms/GDTextInput';
+import { GDTextInputProps } from 'components/atoms/GDTextInput/GDTextInput';
 
 export type ProfileFormFields = {
   [Property in keyof UserResponse]?: GDTextInputProps
