@@ -1,17 +1,15 @@
 import './styles.css';
 import React, { FC } from 'react';
+import classNames from 'classnames';
 
-export const ThemeSwitch: FC = () => {
-  const switchTheme = () => {
-    const element = document.getElementById('root');
-    element?.classList.toggle('alt-theme');
-  };
+type ThemeSwitchProps = {
+  toggleTheme: () => void;
+}
 
-  return (
+export const ThemeSwitch: FC<ThemeSwitchProps> = ({ toggleTheme }) => (
   // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    <label className="switch">
-      <input type="checkbox" onClick={switchTheme} />
-      <span className="slider round" />
-    </label>
-  );
-};
+  <label className={classNames('theme-switcher__switch')}>
+    <input type="checkbox" onClick={toggleTheme} />
+    <span className={classNames(['theme-switcher__slider', 'theme-switcher__slider_round'])} />
+  </label>
+);

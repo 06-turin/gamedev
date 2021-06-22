@@ -1,5 +1,5 @@
 import './App.css';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Forum } from 'pages/Forum/Forum';
 import { Game } from 'pages/Game/Game';
@@ -14,86 +14,97 @@ import { Topic } from 'pages/Topic/Topic';
 import { NewPost } from 'pages/NewPost/NewPost';
 import { Main } from 'pages/Main/Main';
 import { NavHeader } from 'components/organisms/NavHeader/NavHeader';
+import classNames from 'classnames';
 import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
 
-export const App: FC = () => (
-  <BrowserRouter>
-    <ErrorBoundary>
-      <NavHeader />
-    </ErrorBoundary>
+export const App: FC = () => {
+  const [isAltThemeOn, setIsAltThemeOn] = useState(false);
 
-    <Switch>
-      <Route exact path="/">
-        <ErrorBoundary>
-          <Main />
-        </ErrorBoundary>
-      </Route>
+  const toggleTheme = () => {
+    setIsAltThemeOn(!isAltThemeOn);
+  };
 
-      <Route path="/login">
+  return (
+    <div className={classNames(['app-container', { 'alt-theme': isAltThemeOn }])}>
+      <BrowserRouter>
         <ErrorBoundary>
-          <Login />
+          <NavHeader toggleTheme={toggleTheme} />
         </ErrorBoundary>
-      </Route>
 
-      <Route path="/registration">
-        <ErrorBoundary>
-          <Registration />
-        </ErrorBoundary>
-      </Route>
+        <Switch>
+          <Route exact path="/">
+            <ErrorBoundary>
+              <Main />
+            </ErrorBoundary>
+          </Route>
 
-      <Route path="/forum">
-        <ErrorBoundary>
-          <Forum />
-        </ErrorBoundary>
-      </Route>
+          <Route path="/login">
+            <ErrorBoundary>
+              <Login />
+            </ErrorBoundary>
+          </Route>
 
-      <Route path="/game">
-        <ErrorBoundary>
-          <Game />
-        </ErrorBoundary>
-      </Route>
+          <Route path="/registration">
+            <ErrorBoundary>
+              <Registration />
+            </ErrorBoundary>
+          </Route>
 
-      <Route path="/leaderboard">
-        <ErrorBoundary>
-          <LeaderBoard />
-        </ErrorBoundary>
-      </Route>
+          <Route path="/forum">
+            <ErrorBoundary>
+              <Forum />
+            </ErrorBoundary>
+          </Route>
 
-      <Route path="/profile">
-        <ErrorBoundary>
-          <Profile />
-        </ErrorBoundary>
-      </Route>
+          <Route path="/game">
+            <ErrorBoundary>
+              <Game />
+            </ErrorBoundary>
+          </Route>
 
-      <Route path="/profile-edit">
-        <ErrorBoundary>
-          <ProfileEdit />
-        </ErrorBoundary>
-      </Route>
+          <Route path="/leaderboard">
+            <ErrorBoundary>
+              <LeaderBoard />
+            </ErrorBoundary>
+          </Route>
 
-      <Route path="/profile-password-edit">
-        <ErrorBoundary>
-          <ProfilePasswordEdit />
-        </ErrorBoundary>
-      </Route>
+          <Route path="/profile">
+            <ErrorBoundary>
+              <Profile />
+            </ErrorBoundary>
+          </Route>
 
-      <Route path="/topic">
-        <ErrorBoundary>
-          <Topic />
-        </ErrorBoundary>
-      </Route>
+          <Route path="/profile-edit">
+            <ErrorBoundary>
+              <ProfileEdit />
+            </ErrorBoundary>
+          </Route>
 
-      <Route path="/new-post">
-        <ErrorBoundary>
-          <NewPost />
-        </ErrorBoundary>
-      </Route>
+          <Route path="/profile-password-edit">
+            <ErrorBoundary>
+              <ProfilePasswordEdit />
+            </ErrorBoundary>
+          </Route>
 
-      <Route path="*">
-        <ErrorBoundary>
-          <Error />
-        </ErrorBoundary>
-      </Route>
-    </Switch>
-  </BrowserRouter>
-);
+          <Route path="/topic">
+            <ErrorBoundary>
+              <Topic />
+            </ErrorBoundary>
+          </Route>
+
+          <Route path="/new-post">
+            <ErrorBoundary>
+              <NewPost />
+            </ErrorBoundary>
+          </Route>
+
+          <Route path="*">
+            <ErrorBoundary>
+              <Error />
+            </ErrorBoundary>
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </div>
+  );
+};
