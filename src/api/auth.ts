@@ -1,8 +1,7 @@
-import { AUTH_TOKEN_NAME } from 'config';
 import { is } from 'typescript-is';
 import { callApi } from '../utils/api-wrapper';
+import { AUTH_TOKEN_NAME, PATHS } from './config';
 import {
-  apiURL,
   ERROR_RESPONSE_DATA,
   LogOutResponse,
   SignInRequest,
@@ -17,7 +16,7 @@ export const authAPI = {
     try {
       const response = await callApi({
         method: 'post',
-        url: `${apiURL.auth}/signin`,
+        url: PATHS.auth.signIn,
         data,
         authRequired: true,
       });
@@ -36,7 +35,7 @@ export const authAPI = {
     try {
       const response = await callApi({
         method: 'post',
-        url: `${apiURL.auth}/logout`,
+        url: PATHS.auth.logout,
         authRequired: false,
       });
 
@@ -54,7 +53,7 @@ export const authAPI = {
     try {
       const response = await callApi({
         method: 'post',
-        url: `${apiURL.auth}/signup`,
+        url: PATHS.auth.signUp,
         data,
         authRequired: true,
       });
@@ -71,7 +70,7 @@ export const authAPI = {
     }
   },
 
-  isAuth: (): Boolean => {
+  isAuth: (): boolean => {
     const token = localStorage.getItem(AUTH_TOKEN_NAME);
     return Boolean(token);
   },
@@ -80,7 +79,7 @@ export const authAPI = {
     try {
       const response = await callApi({
         method: 'get',
-        url: `${apiURL.auth}/user`,
+        url: PATHS.auth.userInfo,
         authRequired: true,
       });
 

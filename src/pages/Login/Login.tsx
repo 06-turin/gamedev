@@ -1,5 +1,5 @@
 import './styles.css';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
 import { authAPI } from 'api/auth';
 import { useApiRequestFactory } from 'utils/api-factory';
+import { useMountEffect } from 'utils/useMountEffect';
 import { LoginFormFields } from './types';
 import { loginFormFields } from './constants';
 
@@ -16,12 +17,11 @@ export const Login: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  useEffect(() => {
+  useMountEffect(() => {
     if (authAPI.isAuth()) {
       history.replace('/');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   const [errorMessage, setErrorMessage] = useState('');
 

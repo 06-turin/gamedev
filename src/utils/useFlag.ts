@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export function useFlag(initiateFlag: Boolean) {
+export const useFlag = (initiateFlag: boolean) => {
   const [flag, setFlag] = useState(initiateFlag);
 
   const on = () => setFlag(true);
@@ -10,4 +10,4 @@ export function useFlag(initiateFlag: Boolean) {
   return {
     flag, on, off, toggle,
   };
-}
+};

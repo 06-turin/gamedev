@@ -1,5 +1,5 @@
 import './styles.css';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import logoImage from 'assets/images/logo_img_base.png';
 import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { authAPI } from 'api/auth';
+import { useMountEffect } from 'utils/useMountEffect';
 
 export type MainPageProps = {
   className?: string
@@ -17,12 +18,11 @@ export const Main: FC<MainPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  useEffect(() => {
+  useMountEffect(() => {
     if (!authAPI.isAuth()) {
       history.replace('/login');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   const onPlayClickHandler = () => history.push('/game');
 

@@ -1,6 +1,6 @@
 import { useFlag } from './useFlag';
 
-export function useApiRequestFactory(requestFunction: (data?: any)=>Promise<any>) {
+export const useApiRequestFactory = (requestFunction: (data?: any)=>Promise<any>) => {
   const { flag: isLoading, on: startRequest, off: endRequest } = useFlag(false);
 
   const request = async (...params: any) => {
@@ -18,4 +18,4 @@ export function useApiRequestFactory(requestFunction: (data?: any)=>Promise<any>
     request,
     isLoading,
   };
-}
+};

@@ -1,20 +1,15 @@
 /* eslint-disable camelcase */
 import { Method } from 'axios';
 
-export enum apiURL {
-  auth = '/auth',
-  users = '/user'
-}
-
 export const ERROR_RESPONSE_DATA = 'Invalid response data!';
 
 export type ApiRequestProps = {
   method: Method,
-  url: `/${string}`,
+  url: string,
   data?: any,
   params?: any,
-  authRequired?: Boolean,
-  formData?: Boolean
+  authRequired?: boolean,
+  formData?: boolean
 }
 
 export enum ResponseStatus {

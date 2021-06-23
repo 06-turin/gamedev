@@ -1,8 +1,6 @@
 import './App.css';
 import React, { FC, useState } from 'react';
-import {
-  BrowserRouter, Route, Switch,
-} from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Forum } from 'pages/Forum/Forum';
 import { Game } from 'pages/Game/Game';
 import { LeaderBoard } from 'pages/LeaderBoard/LeaderBoard';
@@ -17,7 +15,7 @@ import { NewPost } from 'pages/NewPost/NewPost';
 import { Main } from 'pages/Main/Main';
 import { NavHeader } from 'components/organisms/NavHeader/NavHeader';
 import classNames from 'classnames';
-import { ErrorBoundary } from '../ErrorBoundary/ErrorBoundary';
+import { ErrorBoundary } from 'components/organisms/ErrorBoundary/ErrorBoundary';
 
 export const App: FC = () => {
   const [isAltThemeOn, setIsAltThemeOn] = useState(false);

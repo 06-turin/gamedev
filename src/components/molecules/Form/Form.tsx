@@ -35,13 +35,23 @@ export const Form: FC<FormProps> = ({
   const fieldsList = Object.values(fields)
     .map((props: GDTextInputProps) => (
       <GDTextInput
-        {...props}
-        name={props.name ?? props.id}
         key={props.id}
+        id={props.id}
+        title={props.title}
+        name={props.name ?? props.id}
+        type={props.type}
+        className={props.className}
+        placeholder={props.placeholder}
+        value={props.value}
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+        isInvalid={props.isInvalid}
       />
     ));
 
-  const messageComp = message ? <span className={classNames(['form__label', `form__label__${messageClass}`])}>{message}</span> : '';
+  const messageComp = message
+    ? <span className={classNames(['form__label', `form__label__${messageClass}`])}>{message}</span>
+    : null;
 
   const submitButton = textSubmitButton
     ? (
@@ -52,7 +62,7 @@ export const Form: FC<FormProps> = ({
         size="l"
         type="submit"
       />
-    ) : '';
+    ) : null;
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (e): void => {
     e.preventDefault();
@@ -65,7 +75,7 @@ export const Form: FC<FormProps> = ({
 
   return (
     <form
-      className={classNames(['form', className, isInvalid ? 'is-invalid' : ''])}
+      className={classNames(['form', className, { isInvalid }])}
       onSubmit={submitHandler}
     >
       {fieldsList}

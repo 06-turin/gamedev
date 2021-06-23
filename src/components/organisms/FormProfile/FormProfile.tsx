@@ -1,7 +1,6 @@
 import './styles.css';
 import React, {
-  ChangeEventHandler,
-  FC, FormEventHandler, useEffect, useState,
+  ChangeEventHandler, FC, FormEventHandler, useMemo,
 } from 'react';
 import { UserResponse } from 'api/types';
 import classNames from 'classnames';
@@ -11,41 +10,29 @@ import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { getFormData } from 'utils/getFormData';
 import { FormMessageStatus } from 'components/molecules/Form/types';
 import { SubmitedProfileData } from './types';
-
-const fields = [
-  'display_name',
-  'first_name',
-  'second_name',
-  'email',
-  'phone',
-];
+import { profileFields as fields } from './constants';
 
 type FormProfileProps = {
   user: UserResponse
+  onChangeInput: (key: string) => ChangeEventHandler<HTMLInputElement>,
   onSubmit: (data: SubmitedProfileData) => void,
   message?: string,
   messageClass?: FormMessageStatus,
-  isLoading?: Boolean
+  isLoading?: boolean
 }
 
 export const FormProfile: FC<FormProfileProps> = ({
-  onSubmit, user, message, messageClass = FormMessageStatus.default,
+  onChangeInput, onSubmit, user, message, messageClass = FormMessageStatus.default,
 }) => {
   const { t } = useTranslation();
 
   const messageComp = (
     <p
-      className={classNames(['form__label', `form__label__${messageClass}`])}
-      style={message ? { visibility: 'visible' } : { visibility: 'hidden' }}
+      className={classNames(['form__label', `form__label__${messageClass}`, { hidden: !message }])}
     >
       {message || 'hidden'}
     </p>
   );
-
-  const [profile, setProfile] = useState(user);
-  useEffect(() => {
-    setProfile(user);
-  }, [user]);
 
   const submitButton = (
     <GDButton
@@ -66,23 +53,16 @@ export const FormProfile: FC<FormProfileProps> = ({
     }
   };
 
-  const changeHandler = (key: string): ChangeEventHandler<HTMLInputElement> => (e) => {
-    setProfile(() => ({
-      ...profile,
-      [key]: e.target.value,
-    }));
-  };
-
-  const inputList = fields.map((key) => (
+  const inputList = useMemo(() => fields.map((key) => (
     <GDTextInput
       id={key}
       title={t(key)}
       name={key}
-      value={profile[key as keyof UserResponse] ?? ''}
-      onChange={changeHandler(key)}
+      value={user[key as keyof UserResponse] ?? ''}
+      onChange={onChangeInput(key)}
       key={key}
     />
-  ));
+  )), [onChangeInput, t, user]);
 
   return (
     <form

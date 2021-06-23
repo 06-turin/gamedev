@@ -6,7 +6,7 @@
   font-size: 38px;
   padding: 1rem;
 
-  &.is-invalid {
+  &.isInvalid {
     border: 2px solid var(--dangerColor);
   }
 }

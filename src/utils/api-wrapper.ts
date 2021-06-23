@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { API_BASE_URL, AUTH_TOKEN_NAME } from 'config';
-import { ApiRequestProps, ResponseStatus, ApiResponse } from '../api/types';
+import { ApiRequestProps, ResponseStatus, ApiResponse } from 'api/types';
+import { AUTH_TOKEN_NAME } from 'api/config';
 
 const axiosInstance = axios.create({});
 
@@ -22,7 +22,7 @@ export const callApi: (params: ApiRequestProps) => Promise<ApiResponse> = async 
   const requestConfig: AxiosRequestConfig = {
     headers: {},
     method,
-    url: `${API_BASE_URL}${url}`,
+    url,
     withCredentials: true,
     validateStatus(status) {
       if (status < 400) {

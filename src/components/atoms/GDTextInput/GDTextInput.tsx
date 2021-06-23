@@ -12,7 +12,7 @@ export type GDTextInputProps = {
   value?: string | number,
   onChange?: ChangeEventHandler<HTMLInputElement>,
   onBlur?: FocusEventHandler<HTMLInputElement>,
-  isInvalid?: Boolean,
+  isInvalid?: boolean,
 }
 
 export const GDTextInput: FC<GDTextInputProps> = ({

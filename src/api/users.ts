@@ -1,7 +1,7 @@
 import { is } from 'typescript-is';
-import { callApi } from '../utils/api-wrapper';
+import { callApi } from 'utils/api-wrapper';
+import { PATHS } from './config';
 import {
-  apiURL,
   ChangePasswordRequest,
   ChangePasswordResponse,
   ERROR_RESPONSE_DATA,
@@ -14,7 +14,7 @@ export const usersAPI = {
     try {
       const response = await callApi({
         method: 'put',
-        url: `${apiURL.users}/profile`,
+        url: PATHS.users.updateProfile,
         data,
         authRequired: true,
       });
@@ -32,7 +32,7 @@ export const usersAPI = {
     try {
       const response = await callApi({
         method: 'put',
-        url: `${apiURL.users}/password`,
+        url: PATHS.users.changePassword,
         data,
         authRequired: true,
       });
@@ -50,7 +50,7 @@ export const usersAPI = {
     try {
       const response = await callApi({
         method: 'put',
-        url: `${apiURL.users}/profile/avatar`,
+        url: PATHS.users.uploadAvatar,
         data,
         formData: true,
         authRequired: true,

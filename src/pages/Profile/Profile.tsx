@@ -1,5 +1,5 @@
 import './styles.css';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useMemo, useState } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
@@ -10,6 +10,7 @@ import { UserResponse } from 'api/types';
 import { authAPI } from 'api/auth';
 import { useApiRequestFactory } from 'utils/api-factory';
 import { resourcesAPI } from 'api/resources';
+import { useMountEffect } from 'utils/useMountEffect';
 
 export type ProfilePageProps = {
   className?: string
@@ -32,15 +33,16 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
     }
   };
 
-  useEffect(() => {
+  useMountEffect(() => {
     if (!authAPI.isAuth()) {
       history.replace('/login');
     }
     fetchProfile();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  const avatarSrc = profile.avatar ? resourcesAPI.getResourceURL(profile.avatar) : avatarDummy;
+  const avatarSrc = useMemo(() => (
+    profile.avatar ? resourcesAPI.getResourceURL(profile.avatar) : avatarDummy
+  ), [profile]);
 
   return (
     <div className={classnames(['page', className])}>

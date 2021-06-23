@@ -1,7 +1,7 @@
 import './styles.css';
 import React, {
   ChangeEventHandler,
-  FC, useEffect, useRef, useState,
+  FC, useCallback, useEffect, useRef, useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { authAPI } from 'api/auth';
@@ -15,6 +15,7 @@ import { FormMessageStatus } from 'components/molecules/Form/types';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
+import { useMountEffect } from 'utils/useMountEffect';
 
 export const ProfileEdit: FC = () => {
   const { t } = useTranslation();
@@ -43,13 +44,12 @@ export const ProfileEdit: FC = () => {
     }
   };
 
-  useEffect(() => {
+  useMountEffect(() => {
     if (!authAPI.isAuth()) {
       history.replace('/login');
     }
     fetchProfile();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   const [formMessage, setFormMessage] = useState('');
   const [formMessageStatus, setFormMessageStatus] = useState(FormMessageStatus.default);
@@ -95,6 +95,15 @@ export const ProfileEdit: FC = () => {
     }
   };
 
+  const changeInputHandler = useCallback(
+    (key: string): ChangeEventHandler<HTMLInputElement> => (e) => {
+      setProfile(() => ({
+        ...profile,
+        [key]: e.target.value,
+      }));
+    }, [profile],
+  );
+
   return (
     <div className="page">
       <div className="page__header">
@@ -103,6 +112,7 @@ export const ProfileEdit: FC = () => {
       <FormProfile
         user={profile}
         onSubmit={submitHandler}
+        onChangeInput={changeInputHandler}
         message={formMessage}
         messageClass={formMessageStatus}
       />
