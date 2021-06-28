@@ -11,8 +11,10 @@ import { Position } from '../types/PositionType';
 import { Bomb } from './Bomb';
 import { getBattleField } from './BattleField';
 import { gameService } from '../../services/gameService';
+import { MovingEntity } from './MovingEntity';
+import { Movements } from '../types/DirectionsType';
 
-export class Player implements IEntity {
+export class Player extends MovingEntity implements IEntity {
   type = EntitiesTypes.PLAYER;
 
   alive = true;
@@ -22,6 +24,8 @@ export class Player implements IEntity {
     y: 1,
   };
 
+  nextPos = this.pos
+
   private hasBombs = PLAYER_HAS_BOMBS;
 
   bombBlownSize = PLAYER_BOMB_BLOWS_SIZE;
@@ -30,7 +34,16 @@ export class Player implements IEntity {
   radius = GRID * 0.3;
 
   constructor(private canvasCtx: CanvasRenderingContext2D) {
+    super({
+      speed: 300,
+    });
     this.init();
+  }
+
+  protected isMovingAvailable = (direction: Movements) => {
+    const BF = getBattleField();
+    const targetCell = this.getNextPos(direction);
+    return BF.isCellEmpty(targetCell);
   }
 
   addBombToPlayer() {
@@ -70,18 +83,6 @@ export class Player implements IEntity {
 
   refresh = (dt: number) => dt
 
-  move(position: Position): void {
-    const BF = getBattleField();
-    if (BF.isCellEmpty(position)) {
-      // clear previous if no bomb there
-      if (BF.getCell(this.pos) !== EntitiesTypes.BOMB) {
-        BF.clearCell(this.pos);
-      }
-      this.pos = position;
-      BF.setCell(this.pos, EntitiesTypes.PLAYER);
-    }
-  }
-
   placeBomb(): void {
     if (this.hasBombs <= 0) return;
 
@@ -96,13 +97,13 @@ export class Player implements IEntity {
 
   handleKeyEvent = (event: KeyboardEvent) => {
     if (event.key === 'ArrowUp') {
-      this.move({ x: this.pos.x, y: this.pos.y - 1 });
+      this.move(Movements.UP);
     } else if (event.key === 'ArrowDown') {
-      this.move({ x: this.pos.x, y: this.pos.y + 1 });
+      this.move(Movements.DOWN);
     } else if (event.key === 'ArrowRight') {
-      this.move({ x: this.pos.x + 1, y: this.pos.y });
+      this.move(Movements.RIGHT);
     } else if (event.key === 'ArrowLeft') {
-      this.move({ x: this.pos.x - 1, y: this.pos.y });
+      this.move(Movements.LEFT);
     } else if (event.key === ' ') {
       this.placeBomb();
     }

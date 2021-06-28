@@ -71,7 +71,7 @@ export class Bomb implements IEntity {
     BF.clearCell(this.pos);
 
     // create Explosions per each directions
-    DIRECTIONS.forEach((dir: DirectionType) => {
+    Object.values(DIRECTIONS).forEach((dir: DirectionType) => {
       for (let i = 0; i < this.blownSize; i++) {
         // calculate position
         const pos: Position = {
@@ -79,7 +79,6 @@ export class Bomb implements IEntity {
           y: this.pos.y + dir.y * i,
         };
         const cell = BF.getCell(pos);
-
         if (cell === EntitiesTypes.WALL) return;
 
         // create Explosion in cell
