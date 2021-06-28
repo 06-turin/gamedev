@@ -15,14 +15,13 @@ import { MovingEntity } from './MovingEntity';
 import { Movements } from '../types/DirectionsType';
 
 export class Player extends MovingEntity implements IEntity {
+  coords: Position = { x: 1.5 * GRID, y: 1.5 * GRID }
+
   type = EntitiesTypes.PLAYER;
 
   alive = true;
 
-  pos: Position = {
-    x: 1,
-    y: 1,
-  };
+  pos: Position = { x: 1, y: 1 };
 
   nextPos = this.pos
 
@@ -36,6 +35,7 @@ export class Player extends MovingEntity implements IEntity {
   constructor(private canvasCtx: CanvasRenderingContext2D) {
     super({
       speed: 300,
+      startPosition: { x: 1, y: 1 },
     });
     this.init();
   }
@@ -70,18 +70,23 @@ export class Player extends MovingEntity implements IEntity {
     document.removeEventListener('keydown', this.handleKeyEvent as () => {});
   }
 
-  render() {
-    const x = (this.pos.x + 0.5) * GRID;
-    const y = (this.pos.y + 0.5) * GRID;
+  // render() {
+  //   const x = (this.pos.x + 0.5) * GRID;
+  //   const y = (this.pos.y + 0.5) * GRID;
 
+  //   this.canvasCtx.save();
+  //   this.canvasCtx.fillStyle = 'white';
+  //   this.canvasCtx.beginPath();
+  //   this.canvasCtx.arc(x, y, this.radius, 0, DEGREE_360);
+  //   this.canvasCtx.fill();
+  // }
+  canvasAnimation = () => {
     this.canvasCtx.save();
     this.canvasCtx.fillStyle = 'white';
     this.canvasCtx.beginPath();
-    this.canvasCtx.arc(x, y, this.radius, 0, DEGREE_360);
+    this.canvasCtx.arc(this.coords.x, this.coords.y, this.radius, 0, DEGREE_360);
     this.canvasCtx.fill();
   }
-
-  refresh = (dt: number) => dt
 
   placeBomb(): void {
     if (this.hasBombs <= 0) return;
