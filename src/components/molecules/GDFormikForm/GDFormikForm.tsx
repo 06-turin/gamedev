@@ -5,7 +5,6 @@ import { GDTextInput } from 'components/atoms/GDTextInput/GDTextInput';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import * as yup from 'yup';
 import classnames from 'classnames';
-import { validationSchema } from 'pages/Debug/constants';
 import { GDFormikFormFields, SubmitFormMethod } from './types';
 
 type GDFormikFormProps = {
@@ -32,7 +31,7 @@ export const GDFormikForm: FC<GDFormikFormProps> = ({
       initialValues={initialValues}
       validateOnBlur
       onSubmit={onSubmit}
-      validationSchema={validationSchema}
+      validationSchema={null}
     >
       {({
         values,
