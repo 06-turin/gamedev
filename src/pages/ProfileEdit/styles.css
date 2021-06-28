@@ -1,9 +1,0 @@
-.profile-form {
-  margin-top: auto;
-}
-
-.profile__upload_avatar__label {
-  > input {
-    display: none;
-  }
-}

@@ -1,7 +1,0 @@
-.render-error {
-  &__text {
-    font-size: 32px;
-    color: var(--activityColor);
-    text-align: center;
-  }
-}
