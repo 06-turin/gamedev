@@ -64,6 +64,8 @@ export class BattleField {
         } else
         if (cell === EntitiesTypes.WALL) {
           cells[rIdx][cIdx] = EntitiesTypes.WALL;
+        } else {
+          cells[rIdx][cIdx] = EntitiesTypes.EMPTY;
         }
       });
     });
