@@ -15,28 +15,26 @@ import { MovingEntity } from './MovingEntity';
 import { Movements } from '../types/DirectionsType';
 
 export class Player extends MovingEntity implements IEntity {
-  coords: Position = { x: 1.5 * GRID, y: 1.5 * GRID }
-
   type = EntitiesTypes.PLAYER;
 
   alive = true;
 
   pos: Position = { x: 1, y: 1 };
 
-  nextPos = this.pos
+  coords: Position = { x: 1.5 * GRID, y: 1.5 * GRID }
 
   private hasBombs = PLAYER_HAS_BOMBS;
 
   bombBlownSize = PLAYER_BOMB_BLOWS_SIZE;
 
   // for render
-  radius = GRID * 0.3;
+  private radius = GRID * 0.3;
 
   constructor(private canvasCtx: CanvasRenderingContext2D) {
     super({
       speed: 300,
-      startPosition: { x: 1, y: 1 },
     });
+
     this.init();
   }
 
@@ -63,23 +61,15 @@ export class Player extends MovingEntity implements IEntity {
 
   init() {
     gameService.setBombs(this.hasBombs);
-    document.addEventListener('keydown', this.handleKeyEvent as () => {});
+    document.addEventListener('keydown', this.handleKeydownEvent as () => {});
+    document.addEventListener('keyup', this.handleKeyupEvent as () => {});
   }
 
   destroy() {
-    document.removeEventListener('keydown', this.handleKeyEvent as () => {});
+    document.removeEventListener('keydown', this.handleKeydownEvent as () => {});
+    document.removeEventListener('keydown', this.handleKeyupEvent as () => {});
   }
 
-  // render() {
-  //   const x = (this.pos.x + 0.5) * GRID;
-  //   const y = (this.pos.y + 0.5) * GRID;
-
-  //   this.canvasCtx.save();
-  //   this.canvasCtx.fillStyle = 'white';
-  //   this.canvasCtx.beginPath();
-  //   this.canvasCtx.arc(x, y, this.radius, 0, DEGREE_360);
-  //   this.canvasCtx.fill();
-  // }
   canvasAnimation = () => {
     this.canvasCtx.save();
     this.canvasCtx.fillStyle = 'white';
@@ -92,6 +82,7 @@ export class Player extends MovingEntity implements IEntity {
     if (this.hasBombs <= 0) return;
 
     const BF = getBattleField();
+
     if (BF.getCell(this.pos) === EntitiesTypes.PLAYER) {
       const bomb = new Bomb(this.canvasCtx, this.pos, this, this.bombBlownSize);
       BF.addEntity(bomb);
@@ -100,17 +91,26 @@ export class Player extends MovingEntity implements IEntity {
     }
   }
 
-  handleKeyEvent = (event: KeyboardEvent) => {
+  handleKeydownEvent = (event: KeyboardEvent) => {
     if (event.key === 'ArrowUp') {
-      this.move(Movements.UP);
+      this.moveOn(Movements.UP);
     } else if (event.key === 'ArrowDown') {
-      this.move(Movements.DOWN);
+      this.moveOn(Movements.DOWN);
     } else if (event.key === 'ArrowRight') {
-      this.move(Movements.RIGHT);
+      this.moveOn(Movements.RIGHT);
     } else if (event.key === 'ArrowLeft') {
-      this.move(Movements.LEFT);
+      this.moveOn(Movements.LEFT);
     } else if (event.key === ' ') {
       this.placeBomb();
+    }
+  };
+
+  handleKeyupEvent = (event: KeyboardEvent) => {
+    if (event.key === 'ArrowUp'
+    || event.key === 'ArrowDown'
+    || event.key === 'ArrowRight'
+    || event.key === 'ArrowLeft') {
+      this.moveOff();
     }
   };
 }
