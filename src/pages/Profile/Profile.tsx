@@ -1,16 +1,17 @@
 import './styles.css';
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useMemo } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useHistory } from 'react-router-dom';
-import { UserResponse } from 'api/types';
 import { authAPI } from 'api/auth';
-import { useApiRequestFactory } from 'utils/api-factory';
 import { resourcesAPI } from 'api/resources';
 import { useMountEffect } from 'utils/useMountEffect';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserInfo } from 'redux/user/userSlice';
+import { getUserInfoAsync } from 'redux/user/thunks';
 
 export type ProfilePageProps = {
   className?: string
@@ -19,30 +20,21 @@ export type ProfilePageProps = {
 export const Profile: FC<ProfilePageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
+  const dispatch = useDispatch();
 
-  const [profile, setProfile] = useState({} as UserResponse);
-
-  const { request: getUserInfo } = useApiRequestFactory(authAPI.getUserInfo);
-
-  const fetchProfile = async () => {
-    try {
-      const result = await getUserInfo();
-      setProfile(() => result);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const userInfo = useSelector(selectUserInfo);
 
   useMountEffect(() => {
     if (!authAPI.isAuth()) {
       history.replace('/login');
     }
-    fetchProfile();
+
+    dispatch(getUserInfoAsync());
   });
 
   const avatarSrc = useMemo(() => (
-    profile.avatar ? resourcesAPI.getResourceURL(profile.avatar) : avatarDummy
-  ), [profile]);
+    userInfo.avatar ? resourcesAPI.getResourceURL(userInfo.avatar) : avatarDummy
+  ), [userInfo]);
 
   return (
     <div className={classnames(['page', className])}>
@@ -54,11 +46,11 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
             <img className="profile-page__avatar" src={avatarSrc} alt={t('avatar')} />
           </div>
           <div className="profile-page__info-container">
-            <span className="profile-page__nick-name">{profile.login}</span>
-            <span className="profile-page__name">{profile.first_name}</span>
-            <span className="profile-page__last-name">{profile.second_name}</span>
-            <span className="profile-page__phone">{profile.phone}</span>
-            <span className="profile-page__email">{profile.email}</span>
+            <span className="profile-page__nick-name">{userInfo.login}</span>
+            <span className="profile-page__name">{userInfo.first_name}</span>
+            <span className="profile-page__last-name">{userInfo.second_name}</span>
+            <span className="profile-page__phone">{userInfo.phone}</span>
+            <span className="profile-page__email">{userInfo.email}</span>
           </div>
         </div>
 
