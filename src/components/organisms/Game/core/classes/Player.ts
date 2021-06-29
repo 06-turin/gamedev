@@ -4,6 +4,7 @@ import {
   GRID,
   PLAYER_BOMB_BLOWS_SIZE,
   PLAYER_HAS_BOMBS,
+  PLAYER_START_SPEED,
 } from '../config';
 import { EntitiesTypes } from '../types/EntitiesTypes';
 import { IEntity } from '../interfaces/IEntity';
@@ -32,7 +33,7 @@ export class Player extends MovingEntity implements IEntity {
 
   constructor(private canvasCtx: CanvasRenderingContext2D) {
     super({
-      speed: 300,
+      speed: PLAYER_START_SPEED,
     });
 
     this.init();
