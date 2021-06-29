@@ -7,9 +7,10 @@ import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useHistory } from 'react-router-dom';
 import { authAPI } from 'api/auth';
 import { useMountEffect } from 'utils/useMountEffect';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectUserInfo } from 'redux/user/userSlice';
-import { getUserInfoAsync } from 'redux/user/thunks';
+import { getUserInfoAsync } from 'redux/user/userActions';
+import { useBoundAction } from 'hooks/useBoundAction';
 
 export type ProfilePageProps = {
   className?: string
@@ -18,16 +19,18 @@ export type ProfilePageProps = {
 export const Profile: FC<ProfilePageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useDispatch();
+  const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
 
-  const userInfo = useSelector(selectUserInfo);
+  const {
+    avatarSrc, login, first_name, phone, second_name, email,
+  } = useSelector(selectUserInfo);
 
   useMountEffect(() => {
     if (!authAPI.isAuth()) {
       history.replace('/login');
     }
 
-    dispatch(getUserInfoAsync());
+    getUserInfoAsyncBounded();
   });
 
   return (
@@ -37,14 +40,14 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
       <div className="page__content">
         <div className="profile-page__info">
           <div className="profile-page__avatar-container">
-            <img className="profile-page__avatar" src={userInfo.avatarSrc} alt={t('avatar')} />
+            <img className="profile-page__avatar" src={avatarSrc} alt={t('avatar')} />
           </div>
           <div className="profile-page__info-container">
-            <span className="profile-page__nick-name">{userInfo.login}</span>
-            <span className="profile-page__name">{userInfo.first_name}</span>
-            <span className="profile-page__last-name">{userInfo.second_name}</span>
-            <span className="profile-page__phone">{userInfo.phone}</span>
-            <span className="profile-page__email">{userInfo.email}</span>
+            <span className="profile-page__nick-name">{login}</span>
+            <span className="profile-page__name">{first_name}</span>
+            <span className="profile-page__last-name">{second_name}</span>
+            <span className="profile-page__phone">{phone}</span>
+            <span className="profile-page__email">{email}</span>
           </div>
         </div>
 

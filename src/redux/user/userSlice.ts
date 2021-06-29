@@ -3,7 +3,7 @@ import { UserResponse } from 'api/types';
 import { RootState } from 'redux/store';
 import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
-import { getUserInfoAsync } from './thunks';
+import { getUserInfoAsync } from './userActions';
 
 type UserInfo = UserResponse & {
   avatarSrc?: string
