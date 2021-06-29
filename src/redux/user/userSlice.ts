@@ -1,14 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { UserResponse } from 'api/types';
 import { RootState } from 'redux/store';
+import { resourcesAPI } from 'api/resources';
+import avatarDummy from 'assets/images/logo_img_base.png';
 import { getUserInfoAsync } from './thunks';
 
+type UserInfo = UserResponse & {
+  avatarSrc?: string
+}
+
 type UserState = {
-    userInfo: UserResponse
+    userInfo: UserInfo
 }
 
 const initialState: UserState = {
-  userInfo: {} as UserResponse,
+  userInfo: {
+    id: 0,
+    first_name: null,
+    second_name: null,
+    display_name: null,
+    login: '',
+    email: '',
+    phone: '',
+    avatar: null,
+    avatarSrc: avatarDummy,
+  },
 };
 
 export const userSlice = createSlice({
@@ -18,7 +34,14 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getUserInfoAsync.fulfilled, (state, action) => {
-      state.userInfo = action.payload;
+      const avatarSrc = action.payload.avatar
+        ? resourcesAPI.getResourceURL(action.payload.avatar)
+        : avatarDummy;
+
+      state.userInfo = {
+        ...action.payload,
+        avatarSrc,
+      };
     });
   },
 });
