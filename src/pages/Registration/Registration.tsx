@@ -5,9 +5,9 @@ import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/t
 import { useTranslation } from 'react-i18next';
 import { authAPI } from 'api/auth';
 import { useHistory } from 'react-router-dom';
-import { useApiRequestFactory } from 'utils/api-factory';
+import { useApiRequestFactory } from 'hooks/useApiRequestFactory';
 import { Form } from 'components/molecules/Form/Form';
-import { useMountEffect } from 'utils/useMountEffect';
+import { useMountEffect } from 'hooks/useMountEffect';
 import { RefistrationFormFields } from './types';
 import { registerFormFields } from './constants';
 

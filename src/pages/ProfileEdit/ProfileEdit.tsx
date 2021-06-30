@@ -10,12 +10,12 @@ import { UserResponse } from 'api/types';
 import { FormProfile } from 'components/organisms/FormProfile/FormProfile';
 import { usersAPI } from 'api/users';
 import { SubmitedProfileData } from 'components/organisms/FormProfile/types';
-import { useApiRequestFactory } from 'utils/api-factory';
+import { useApiRequestFactory } from 'hooks/useApiRequestFactory';
 import { FormMessageStatus } from 'components/molecules/Form/types';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
-import { useMountEffect } from 'utils/useMountEffect';
+import { useMountEffect } from 'hooks/useMountEffect';
 
 export const ProfileEdit: FC = () => {
   const { t } = useTranslation();

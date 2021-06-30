@@ -5,7 +5,7 @@ import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { Form } from 'components/molecules/Form/Form';
 import { editProfilePasswordFields } from 'pages/ProfilePasswordEdit/constants';
 import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
-import { useApiRequestFactory } from 'utils/api-factory';
+import { useApiRequestFactory } from 'hooks/useApiRequestFactory';
 import { usersAPI } from 'api/users';
 import { ChangePasswordRequest } from 'api/types';
 import { PasswordFormFields } from './types';

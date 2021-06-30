@@ -1,16 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {
+  AnyAction, AsyncThunk, createSlice, SerializedError,
+} from '@reduxjs/toolkit';
 import { UserResponse } from 'api/types';
 import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
-import { getUserInfoAsync } from './userActions';
+import { AUTH_TOKEN_NAME } from 'api/config';
+import { getUserInfoAsync, loginAsync, logoutAsync } from './userActions';
 
 type UserInfo = UserResponse & {
   avatarSrc?: string
 }
 
 type UserState = {
-    userInfo: UserInfo
-    theme: 'light' | 'dark'
+    userInfo: UserInfo,
+    theme: 'light' | 'dark',
+    isAuth: boolean,
+    isLoading: boolean,
+    error: SerializedError | null
 }
 
 const initialState: UserState = {
@@ -26,6 +32,28 @@ const initialState: UserState = {
     avatarSrc: avatarDummy,
   },
   theme: 'dark',
+  isAuth: Boolean(localStorage.getItem(AUTH_TOKEN_NAME)),
+  isLoading: false,
+  error: null,
+};
+
+type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>
+
+type PendingAction = ReturnType<GenericAsyncThunk['pending']>
+type RejectedAction = ReturnType<GenericAsyncThunk['rejected']>
+type FulfilledAction = ReturnType<GenericAsyncThunk['fulfilled']>
+
+function isPendingAction(action: AnyAction): action is PendingAction {
+  return action.type.endsWith('/pending');
+}
+
+const setAuth = (state: UserState, auth: boolean): void => {
+  if (auth) {
+    localStorage.setItem(AUTH_TOKEN_NAME, '1');
+  } else {
+    localStorage.removeItem(AUTH_TOKEN_NAME);
+  }
+  state.isAuth = auth;
 };
 
 export const userSlice = createSlice({
@@ -34,6 +62,9 @@ export const userSlice = createSlice({
   reducers: {
     toggleTheme: (state) => {
       state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    },
+    logout(state) {
+      setAuth(state, false);
     },
   },
   extraReducers: (builder) => {
@@ -47,9 +78,37 @@ export const userSlice = createSlice({
         avatarSrc,
       };
     });
+    builder.addCase(loginAsync.fulfilled, (state) => setAuth(state, true));
+    builder.addCase(logoutAsync.fulfilled, (state) => setAuth(state, false));
+    // matcher can be defined outside as a type predicate function
+    builder.addMatcher(isPendingAction, (state) => {
+      state.error = null;
+      state.isLoading = true;
+    });
+    builder.addMatcher(
+      // matcher can be defined inline as a type predicate function
+      (action): action is RejectedAction => action.type.endsWith('/rejected'),
+      (state, action) => {
+        state.error = action.error as SerializedError;
+        state.isLoading = false;
+      },
+    );
+    // matcher can just return boolean and the matcher can receive a generic argument
+    builder.addMatcher<FulfilledAction>(
+      (action) => action.type.endsWith('/fulfilled'),
+      (state) => {
+        state.error = null;
+        state.isLoading = false;
+      },
+    );
   },
 });
 
 export const userReducer = userSlice.reducer;
 
 export const { toggleTheme } = userSlice.actions;
+export const userActions = userSlice.actions;
+
+export const selectUserInfo = (state: RootState) => state.user.userInfo;
+
+export const getUserState = (state: RootState): UserState => state.user;
