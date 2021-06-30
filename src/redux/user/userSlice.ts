@@ -46,6 +46,12 @@ type FulfilledAction = ReturnType<GenericAsyncThunk['fulfilled']>
 function isPendingAction(action: AnyAction): action is PendingAction {
   return action.type.endsWith('/pending');
 }
+function isRejectedAction(action: AnyAction): action is RejectedAction {
+  return action.type.endsWith('/rejected');
+}
+function isFulfilledAction(action: AnyAction): action is FulfilledAction {
+  return action.type.endsWith('/fulfilled');
+}
 
 const setAuth = (state: UserState, auth: boolean): void => {
   if (auth) {
@@ -80,27 +86,19 @@ export const userSlice = createSlice({
     });
     builder.addCase(loginAsync.fulfilled, (state) => setAuth(state, true));
     builder.addCase(logoutAsync.fulfilled, (state) => setAuth(state, false));
-    // matcher can be defined outside as a type predicate function
+
     builder.addMatcher(isPendingAction, (state) => {
       state.error = null;
       state.isLoading = true;
     });
-    builder.addMatcher(
-      // matcher can be defined inline as a type predicate function
-      (action): action is RejectedAction => action.type.endsWith('/rejected'),
-      (state, action) => {
-        state.error = action.error as SerializedError;
-        state.isLoading = false;
-      },
-    );
-    // matcher can just return boolean and the matcher can receive a generic argument
-    builder.addMatcher<FulfilledAction>(
-      (action) => action.type.endsWith('/fulfilled'),
-      (state) => {
-        state.error = null;
-        state.isLoading = false;
-      },
-    );
+    builder.addMatcher(isRejectedAction, (state, action) => {
+      state.error = action.error as SerializedError;
+      state.isLoading = false;
+    });
+    builder.addMatcher(isFulfilledAction, (state) => {
+      state.error = null;
+      state.isLoading = false;
+    });
   },
 });
 
