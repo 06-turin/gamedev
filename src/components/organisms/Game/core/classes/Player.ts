@@ -68,7 +68,7 @@ export class Player extends MovingEntity implements IEntity {
 
   destroy() {
     document.removeEventListener('keydown', this.handleKeydownEvent as () => {});
-    document.removeEventListener('keydown', this.handleKeyupEvent as () => {});
+    document.removeEventListener('keyup', this.handleKeyupEvent as () => {});
   }
 
   canvasAnimation = () => {
