@@ -5,6 +5,7 @@ import { UserResponse } from 'api/types';
 import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { AUTH_TOKEN_NAME } from 'api/config';
+import { RootState } from 'redux/store';
 import {
   changeAvatarAsync,
   changePasswordAsync,
