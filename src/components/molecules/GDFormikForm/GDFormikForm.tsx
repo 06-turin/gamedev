@@ -5,6 +5,7 @@ import { GDTextInput } from 'components/atoms/GDTextInput/GDTextInput';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classnames from 'classnames';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { GDFormikFormFields, TSubmitFormMethod } from './types';
 
 type GDFormikFormProps = {
@@ -20,6 +21,8 @@ export const GDFormikForm: FC<GDFormikFormProps> = ({
   textSubmitButton = 'submit',
   onSubmit,
 }) => {
+  const { t } = useTranslation();
+
   const initialValues = fields.reduce((values: FormikValues, field) => {
     values[field.id] = field.value;
     return values;
@@ -54,7 +57,7 @@ export const GDFormikForm: FC<GDFormikFormProps> = ({
           }) => (
             <GDTextInput
               id={id}
-              title={title}
+              title={t(title)}
               type={type}
               placeholder={placeholder}
               value={values.name}
