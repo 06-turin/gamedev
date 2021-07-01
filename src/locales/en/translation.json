@@ -72,5 +72,10 @@
     "no": "no",
     "cancel": "cancel",
     "ok": "ok",
-    "required": "required"
+    "required": "required",
+    "too_short" : "too short",
+    "too_long": "too long",
+    "invalid_format": "invalid format",
+    "letters_only": "letters only",
+    "passwords_not_matches": "passwords not matches"
 }
