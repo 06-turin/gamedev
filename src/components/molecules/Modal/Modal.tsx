@@ -7,7 +7,7 @@ import { ModalDisplayStatus } from 'components/molecules/Modal/types';
 
 export type ModalProps = {
   title: string
-  type?: 'info' | 'confirm' | 'y/n' | 'custom'
+  type?: 'info' | 'confirm' | 'y/n' | 'banner' | 'custom'
   onSubmit?: () => void
   onReject?: () => void
   customActions?: {
@@ -60,6 +60,9 @@ export const Modal: FC<ModalProps> = ({
             <GDButton className={classnames('modal__button')} title={t('no')} styleOption="secondary" size="l" onClick={actionHandler(onReject)} />
           </>
         );
+
+      case 'banner':
+        return <></>;
 
       case 'custom':
         return customActions?.map(({ actionTitle, callback }) => (
