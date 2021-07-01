@@ -111,6 +111,9 @@ export const ProfileEdit: FC = () => {
       .typeError(t('letters_only'))
       .required(t('required'))
       .max(25, t('too_long')),
+    nick_name: yup.string()
+      .required(t('required'))
+      .max(25, t('too_long')),
     phone: yup.string()
       .required(t('required'))
       .matches(phoneRegExp, t('invalid_format')),

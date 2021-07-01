@@ -24,17 +24,17 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
   const [modalDisplay, setModalDisplay] = useState('hidden' as TModalDisplayStatus);
 
   const validationSchema = yup.object().shape({
-    password: yup.string()
+    oldPassword: yup.string()
       .required(t('required'))
       .min(5, t('too_short'))
       .max(15, t('too_long')),
-    new_password: yup.string()
+    newPassword: yup.string()
       .required(t('required'))
       .min(8, t('too_short'))
       .max(25, t('too_long')),
-    repeat: yup.string()
+    verifyPassword: yup.string()
       .required(t('required'))
-      .oneOf([yup.ref('new_password')], t('passwords_not_matches'))
+      .oneOf([yup.ref('newPassword')], t('passwords_not_matches'))
       .min(8, t('too_short'))
       .max(25, t('too_long')),
   });
