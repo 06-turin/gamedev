@@ -10,7 +10,7 @@ type UserInfo = UserResponse & {
 
 type UserState = {
     userInfo: UserInfo
-    isAltThemeOn: boolean
+    theme: 'light' | 'dark'
 }
 
 const initialState: UserState = {
@@ -25,7 +25,7 @@ const initialState: UserState = {
     avatar: null,
     avatarSrc: avatarDummy,
   },
-  isAltThemeOn: false,
+  theme: 'dark',
 };
 
 export const userSlice = createSlice({
@@ -33,7 +33,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     toggleTheme: (state) => {
-      state.isAltThemeOn = !state.isAltThemeOn;
+      state.theme = state.theme === 'dark' ? 'light' : 'dark';
     },
   },
   extraReducers: (builder) => {

@@ -17,13 +17,13 @@ import { NavHeader } from 'components/organisms/NavHeader/NavHeader';
 import classNames from 'classnames';
 import { ErrorBoundary } from 'components/organisms/ErrorBoundary/ErrorBoundary';
 import { useSelector } from 'react-redux';
-import { selectIsAltThemeOn } from 'redux/user/userSelectors';
+import { selectTheme } from 'redux/user/userSelectors';
 
 export const App: FC = () => {
-  const isAltThemeOn = useSelector(selectIsAltThemeOn);
+  const theme = useSelector(selectTheme);
 
   return (
-    <div className={classNames(['app-container', { 'alt-theme': isAltThemeOn }])}>
+    <div className={classNames(['app-container', `theme_${theme}`])}>
       <BrowserRouter>
         <ErrorBoundary>
           <NavHeader />
