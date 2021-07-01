@@ -7,7 +7,7 @@
   color: var(--dangerColor);
 }
 
-.input-field_standard {
+.input-field {
   background-color: transparent;
   margin-left: 12px;
   box-shadow: none;
@@ -20,9 +20,9 @@
   &:focus-visible {
     outline: none;
   }
-}
 
-.input-field_invalid {
-  color: var(--dangerColor);
-  border-color: var(--dangerColor);
+  &_invalid {
+    color: var(--dangerColor);
+    border-color: var(--dangerColor);
+  }
 }

@@ -24,7 +24,7 @@ export const GDTextInput: FC<GDTextInputProps> = ({
       {titleString}
       <input
         placeholder={placeholder}
-        className={classNames('input-field_standard', isInvalid && 'input-field_invalid', className)}
+        className={classNames('input-field', isInvalid && 'input-field_invalid', className)}
         type={type}
         id={id}
         name={id}
