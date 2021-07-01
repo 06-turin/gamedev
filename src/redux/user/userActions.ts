@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { authAPI } from 'api/auth';
-import { SignInRequest } from 'api/types';
+import { SignInRequest, SignUpRequest } from 'api/types';
 
 export const getUserInfoAsync = createAsyncThunk(
   'user/getUserInfoAsync',
@@ -22,6 +22,14 @@ export const logoutAsync = createAsyncThunk(
   'user/logoutAsync',
   async () => {
     const result = await authAPI.logout();
+    return result;
+  },
+);
+
+export const registerAsync = createAsyncThunk(
+  'user/registerAsync',
+  async (data: SignUpRequest) => {
+    const result = await authAPI.register(data);
     return result;
   },
 );

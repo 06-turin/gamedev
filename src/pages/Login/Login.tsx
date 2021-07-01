@@ -7,8 +7,6 @@ import { Form } from 'components/molecules/Form/Form';
 import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
 import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
-// import { authAPI } from 'api/auth';
-// import { useMountEffect } from 'hooks/useMountEffect';
 import { loginAsync } from 'redux/user/userActions';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { useSelector } from 'react-redux';
@@ -20,15 +18,9 @@ import { loginFormFields } from './constants';
 export const Login: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
-  const loginAsyncBounded = useBoundAction(loginAsync);
 
   const { error, isAuth, isLoading } = useSelector(getUserState);
-
-  // useMountEffect(() => {
-  //   if (authAPI.isAuth()) {
-  //     history.replace('/');
-  //   }
-  // });
+  const loginAsyncBounded = useBoundAction(loginAsync);
 
   const { message, status, buildMessage } = useFormMessages();
 
@@ -40,13 +32,13 @@ export const Login: FC = () => {
     if (isAuth) {
       history.replace('/');
     } else if (isLoading) {
-      buildMessage('is Loading', FormMessageStatus.warning);
+      buildMessage(t('loading...'), FormMessageStatus.warning);
     } else if (error) {
       buildMessage(error.message ?? '', FormMessageStatus.error);
     } else {
       buildMessage('');
     }
-  }, [error, isAuth, isLoading, history, buildMessage]);
+  }, [error, isAuth, isLoading, history, buildMessage, t]);
 
   const formComponent = (
     <Form

@@ -5,7 +5,9 @@ import { UserResponse } from 'api/types';
 import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { AUTH_TOKEN_NAME } from 'api/config';
-import { getUserInfoAsync, loginAsync, logoutAsync } from './userActions';
+import {
+  getUserInfoAsync, loginAsync, logoutAsync, registerAsync,
+} from './userActions';
 
 type UserInfo = UserResponse & {
   avatarSrc?: string
@@ -86,6 +88,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(loginAsync.fulfilled, (state) => setAuth(state, true));
     builder.addCase(logoutAsync.fulfilled, (state) => setAuth(state, false));
+    builder.addCase(registerAsync.fulfilled, (state) => setAuth(state, true));
 
     builder.addMatcher(isPendingAction, (state) => {
       state.error = null;
