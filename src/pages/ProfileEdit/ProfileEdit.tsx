@@ -13,7 +13,7 @@ import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { useMountEffect } from 'hooks/useMountEffect';
 import { useBoundAction } from 'hooks/useBoundAction';
-import { getUserInfoAsync, updateUserAsync } from 'redux/user/userActions';
+import { changeAvatarAsync, getUserInfoAsync, updateUserAsync } from 'redux/user/userActions';
 import { useSelector } from 'react-redux';
 import { getUserState, userActions } from 'redux/user/userSlice';
 import { useFormMessages } from 'hooks/useFormMessages';
@@ -26,6 +26,7 @@ export const ProfileEdit: FC = () => {
   const updateUserInfoBounded = useBoundAction(userActions.update);
   const clearRequestBounded = useBoundAction(userActions.clearRequestState);
   const updateUserInfoAsyncBounded = useBoundAction(updateUserAsync);
+  const changeAvatarAsyncBounded = useBoundAction(changeAvatarAsync);
 
   const {
     userInfo: profile, isLoading, isUpdatedSuccessful, error,
@@ -42,6 +43,26 @@ export const ProfileEdit: FC = () => {
     updateUserInfoAsyncBounded(requestData);
   };
 
+  const changeInputHandler = useCallback(
+    (key: string): ChangeEventHandler<HTMLInputElement> => (e) => {
+      const newProfile = {
+        ...profile,
+        [key]: e.target.value,
+      };
+      updateUserInfoBounded(newProfile);
+    }, [profile, updateUserInfoBounded],
+  );
+
+  const formAvatar = useRef<HTMLFormElement>(null);
+
+  const changeAvatarHandler: ChangeEventHandler<HTMLInputElement> = async () => {
+    if (formAvatar?.current) {
+      const formData = new FormData(formAvatar.current);
+      buildMessage('');
+      changeAvatarAsyncBounded(formData);
+    }
+  };
+
   useEffect(() => {
     if (isUpdatedSuccessful) {
       buildMessage(t('updated_successfully'), FormMessageStatus.success);
@@ -55,21 +76,6 @@ export const ProfileEdit: FC = () => {
   }, [isUpdatedSuccessful, error, isLoading, history, buildMessage, t]);
 
   useEffect(() => () => { clearRequestBounded(); }, [clearRequestBounded]);
-
-  const formAvatar = useRef<HTMLFormElement>(null);
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const changeAvatarHandler: ChangeEventHandler<HTMLInputElement> = async () => {};
-
-  const changeInputHandler = useCallback(
-    (key: string): ChangeEventHandler<HTMLInputElement> => (e) => {
-      const newProfile = {
-        ...profile,
-        [key]: e.target.value,
-      };
-      updateUserInfoBounded(newProfile);
-    }, [profile, updateUserInfoBounded],
-  );
 
   const pageTitle = t('profile');
 

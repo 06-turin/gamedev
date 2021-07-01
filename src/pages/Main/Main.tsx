@@ -11,7 +11,6 @@ import { useBoundAction } from 'hooks/useBoundAction';
 import { logoutAsync } from 'redux/user/userActions';
 import { useSelector } from 'react-redux';
 import { getUserState } from 'redux/user/userSlice';
-// import { useMountEffect } from 'hooks/useMountEffect';
 
 export type MainPageProps = {
   className?: string
@@ -23,12 +22,6 @@ export const Main: FC<MainPageProps> = ({ className }) => {
 
   const logoutAsyncBounded = useBoundAction(logoutAsync);
   const { isAuth } = useSelector(getUserState);
-
-  // useMountEffect(() => {
-  //   if (!authAPI.isAuth()) {
-  //     history.replace('/login');
-  //   }
-  // });
 
   const onPlayClickHandler = () => history.push('/game');
 
