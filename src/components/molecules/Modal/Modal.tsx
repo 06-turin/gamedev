@@ -3,23 +3,23 @@ import React, { FC } from 'react';
 import classnames from 'classnames';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useTranslation } from 'react-i18next';
-import { ModalDisplayStatus } from 'components/molecules/Modal/types';
+import { TModalDisplayStatus, TModalType } from 'components/molecules/Modal/types';
 
-export type ModalProps = {
+export type TModalProps = {
   title: string
-  type?: 'info' | 'confirm' | 'y/n' | 'banner' | 'custom'
+  type?: TModalType
   onSubmit?: () => void
   onReject?: () => void
   customActions?: {
     actionTitle: string
     callback: () => void
   }[]
-  display: ModalDisplayStatus
-  setDisplay?: (state: ModalDisplayStatus) => void
+  display: TModalDisplayStatus
+  setDisplay?: (state: TModalDisplayStatus) => void
   className?: string
 }
 
-export const Modal: FC<ModalProps> = ({
+export const Modal: FC<TModalProps> = ({
   title,
   type = 'info',
   onSubmit,
@@ -28,6 +28,7 @@ export const Modal: FC<ModalProps> = ({
   display,
   setDisplay,
   className,
+  children,
 }) => {
   const { t } = useTranslation();
 
@@ -86,6 +87,7 @@ export const Modal: FC<ModalProps> = ({
         <div className="modal__options-container">
           {typeSwitch()}
         </div>
+        {children}
       </div>
     </div>
   );

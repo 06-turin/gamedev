@@ -1,21 +1,24 @@
 import './styles.css';
 import React, {
-  ChangeEventHandler,
-  FC, useCallback, useEffect, useRef, useState,
+  ChangeEventHandler, FC, useEffect, useRef, useState,
 } from 'react';
 import { useTranslation } from 'react-i18next';
 import { authAPI } from 'api/auth';
 import { useHistory, Link } from 'react-router-dom';
 import { UserResponse } from 'api/types';
-import { FormProfile } from 'components/organisms/FormProfile/FormProfile';
 import { usersAPI } from 'api/users';
-import { SubmitedProfileData } from 'components/organisms/FormProfile/types';
 import { useApiRequestFactory } from 'utils/api-factory';
-import { FormMessageStatus } from 'components/molecules/Form/types';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { useMountEffect } from 'utils/useMountEffect';
+import { TModalDisplayStatus, TModalType } from 'components/molecules/Modal/types';
+import { Modal } from 'components/molecules/Modal/Modal';
+import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
+import { editProfileFields } from 'pages/ProfileEdit/constants';
+import { TProfileFormFields } from 'pages/ProfileEdit/types';
+import { TSubmitFormMethod } from 'components/molecules/GDFormikForm/types';
+import * as yup from 'yup';
 
 export const ProfileEdit: FC = () => {
   const { t } = useTranslation();
@@ -34,6 +37,17 @@ export const ProfileEdit: FC = () => {
   const isLoading = isUserLoading || isUserUpdating || isAvatarUploading;
 
   const [profile, setProfile] = useState({} as UserResponse);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalDisplay, setModalDisplay] = useState('hidden' as TModalDisplayStatus);
+  const [modalType, setModalType] = useState('info' as TModalType);
+
+  const showModal = (message: string, type: TModalType): void => {
+    setModalMessage(message);
+    setModalType(type);
+    setModalDisplay('active');
+  };
+
+  const hideModal = () => setModalDisplay('hidden');
 
   const fetchProfile = async () => {
     try {
@@ -44,6 +58,16 @@ export const ProfileEdit: FC = () => {
     }
   };
 
+  const submitHandler: TSubmitFormMethod<TProfileFormFields> = async (data) => {
+    const requestData = { ...data, login: profile.login };
+    try {
+      await updateUser(requestData);
+      showModal(t('updated_successfully'), 'info');
+    } catch (error) {
+      showModal(error.message, 'info');
+    }
+  };
+
   useMountEffect(() => {
     if (!authAPI.isAuth()) {
       history.replace('/login');
@@ -51,32 +75,11 @@ export const ProfileEdit: FC = () => {
     fetchProfile();
   });
 
-  const [formMessage, setFormMessage] = useState('');
-  const [formMessageStatus, setFormMessageStatus] = useState(FormMessageStatus.default);
-  const setMessage = (text: string, type: FormMessageStatus = FormMessageStatus.default): void => {
-    setFormMessage(() => text);
-    setFormMessageStatus(type);
-  };
-
-  const pageTitle = t('profile');
-
-  const submitHandler = async (data: SubmitedProfileData) => {
-    const requestData = { ...data, login: profile.login };
-    setFormMessage('');
-    try {
-      await updateUser(requestData);
-      setMessage(t('updated_successfully'), FormMessageStatus.success);
-    } catch (error) {
-      setMessage(error.message, FormMessageStatus.error);
-    }
-  };
-
   useEffect(() => {
-    const text = t('loading...');
     if (isLoading) {
-      setMessage(text, FormMessageStatus.warning);
+      showModal(t('loading...'), 'banner');
     } else {
-      setFormMessage((prev) => (prev === text ? '' : prev));
+      hideModal();
     }
   }, [isLoading, t]);
 
@@ -85,36 +88,50 @@ export const ProfileEdit: FC = () => {
   const changeAvatarHandler: ChangeEventHandler<HTMLInputElement> = async () => {
     if (formAvatar?.current) {
       const formData = new FormData(formAvatar.current);
-      setFormMessage('');
       try {
         await uploadAvatar(formData);
-        setMessage(t('updated_successfully'), FormMessageStatus.success);
+        showModal(t('updated_successfully'), 'info');
       } catch (error) {
-        setMessage(error.message, FormMessageStatus.error);
+        showModal(error.message, 'info');
       }
     }
   };
 
-  const changeInputHandler = useCallback(
-    (key: string): ChangeEventHandler<HTMLInputElement> => (e) => {
-      setProfile(() => ({
-        ...profile,
-        [key]: e.target.value,
-      }));
-    }, [profile],
-  );
+  const phoneRegExp = /^((\+[1-9]{1,4}[\\-]*)|(\([0-9]{2,3}\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[\\-]*[0-9]{3,4}?$/;
+
+  const validationSchema = yup.object().shape({
+    email: yup.string()
+      .required(t('required'))
+      .email(t('invalid_format')),
+    first_name: yup.string()
+      .typeError(t('letters_only'))
+      .required(t('required'))
+      .max(25, t('too_long')),
+    second_name: yup.string()
+      .typeError(t('letters_only'))
+      .required(t('required'))
+      .max(25, t('too_long')),
+    phone: yup.string()
+      .required(t('required'))
+      .matches(phoneRegExp, t('invalid_format')),
+  });
 
   return (
     <div className="page">
+      <Modal
+        title={modalMessage}
+        display={modalDisplay}
+        type={modalType}
+        setDisplay={setModalDisplay}
+      />
       <div className="page__header">
-        <h1 className="page__title">{pageTitle}</h1>
+        <h1 className="page__title">{t('profile')}</h1>
       </div>
-      <FormProfile
-        user={profile}
+      <GDFormikForm
+        fields={Object.values(editProfileFields)}
+        validationSchema={validationSchema}
+        textSubmitButton={t('submit')}
         onSubmit={submitHandler}
-        onChangeInput={changeInputHandler}
-        message={formMessage}
-        messageClass={formMessageStatus}
       />
       <div className="profile-edit-actions">
         <form ref={formAvatar}>

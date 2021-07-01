@@ -5,13 +5,13 @@ import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
-import { SubmitFormMethod } from 'components/molecules/GDFormikForm/types';
+import { TSubmitFormMethod } from 'components/molecules/GDFormikForm/types';
 import { authAPI } from 'api/auth';
 import { useApiRequestFactory } from 'utils/api-factory';
 import { useMountEffect } from 'utils/useMountEffect';
 import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
 import { Modal } from 'components/molecules/Modal/Modal';
-import { ModalDisplayStatus } from 'components/molecules/Modal/types';
+import { TModalDisplayStatus } from 'components/molecules/Modal/types';
 import * as yup from 'yup';
 import { LoginFormFields } from './types';
 import { loginFormFields } from './constants';
@@ -27,7 +27,7 @@ export const Login: FC = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState('');
-  const [modalDisplay, setModalDisplay] = useState('hidden' as ModalDisplayStatus);
+  const [modalDisplay, setModalDisplay] = useState('hidden' as TModalDisplayStatus);
 
   const validationSchema = yup.object().shape({
     login: yup.string().required(t('required')),
@@ -36,7 +36,7 @@ export const Login: FC = () => {
 
   const { request: login } = useApiRequestFactory(authAPI.login);
 
-  const submitHandler: SubmitFormMethod<LoginFormFields> = async (data) => {
+  const submitHandler: TSubmitFormMethod<LoginFormFields> = async (data) => {
     try {
       await login(data);
       setErrorMessage('');

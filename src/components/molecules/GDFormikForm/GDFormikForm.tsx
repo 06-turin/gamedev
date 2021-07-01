@@ -5,13 +5,13 @@ import { GDTextInput } from 'components/atoms/GDTextInput/GDTextInput';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classnames from 'classnames';
 import * as yup from 'yup';
-import { GDFormikFormFields, SubmitFormMethod } from './types';
+import { GDFormikFormFields, TSubmitFormMethod } from './types';
 
 type GDFormikFormProps = {
   fields: GDFormikFormFields,
   validationSchema: yup.ObjectSchema<any>
   textSubmitButton?: string,
-  onSubmit: SubmitFormMethod<any>,
+  onSubmit: TSubmitFormMethod<any>,
 }
 
 export const GDFormikForm: FC<GDFormikFormProps> = ({

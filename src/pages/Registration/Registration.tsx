@@ -1,13 +1,13 @@
 import './styles.css';
 import React, { FC, useState } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
-import { SubmitFormMethod } from 'components/molecules/GDFormikForm/types';
+import { TSubmitFormMethod } from 'components/molecules/GDFormikForm/types';
 import { useTranslation } from 'react-i18next';
 import { authAPI } from 'api/auth';
 import { useHistory } from 'react-router-dom';
 import { useApiRequestFactory } from 'utils/api-factory';
 import { useMountEffect } from 'utils/useMountEffect';
-import { ModalDisplayStatus } from 'components/molecules/Modal/types';
+import { TModalDisplayStatus } from 'components/molecules/Modal/types';
 import { Modal } from 'components/molecules/Modal/Modal';
 import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
 import * as yup from 'yup';
@@ -26,7 +26,7 @@ export const Registration: FC = () => {
   });
 
   const [modalMessage, setModalMessage] = useState('');
-  const [modalDisplay, setModalDisplay] = useState('hidden' as ModalDisplayStatus);
+  const [modalDisplay, setModalDisplay] = useState('hidden' as TModalDisplayStatus);
 
   const phoneRegExp = /^((\+[1-9]{1,4}[\\-]*)|(\([0-9]{2,3}\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[\\-]*[0-9]{3,4}?$/;
 
@@ -60,7 +60,7 @@ export const Registration: FC = () => {
       .max(25, t('too_long')),
   });
 
-  const submitHandler: SubmitFormMethod<RefistrationFormFields> = async (data) => {
+  const submitHandler: TSubmitFormMethod<RefistrationFormFields> = async (data) => {
     try {
       const response = await register(data);
       if (response.id) {

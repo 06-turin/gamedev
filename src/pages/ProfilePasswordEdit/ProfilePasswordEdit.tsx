@@ -3,11 +3,11 @@ import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { editProfilePasswordFields } from 'pages/ProfilePasswordEdit/constants';
-import { SubmitFormMethod } from 'components/molecules/GDFormikForm/types';
+import { TSubmitFormMethod } from 'components/molecules/GDFormikForm/types';
 import { useApiRequestFactory } from 'utils/api-factory';
 import { usersAPI } from 'api/users';
 import { ChangePasswordRequest } from 'api/types';
-import { ModalDisplayStatus } from 'components/molecules/Modal/types';
+import { TModalDisplayStatus } from 'components/molecules/Modal/types';
 import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
 import { Modal } from 'components/molecules/Modal/Modal';
 import * as yup from 'yup';
@@ -21,7 +21,7 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
   const { t } = useTranslation();
 
   const [modalMessage, setModalMessage] = useState('');
-  const [modalDisplay, setModalDisplay] = useState('hidden' as ModalDisplayStatus);
+  const [modalDisplay, setModalDisplay] = useState('hidden' as TModalDisplayStatus);
 
   const validationSchema = yup.object().shape({
     password: yup.string()
@@ -41,7 +41,7 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
 
   const { request: updatePassword } = useApiRequestFactory(usersAPI.changePassword);
 
-  const submitHandler: SubmitFormMethod<PasswordFormFields> = async (data) => {
+  const submitHandler: TSubmitFormMethod<PasswordFormFields> = async (data) => {
     // TODO verify data
     const requestData: ChangePasswordRequest = {
       oldPassword: data.oldPassword,
@@ -56,8 +56,6 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
     }
   };
 
-  const submitButtonText = t('submit');
-
   return (
     <div className={classnames(['page', className])}>
       <Modal title={modalMessage} display={modalDisplay} setDisplay={setModalDisplay} />
@@ -67,7 +65,7 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
         <GDFormikForm
           fields={Object.values(editProfilePasswordFields)}
           validationSchema={validationSchema}
-          textSubmitButton={submitButtonText}
+          textSubmitButton={t('submit')}
           onSubmit={submitHandler}
         />
       </div>
