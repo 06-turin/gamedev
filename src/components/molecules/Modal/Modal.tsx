@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import classnames from 'classnames';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useTranslation } from 'react-i18next';
+import { ModalDisplayStatus } from 'components/molecules/Modal/types';
 
 export type ModalProps = {
   title: string
@@ -13,8 +14,8 @@ export type ModalProps = {
     actionTitle: string
     callback: () => void
   }[]
-  display: string
-  setDisplay?: (state: 'active' | 'hidden') => void
+  display: ModalDisplayStatus
+  setDisplay?: (state: ModalDisplayStatus) => void
   className?: string
 }
 
@@ -76,7 +77,7 @@ export const Modal: FC<ModalProps> = ({
   };
 
   return (
-    <div className={classnames(['modal', `modal__${display}`, className])}>
+    <div className={classnames(['modal', `modal_${display}`, className])}>
       <div className="modal__banner">
         <span className="modal__banner-title">{title}</span>
         <div className="modal__options-container">

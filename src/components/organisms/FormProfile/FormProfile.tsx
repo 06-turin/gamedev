@@ -57,7 +57,6 @@ export const FormProfile: FC<FormProfileProps> = ({
     <GDTextInput
       id={key}
       title={t(key)}
-      name={key}
       value={user[key as keyof UserResponse] ?? ''}
       onChange={onChangeInput(key)}
       key={key}

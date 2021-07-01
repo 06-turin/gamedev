@@ -38,7 +38,6 @@ export const Form: FC<FormProps> = ({
         key={props.id}
         id={props.id}
         title={props.title}
-        name={props.name ?? props.id}
         type={props.type}
         className={props.className}
         placeholder={props.placeholder}

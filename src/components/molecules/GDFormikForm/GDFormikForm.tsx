@@ -3,19 +3,20 @@ import React, { FC, useState } from 'react';
 import { Formik, FormikValues } from 'formik';
 import { GDTextInput } from 'components/atoms/GDTextInput/GDTextInput';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
-import * as yup from 'yup';
 import classnames from 'classnames';
+import * as yup from 'yup';
 import { GDFormikFormFields, SubmitFormMethod } from './types';
 
 type GDFormikFormProps = {
   fields: GDFormikFormFields,
-  validationSchema?: yup.ObjectSchema<any>
+  validationSchema: yup.ObjectSchema<any>
   textSubmitButton?: string,
   onSubmit: SubmitFormMethod<any>,
 }
 
 export const GDFormikForm: FC<GDFormikFormProps> = ({
   fields,
+  validationSchema,
   textSubmitButton = 'submit',
   onSubmit,
 }) => {
@@ -30,8 +31,9 @@ export const GDFormikForm: FC<GDFormikFormProps> = ({
     <Formik
       initialValues={initialValues}
       validateOnBlur
+      validateOnChange
       onSubmit={onSubmit}
-      validationSchema={null}
+      validationSchema={() => validationSchema}
     >
       {({
         values,
@@ -45,7 +47,6 @@ export const GDFormikForm: FC<GDFormikFormProps> = ({
         <form className={classnames('form')}>
           {fields.map(({
             id,
-            name,
             title,
             type,
             placeholder,
@@ -53,7 +54,6 @@ export const GDFormikForm: FC<GDFormikFormProps> = ({
           }) => (
             <GDTextInput
               id={id}
-              name={name}
               title={title}
               type={type}
               placeholder={placeholder}

@@ -5,7 +5,6 @@ import classNames from 'classnames';
 export type GDTextInputProps = {
   id: string,
   title: string,
-  name?: string,
   type?: string,
   className?: string,
   placeholder?: string,
@@ -17,7 +16,7 @@ export type GDTextInputProps = {
 }
 
 export const GDTextInput: FC<GDTextInputProps> = ({
-  className, placeholder, title, id, name, type = 'text', value, onChange, onBlur, onFocus, isInvalid
+  className, placeholder, title, id, type = 'text', value, onChange, onBlur, onFocus, isInvalid
 }) => {
   const titleString = `${title}:`;
   return (
@@ -28,7 +27,7 @@ export const GDTextInput: FC<GDTextInputProps> = ({
         className={classNames('input-field_standard', isInvalid && 'input-field_invalid', className)}
         type={type}
         id={id}
-        name={name || title}
+        name={id}
         value={value}
         onChange={onChange}
         onBlur={onBlur}

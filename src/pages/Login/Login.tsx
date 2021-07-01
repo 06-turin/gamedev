@@ -3,13 +3,16 @@ import React, { FC, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
-import { Form } from 'components/molecules/Form/Form';
 import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
-import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
+import { SubmitFormMethod } from 'components/molecules/GDFormikForm/types';
 import { authAPI } from 'api/auth';
 import { useApiRequestFactory } from 'utils/api-factory';
 import { useMountEffect } from 'utils/useMountEffect';
+import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
+import { Modal } from 'components/molecules/Modal/Modal';
+import { ModalDisplayStatus } from 'components/molecules/Modal/types';
+import * as yup from 'yup';
 import { LoginFormFields } from './types';
 import { loginFormFields } from './constants';
 
@@ -24,6 +27,12 @@ export const Login: FC = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [modalDisplay, setModalDisplay] = useState('hidden' as ModalDisplayStatus);
+
+  const validationSchema = yup.object().shape({
+    login: yup.string().required(t('required')),
+    password: yup.string().required(t('required')),
+  });
 
   const { request: login } = useApiRequestFactory(authAPI.login);
 
@@ -35,22 +44,15 @@ export const Login: FC = () => {
       history.replace('/');
     } catch (error) {
       setErrorMessage(error.message);
+      setModalDisplay('active');
     }
   };
-
-  const formComponent = (
-    <Form
-      fields={loginFormFields}
-      textSubmitButton={t('boom !')}
-      onSubmit={submitHandler}
-      message={errorMessage}
-      messageClass={FormMessageStatus.error}
-    />
-  );
 
   const textNoAccount = t('no_account_?');
   const textRegister = t('register_!');
   const textJustPlay = t('just_play_!');
+  const textBoom = `${t('boom')} !`;
+  const textOr = t('or');
 
   const actionComponent = (
     <div className="login-page__signup-container">
@@ -64,7 +66,7 @@ export const Login: FC = () => {
             size="l"
           />
         </Link>
-        <span className="login-page__text-label">{t('or')}</span>
+        <span className="login-page__text-label">{textOr}</span>
         <Link to="/game">
           <GDButton
             className="login-page__link"
@@ -79,8 +81,14 @@ export const Login: FC = () => {
 
   return (
     <div className="page login-page">
+      <Modal title={errorMessage} display={modalDisplay} setDisplay={setModalDisplay} />
       <GDLogo logoImage={logoImage} />
-      {formComponent}
+      <GDFormikForm
+        fields={Object.values(loginFormFields)}
+        validationSchema={validationSchema}
+        textSubmitButton={textBoom}
+        onSubmit={submitHandler}
+      />
       {actionComponent}
     </div>
   );
