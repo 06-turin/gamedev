@@ -70,9 +70,16 @@ export const authAPI = {
     }
   },
 
-  isAuth: (): boolean => {
-    const token = localStorage.getItem(AUTH_TOKEN_NAME);
-    return Boolean(token);
+  isAuth: async (): Promise<boolean> => {
+    // TODO:
+    // const token = localStorage.getItem(AUTH_TOKEN_NAME);
+    // @ts-ignore
+    const userInfo = await this.getUserInfo();
+    try {
+      return !!userInfo;
+    } catch (error) {
+      return false;
+    }
   },
 
   getUserInfo: async (): Promise<UserResponse> => {
