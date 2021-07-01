@@ -6,7 +6,9 @@ import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { AUTH_TOKEN_NAME } from 'api/config';
 import {
-  getUserInfoAsync, loginAsync, logoutAsync, registerAsync,
+  changeAvatarAsync,
+  changePasswordAsync,
+  getUserInfoAsync, loginAsync, logoutAsync, registerAsync, updateUserAsync,
 } from './userActions';
 
 type UserInfo = UserResponse & {
@@ -18,6 +20,7 @@ type UserState = {
     theme: 'light' | 'dark',
     isAuth: boolean,
     isLoading: boolean,
+    isUpdatedSuccessful: boolean,
     error: SerializedError | null
 }
 
@@ -36,6 +39,7 @@ const initialState: UserState = {
   theme: 'dark',
   isAuth: Boolean(localStorage.getItem(AUTH_TOKEN_NAME)),
   isLoading: false,
+  isUpdatedSuccessful: false,
   error: null,
 };
 
@@ -64,6 +68,17 @@ const setAuth = (state: UserState, auth: boolean): void => {
   state.isAuth = auth;
 };
 
+const saveUserData = (state: UserState, payload: UserResponse) => {
+  const avatarSrc = payload.avatar
+    ? resourcesAPI.getResourceURL(payload.avatar)
+    : avatarDummy;
+
+  state.userInfo = {
+    ...payload,
+    avatarSrc,
+  };
+};
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -74,22 +89,42 @@ export const userSlice = createSlice({
     logout(state) {
       setAuth(state, false);
     },
+    update(state, action) {
+      saveUserData(state, action.payload);
+    },
+    clearRequestState(state) {
+      state.error = null;
+      state.isLoading = false;
+      state.isUpdatedSuccessful = false;
+    },
   },
   extraReducers: (builder) => {
+    // auth cases
     builder.addCase(getUserInfoAsync.fulfilled, (state, action) => {
-      const avatarSrc = action.payload.avatar
-        ? resourcesAPI.getResourceURL(action.payload.avatar)
-        : avatarDummy;
-
-      state.userInfo = {
-        ...action.payload,
-        avatarSrc,
-      };
+      saveUserData(state, action.payload);
     });
     builder.addCase(loginAsync.fulfilled, (state) => setAuth(state, true));
     builder.addCase(logoutAsync.fulfilled, (state) => setAuth(state, false));
     builder.addCase(registerAsync.fulfilled, (state) => setAuth(state, true));
 
+    // updated cases
+    builder.addCase(updateUserAsync.fulfilled, (state, action) => {
+      saveUserData(state, action.payload);
+      state.isUpdatedSuccessful = true;
+    });
+    builder.addCase(updateUserAsync.pending, (s) => { s.isUpdatedSuccessful = false; });
+    builder.addCase(updateUserAsync.rejected, (s) => { s.isUpdatedSuccessful = false; });
+    builder.addCase(changePasswordAsync.fulfilled, (s) => { s.isUpdatedSuccessful = true; });
+    builder.addCase(changePasswordAsync.pending, (s) => { s.isUpdatedSuccessful = false; });
+    builder.addCase(changePasswordAsync.rejected, (s) => { s.isUpdatedSuccessful = false; });
+    builder.addCase(changeAvatarAsync.fulfilled, (state, action) => {
+      saveUserData(state, action.payload);
+      state.isUpdatedSuccessful = true;
+    });
+    builder.addCase(changeAvatarAsync.pending, (s) => { s.isUpdatedSuccessful = false; });
+    builder.addCase(changeAvatarAsync.rejected, (s) => { s.isUpdatedSuccessful = false; });
+
+    // global matchers
     builder.addMatcher(isPendingAction, (state) => {
       state.error = null;
       state.isLoading = true;

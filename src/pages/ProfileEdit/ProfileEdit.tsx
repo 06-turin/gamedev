@@ -1,108 +1,77 @@
 import './styles.css';
 import React, {
   ChangeEventHandler,
-  FC, useCallback, useEffect, useRef, useState,
+  FC, useCallback, useEffect, useRef,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { authAPI } from 'api/auth';
 import { useHistory, Link } from 'react-router-dom';
-import { UserResponse } from 'api/types';
 import { FormProfile } from 'components/organisms/FormProfile/FormProfile';
-import { usersAPI } from 'api/users';
 import { SubmitedProfileData } from 'components/organisms/FormProfile/types';
-import { useApiRequestFactory } from 'hooks/useApiRequestFactory';
 import { FormMessageStatus } from 'components/molecules/Form/types';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { useMountEffect } from 'hooks/useMountEffect';
+import { useBoundAction } from 'hooks/useBoundAction';
+import { getUserInfoAsync, updateUserAsync } from 'redux/user/userActions';
+import { useSelector } from 'react-redux';
+import { getUserState, userActions } from 'redux/user/userSlice';
+import { useFormMessages } from 'hooks/useFormMessages';
 
 export const ProfileEdit: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const {
-    request: getUserInfo, isLoading: isUserLoading,
-  } = useApiRequestFactory(authAPI.getUserInfo);
-  const {
-    request: updateUser, isLoading: isUserUpdating,
-  } = useApiRequestFactory(usersAPI.update);
-  const {
-    request: uploadAvatar, isLoading: isAvatarUploading,
-  } = useApiRequestFactory(usersAPI.changeAvatar);
+  const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
+  const updateUserInfoBounded = useBoundAction(userActions.update);
+  const clearRequestBounded = useBoundAction(userActions.clearRequestState);
+  const updateUserInfoAsyncBounded = useBoundAction(updateUserAsync);
 
-  const isLoading = isUserLoading || isUserUpdating || isAvatarUploading;
-
-  const [profile, setProfile] = useState({} as UserResponse);
-
-  const fetchProfile = async () => {
-    try {
-      const result = await getUserInfo();
-      setProfile(() => result);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const {
+    userInfo: profile, isLoading, isUpdatedSuccessful, error,
+  } = useSelector(getUserState);
 
   useMountEffect(() => {
-    if (!authAPI.isAuth()) {
-      history.replace('/login');
-    }
-    fetchProfile();
+    getUserInfoAsyncBounded();
   });
 
-  const [formMessage, setFormMessage] = useState('');
-  const [formMessageStatus, setFormMessageStatus] = useState(FormMessageStatus.default);
-  const setMessage = (text: string, type: FormMessageStatus = FormMessageStatus.default): void => {
-    setFormMessage(() => text);
-    setFormMessageStatus(type);
-  };
-
-  const pageTitle = t('profile');
+  const { message, status, buildMessage } = useFormMessages();
 
   const submitHandler = async (data: SubmitedProfileData) => {
     const requestData = { ...data, login: profile.login };
-    setFormMessage('');
-    try {
-      await updateUser(requestData);
-      setMessage(t('updated_successfully'), FormMessageStatus.success);
-    } catch (error) {
-      setMessage(error.message, FormMessageStatus.error);
-    }
+    updateUserInfoAsyncBounded(requestData);
   };
 
   useEffect(() => {
-    const text = t('loading...');
-    if (isLoading) {
-      setMessage(text, FormMessageStatus.warning);
+    if (isUpdatedSuccessful) {
+      buildMessage(t('updated_successfully'), FormMessageStatus.success);
+    } else if (isLoading) {
+      buildMessage(t('loading...'), FormMessageStatus.warning);
+    } else if (error) {
+      buildMessage(error.message ?? '', FormMessageStatus.error);
     } else {
-      setFormMessage((prev) => (prev === text ? '' : prev));
+      buildMessage('');
     }
-  }, [isLoading, t]);
+  }, [isUpdatedSuccessful, error, isLoading, history, buildMessage, t]);
+
+  useEffect(() => () => { clearRequestBounded(); }, [clearRequestBounded]);
 
   const formAvatar = useRef<HTMLFormElement>(null);
 
-  const changeAvatarHandler: ChangeEventHandler<HTMLInputElement> = async () => {
-    if (formAvatar?.current) {
-      const formData = new FormData(formAvatar.current);
-      setFormMessage('');
-      try {
-        await uploadAvatar(formData);
-        setMessage(t('updated_successfully'), FormMessageStatus.success);
-      } catch (error) {
-        setMessage(error.message, FormMessageStatus.error);
-      }
-    }
-  };
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const changeAvatarHandler: ChangeEventHandler<HTMLInputElement> = async () => {};
 
   const changeInputHandler = useCallback(
     (key: string): ChangeEventHandler<HTMLInputElement> => (e) => {
-      setProfile(() => ({
+      const newProfile = {
         ...profile,
         [key]: e.target.value,
-      }));
-    }, [profile],
+      };
+      updateUserInfoBounded(newProfile);
+    }, [profile, updateUserInfoBounded],
   );
+
+  const pageTitle = t('profile');
 
   return (
     <div className="page">
@@ -113,8 +82,8 @@ export const ProfileEdit: FC = () => {
         user={profile}
         onSubmit={submitHandler}
         onChangeInput={changeInputHandler}
-        message={formMessage}
-        messageClass={formMessageStatus}
+        message={message}
+        messageClass={status}
       />
       <div className="profile-edit-actions">
         <form ref={formAvatar}>
