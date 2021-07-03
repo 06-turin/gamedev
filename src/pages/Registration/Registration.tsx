@@ -1,5 +1,5 @@
 import './styles.css';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useMemo } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
 import { useTranslation } from 'react-i18next';
@@ -26,7 +26,7 @@ export const Registration: FC = () => {
     registerAsyncBuonded(data);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     if (isAuth) {
       history.replace('/');
     } else if (isLoading) {

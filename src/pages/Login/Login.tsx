@@ -1,5 +1,5 @@
 import './styles.css';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useMemo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
@@ -28,7 +28,7 @@ export const Login: FC = () => {
     loginAsyncBounded(data);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     if (isAuth) {
       history.replace('/');
     } else if (isLoading) {

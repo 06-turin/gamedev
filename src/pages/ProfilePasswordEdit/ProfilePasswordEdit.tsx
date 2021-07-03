@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
@@ -36,7 +36,7 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
     changePassAsyncBounded(requestData);
   };
 
-  useEffect(() => {
+  useMemo(() => {
     if (isUpdatedSuccessful) {
       buildMessage(t('updated_successfully'), FormMessageStatus.success);
     } else if (isLoading) {
