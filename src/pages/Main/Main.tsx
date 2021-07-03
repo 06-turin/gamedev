@@ -25,12 +25,10 @@ export const Main: FC<MainPageProps> = ({ className }) => {
 
   const onPlayClickHandler = () => history.push('/game');
 
-  const logoutHandler = async () => {
-    logoutAsyncBounded();
-  };
+  const logoutHandler = () => logoutAsyncBounded();
 
   useEffect(() => {
-    if (!isAuth) history.replace('/login');
+    if (!isAuth) { history.replace('/login'); }
   }, [isAuth, history]);
 
   const items = [

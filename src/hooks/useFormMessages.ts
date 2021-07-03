@@ -1,5 +1,5 @@
-import { FormMessageStatus } from 'components/molecules/Form/types';
 import { useCallback, useState } from 'react';
+import { FormMessageStatus } from 'components/molecules/Form/types';
 
 export const useFormMessages = () => {
   const [message, setMessage] = useState('');
@@ -8,7 +8,7 @@ export const useFormMessages = () => {
     text: string,
     type: FormMessageStatus = FormMessageStatus.default,
   ): void => {
-    setMessage(() => text);
+    setMessage(text);
     setStatus(type);
   }, []);
 

@@ -4,7 +4,7 @@ import React, {
   FC, useCallback, useEffect, useRef,
 } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FormProfile } from 'components/organisms/FormProfile/FormProfile';
 import { SubmitedProfileData } from 'components/organisms/FormProfile/types';
 import { FormMessageStatus } from 'components/molecules/Form/types';
@@ -29,7 +29,7 @@ export const ProfileEdit: FC = () => {
   const changeAvatarAsyncBounded = useBoundAction(changeAvatarAsync);
 
   const {
-    userInfo: profile, isLoading, isUpdatedSuccessful, error,
+    userInfo, isLoading, isUpdatedSuccessful, error,
   } = useSelector(getUserState);
 
   useMountEffect(() => {
@@ -39,18 +39,18 @@ export const ProfileEdit: FC = () => {
   const { message, status, buildMessage } = useFormMessages();
 
   const submitHandler = async (data: SubmitedProfileData) => {
-    const requestData = { ...data, login: profile.login };
+    const requestData = { ...data, login: userInfo.login };
     updateUserInfoAsyncBounded(requestData);
   };
 
   const changeInputHandler = useCallback(
     (key: string): ChangeEventHandler<HTMLInputElement> => (e) => {
       const newProfile = {
-        ...profile,
+        ...userInfo,
         [key]: e.target.value,
       };
       updateUserInfoBounded(newProfile);
-    }, [profile, updateUserInfoBounded],
+    }, [userInfo, updateUserInfoBounded],
   );
 
   const formAvatar = useRef<HTMLFormElement>(null);
@@ -77,7 +77,7 @@ export const ProfileEdit: FC = () => {
 
   useEffect(() => () => { clearRequestBounded(); }, [clearRequestBounded]);
 
-  const pageTitle = t('profile');
+  const pageTitle = t('userInfo');
 
   return (
     <div className="page">
@@ -85,20 +85,23 @@ export const ProfileEdit: FC = () => {
         <h1 className="page__title">{pageTitle}</h1>
       </div>
       <FormProfile
-        user={profile}
+        user={userInfo}
         onSubmit={submitHandler}
         onChangeInput={changeInputHandler}
         message={message}
         messageClass={status}
       />
-      <div className="profile-edit-actions">
+      <div className="userInfo-edit-actions">
         <form ref={formAvatar}>
-          <label htmlFor="avatar" className={classNames(['btn', 'btn-secondary', 'size_l', 'profile__upload_avatar__label'])}>
+          <label
+            htmlFor="avatar"
+            className={classNames(['btn', 'btn-secondary', 'size_l', 'profile__upload_avatar__label'])}
+          >
             {t('upload_avatar')}
             <input type="file" name="avatar" id="avatar" onChange={changeAvatarHandler} />
           </label>
 
-          <Link to="/profile-password-edit">
+          <Link to="/userInfo-password-edit">
             <GDButton title={t('change_password')} size="l" styleOption="secondary" />
           </Link>
         </form>

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { ApiRequestProps, ResponseStatus, ApiResponse } from 'api/types';
+import { ApiRequestProps, ApiResponse, ResponseStatus } from 'api/types';
 import { AUTH_TOKEN_NAME } from 'api/config';
 import { store } from 'redux/store';
 import { userActions } from 'redux/user/userSlice';

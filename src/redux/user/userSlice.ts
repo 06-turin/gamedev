@@ -1,11 +1,11 @@
 import {
-  AnyAction, AsyncThunk, createSlice, SerializedError,
+  AnyAction, AsyncThunk, SerializedError, createSlice,
 } from '@reduxjs/toolkit';
-import { UserResponse } from 'api/types';
+import { AUTH_TOKEN_NAME } from 'api/config';
 import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
-import { AUTH_TOKEN_NAME } from 'api/config';
 import { RootState } from 'redux/store';
+import { UserResponse } from 'api/types';
 import {
   changeAvatarAsync,
   changePasswordAsync,
@@ -113,17 +113,16 @@ export const userSlice = createSlice({
       saveUserData(state, action.payload);
       state.isUpdatedSuccessful = true;
     });
-    builder.addCase(updateUserAsync.pending, (s) => { s.isUpdatedSuccessful = false; });
-    builder.addCase(updateUserAsync.rejected, (s) => { s.isUpdatedSuccessful = false; });
-    builder.addCase(changePasswordAsync.fulfilled, (s) => { s.isUpdatedSuccessful = true; });
-    builder.addCase(changePasswordAsync.pending, (s) => { s.isUpdatedSuccessful = false; });
-    builder.addCase(changePasswordAsync.rejected, (s) => { s.isUpdatedSuccessful = false; });
+    builder.addCase(updateUserAsync.pending, (state) => { state.isUpdatedSuccessful = false; });
+    builder.addCase(changePasswordAsync.fulfilled, (state) => { state.isUpdatedSuccessful = true; });
+    builder.addCase(changePasswordAsync.pending, (state) => { state.isUpdatedSuccessful = false; });
+    builder.addCase(changePasswordAsync.rejected, (state) => { state.isUpdatedSuccessful = false; });
     builder.addCase(changeAvatarAsync.fulfilled, (state, action) => {
       saveUserData(state, action.payload);
       state.isUpdatedSuccessful = true;
     });
-    builder.addCase(changeAvatarAsync.pending, (s) => { s.isUpdatedSuccessful = false; });
-    builder.addCase(changeAvatarAsync.rejected, (s) => { s.isUpdatedSuccessful = false; });
+    builder.addCase(changeAvatarAsync.pending, (state) => { state.isUpdatedSuccessful = false; });
+    builder.addCase(changeAvatarAsync.rejected, (state) => { state.isUpdatedSuccessful = false; });
 
     // global matchers
     builder.addMatcher(isPendingAction, (state) => {
