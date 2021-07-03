@@ -36,10 +36,22 @@ export const GameContent: FC<GameContentProps> = ({ gameStatus, stage }) => {
         return <CanvasComponent key={Date.now()} />;
 
       case GameStatus.STAGE_COMPLETED:
-        return <GameContentInside text={t('victory')} buttonText={t('continue')} onButtonClick={nextStageGameHandler} />;
+        return (
+          <GameContentInside
+            text={t('victory')}
+            buttonText={t('continue')}
+            onButtonClick={nextStageGameHandler}
+          />
+        );
 
       case GameStatus.FINISHED:
-        return <GameContentInside text={t('game_over')} buttonText={t('play_again')} onButtonClick={startGameHandler} />;
+        return (
+          <GameContentInside
+            text={t('game_over')}
+            buttonText={t('play_again')}
+            onButtonClick={startGameHandler}
+          />
+        );
     }
   }, [gameStatus, stageText, t]);
 
