@@ -18,6 +18,7 @@ import classNames from 'classnames';
 import { ErrorBoundary } from 'components/organisms/ErrorBoundary/ErrorBoundary';
 import { useSelector } from 'react-redux';
 import { selectTheme } from 'redux/user/userSelectors';
+import { PrivateRoute } from 'components/organisms/PrivateRoute/PrivateRoute';
 
 export const App: FC = () => {
   const theme = useSelector(selectTheme);
@@ -30,23 +31,23 @@ export const App: FC = () => {
         </ErrorBoundary>
 
         <Switch>
-          <Route exact path="/">
+          <PrivateRoute exact path="/" to="/login">
             <ErrorBoundary>
               <Main />
             </ErrorBoundary>
-          </Route>
+          </PrivateRoute>
 
-          <Route path="/login">
+          <PrivateRoute path="/login" to="/" redirectIfAuth>
             <ErrorBoundary>
               <Login />
             </ErrorBoundary>
-          </Route>
+          </PrivateRoute>
 
-          <Route path="/registration">
+          <PrivateRoute path="/registration" to="/" redirectIfAuth>
             <ErrorBoundary>
               <Registration />
             </ErrorBoundary>
-          </Route>
+          </PrivateRoute>
 
           <Route path="/forum">
             <ErrorBoundary>
@@ -66,23 +67,23 @@ export const App: FC = () => {
             </ErrorBoundary>
           </Route>
 
-          <Route path="/profile">
+          <PrivateRoute path="/profile" to="/login">
             <ErrorBoundary>
               <Profile />
             </ErrorBoundary>
-          </Route>
+          </PrivateRoute>
 
-          <Route path="/profile-edit">
+          <PrivateRoute path="/profile-edit" to="/login">
             <ErrorBoundary>
               <ProfileEdit />
             </ErrorBoundary>
-          </Route>
+          </PrivateRoute>
 
-          <Route path="/profile-password-edit">
+          <PrivateRoute path="/profile-password-edit" to="/login">
             <ErrorBoundary>
               <ProfilePasswordEdit />
             </ErrorBoundary>
-          </Route>
+          </PrivateRoute>
 
           <Route path="/topic">
             <ErrorBoundary>
