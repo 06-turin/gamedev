@@ -6,15 +6,17 @@ import { getUserState } from 'redux/user/userSlice';
 type PrivateRouteProps = {
   to: `/${string}`,
   redirectIfAuth?: boolean,
-  [x: string]: any,
+  path: `/${string}`,
+  component: FC,
+  exact?: boolean
 }
 
 export const PrivateRoute: FC<PrivateRouteProps> = ({
-  to, redirectIfAuth = false, ...rest
+  to, redirectIfAuth = false, component, ...rest
 }) => {
   const { isAuth } = useSelector(getUserState);
 
   return isAuth === redirectIfAuth
     ? <Redirect to={to} />
-    : <Route {...rest} />;
+    : <Route component={component} {...rest} />;
 };

@@ -31,23 +31,26 @@ export const App: FC = () => {
         </ErrorBoundary>
 
         <Switch>
-          <PrivateRoute exact path="/" to="/login">
-            <ErrorBoundary>
-              <Main />
-            </ErrorBoundary>
-          </PrivateRoute>
+          <PrivateRoute
+            exact
+            path="/"
+            to="/login"
+            component={() => <ErrorBoundary><Main /></ErrorBoundary>}
+          />
 
-          <PrivateRoute path="/login" to="/" redirectIfAuth>
-            <ErrorBoundary>
-              <Login />
-            </ErrorBoundary>
-          </PrivateRoute>
+          <PrivateRoute
+            path="/login"
+            to="/"
+            redirectIfAuth
+            component={() => <ErrorBoundary><Login /></ErrorBoundary>}
+          />
 
-          <PrivateRoute path="/registration" to="/" redirectIfAuth>
-            <ErrorBoundary>
-              <Registration />
-            </ErrorBoundary>
-          </PrivateRoute>
+          <PrivateRoute
+            path="/registration"
+            to="/"
+            redirectIfAuth
+            component={() => <ErrorBoundary><Registration /></ErrorBoundary>}
+          />
 
           <Route path="/forum">
             <ErrorBoundary>
@@ -67,23 +70,23 @@ export const App: FC = () => {
             </ErrorBoundary>
           </Route>
 
-          <PrivateRoute path="/profile" to="/login">
-            <ErrorBoundary>
-              <Profile />
-            </ErrorBoundary>
-          </PrivateRoute>
+          <PrivateRoute
+            path="/profile"
+            to="/login"
+            component={() => <ErrorBoundary><Profile /></ErrorBoundary>}
+          />
 
-          <PrivateRoute path="/profile-edit" to="/login">
-            <ErrorBoundary>
-              <ProfileEdit />
-            </ErrorBoundary>
-          </PrivateRoute>
+          <PrivateRoute
+            path="/profile-edit"
+            to="/login"
+            component={() => <ErrorBoundary><ProfileEdit /></ErrorBoundary>}
+          />
 
-          <PrivateRoute path="/profile-password-edit" to="/login">
-            <ErrorBoundary>
-              <ProfilePasswordEdit />
-            </ErrorBoundary>
-          </PrivateRoute>
+          <PrivateRoute
+            path="/profile-password-edit"
+            to="/login"
+            component={() => <ErrorBoundary><ProfilePasswordEdit /></ErrorBoundary>}
+          />
 
           <Route path="/topic">
             <ErrorBoundary>
