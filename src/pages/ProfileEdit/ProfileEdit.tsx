@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { FormProfile } from 'components/organisms/FormProfile/FormProfile';
 import { SubmitedProfileData } from 'components/organisms/FormProfile/types';
-import { FormMessageStatus } from 'components/molecules/Form/types';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { FormUpdateAvatar } from 'components/organisms/FormUpdateAvatar/FormUpdateAvatar';
@@ -17,9 +16,12 @@ import { getUserInfoAsync, updateUserAsync } from 'redux/user/userActions';
 import { useSelector } from 'react-redux';
 import { getUserState, userActions } from 'redux/user/userSlice';
 import { useFormMessages } from 'hooks/useFormMessages';
+import { useModal } from 'components/molecules/Modal/useModal';
+import { Modal } from 'components/molecules/Modal/Modal';
 
 export const ProfileEdit: FC = () => {
   const { t } = useTranslation();
+  const modal = useModal();
 
   const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
   const updateUserInfoBounded = useBoundAction(userActions.update);
@@ -51,13 +53,13 @@ export const ProfileEdit: FC = () => {
 
   useMemo(() => {
     if (isUpdatedSuccessful) {
-      buildMessage(t('updated_successfully'), FormMessageStatus.success);
+      modal.show(t('updated_successfully'));
     } else if (isLoading) {
-      buildMessage(t('loading...'), FormMessageStatus.warning);
+      modal.show(t('loading...'), 'banner');
     } else if (error) {
-      buildMessage(error.message ?? '', FormMessageStatus.error);
+      modal.show(error.message ?? '');
     } else {
-      buildMessage('');
+      modal.hide();
     }
   }, [isUpdatedSuccessful, error, isLoading, buildMessage, t]);
 
@@ -67,6 +69,7 @@ export const ProfileEdit: FC = () => {
 
   return (
     <div className="page">
+      <Modal {...modal.bind} />
       <div className="page__header">
         <h1 className="page__title">{pageTitle}</h1>
       </div>

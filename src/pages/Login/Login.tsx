@@ -6,36 +6,40 @@ import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Form } from 'components/molecules/Form/Form';
 import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
-import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
+import { SubmitFormMethod } from 'components/molecules/Form/types';
 import { loginAsync } from 'redux/user/userActions';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { useSelector } from 'react-redux';
 import { getUserState } from 'redux/user/userSlice';
 import { useFormMessages } from 'hooks/useFormMessages';
+import { Modal } from 'components/molecules/Modal/Modal';
+import { useModal } from 'components/molecules/Modal/useModal';
 import { LoginFormFields } from './types';
 import { loginFormFields } from './constants';
 
 export const Login: FC = () => {
   const { t } = useTranslation();
+  const modal = useModal();
 
   const { error, isLoading } = useSelector(getUserState);
   const loginAsyncBounded = useBoundAction(loginAsync);
 
-  const { message, status, buildMessage } = useFormMessages();
+  const { message, status } = useFormMessages();
 
   const submitHandler: SubmitFormMethod<LoginFormFields> = async (data) => {
     loginAsyncBounded(data);
   };
 
   useMemo(() => {
+
     if (isLoading) {
-      buildMessage(t('loading...'), FormMessageStatus.warning);
+      modal.show(t('loading...'), 'banner');
     } else if (error) {
-      buildMessage(error.message ?? '', FormMessageStatus.error);
+      modal.show(error.message ?? '');
     } else {
-      buildMessage('');
+      modal.hide();
     }
-  }, [error, isLoading, buildMessage, t]);
+  }, [error, isLoading, t]);
 
   const formComponent = (
     <Form
@@ -78,6 +82,7 @@ export const Login: FC = () => {
 
   return (
     <div className="page login-page">
+      <Modal {...modal.bind} />
       <GDLogo logoImage={logoImage} />
       {formComponent}
       {actionComponent}

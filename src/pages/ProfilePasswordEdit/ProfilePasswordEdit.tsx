@@ -4,13 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { Form } from 'components/molecules/Form/Form';
 import { editProfilePasswordFields } from 'pages/ProfilePasswordEdit/constants';
-import { FormMessageStatus, SubmitFormMethod } from 'components/molecules/Form/types';
+import { SubmitFormMethod } from 'components/molecules/Form/types';
 import { ChangePasswordRequest } from 'api/types';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { changePasswordAsync } from 'redux/user/userActions';
 import { useSelector } from 'react-redux';
 import { getUserState, userActions } from 'redux/user/userSlice';
 import { useFormMessages } from 'hooks/useFormMessages';
+import { useModal } from 'components/molecules/Modal/useModal';
+import { Modal } from 'components/molecules/Modal/Modal';
 import { PasswordFormFields } from './types';
 
 export type ProfilePasswordPageProps = {
@@ -19,6 +21,7 @@ export type ProfilePasswordPageProps = {
 
 export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className }) => {
   const { t } = useTranslation();
+  const modal = useModal();
 
   const { message, status, buildMessage } = useFormMessages();
 
@@ -38,13 +41,13 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
 
   useMemo(() => {
     if (isUpdatedSuccessful) {
-      buildMessage(t('updated_successfully'), FormMessageStatus.success);
+      modal.show(t('updated_successfully'));
     } else if (isLoading) {
-      buildMessage(t('loading...'), FormMessageStatus.warning);
+      modal.show(t('loading...'), 'banner');
     } else if (error) {
-      buildMessage(error.message ?? '', FormMessageStatus.error);
+      modal.show(error.message ?? '');
     } else {
-      buildMessage('');
+      modal.hide();
     }
   }, [isUpdatedSuccessful, error, isLoading, buildMessage, t]);
 
@@ -62,6 +65,8 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
 
   return (
     <div className={classnames(['page', className])}>
+      <Modal {...modal.bind} />
+
       <h1 className="page__title">{t('password_edit')}</h1>
 
       <div className="page__content">
