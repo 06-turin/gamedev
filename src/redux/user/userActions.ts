@@ -4,6 +4,7 @@ import {
   ChangePasswordRequest, SignInRequest, SignUpRequest, UserRequest,
 } from 'api/types';
 import { usersAPI } from 'api/users';
+import { setIsLoadingShown } from 'redux/requestStatus/requestStatusActions';
 
 export enum UserActionType {
   info = 'user/getUserInfoAsync',
@@ -17,8 +18,10 @@ export enum UserActionType {
 
 export const getUserInfoAsync = createAsyncThunk(
   UserActionType.info,
-  async () => {
+  async (nodata, thunkAPI) => {
+    thunkAPI.dispatch(setIsLoadingShown(true));
     const userInfo = await authAPI.getUserInfo();
+    thunkAPI.dispatch(setIsLoadingShown(false));
     return userInfo;
   },
 );
