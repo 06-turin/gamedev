@@ -56,6 +56,7 @@ export const GDFormikForm: FC<GDFormikFormProps> = ({
           className={className}
           isInvalid={!!(formik.touched[id] && formik.errors[id] && !formik.isValid)}
           onFocus={(event) => setActiveInputID(event.target.id)}
+          key={id}
         />
       ))}
       <p className="form__error-label">{formik.touched[activeInputID] && formik.errors[activeInputID]}</p>
