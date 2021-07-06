@@ -54,7 +54,7 @@ export const ProfileEdit: FC = () => {
   return (
     <div className="page">
       <Modal {...modal.bind} />
-      <h1 className="page__title">{t('userInfo')}</h1>
+      <h1 className="page__title">{t('profile_edit')}</h1>
       <GDFormikForm
         fields={Object.values(editProfileFormFields)}
         initialValues={userInfo}
