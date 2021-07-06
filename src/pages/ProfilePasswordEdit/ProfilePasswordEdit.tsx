@@ -2,18 +2,17 @@ import React, { FC, useEffect, useMemo } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
-import { Form } from 'components/molecules/Form/Form';
-import { editProfilePasswordFields } from 'pages/ProfilePasswordEdit/constants';
-import { SubmitFormMethod } from 'components/molecules/Form/types';
+import { editProfilePasswordFields, validationSchemaConstructor } from 'pages/ProfilePasswordEdit/constants';
 import { ChangePasswordRequest } from 'api/types';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { changePasswordAsync } from 'redux/user/userActions';
 import { useSelector } from 'react-redux';
 import { getUserState, userActions } from 'redux/user/userSlice';
-import { useFormMessages } from 'hooks/useFormMessages';
 import { useModal } from 'components/molecules/Modal/useModal';
 import { Modal } from 'components/molecules/Modal/Modal';
-import { PasswordFormFields } from './types';
+import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
+import { TSubmitFormMethod } from 'components/molecules/GDFormikForm/types';
+import { TPasswordFormFields } from './types';
 
 export type ProfilePasswordPageProps = {
   className?: string
@@ -22,15 +21,14 @@ export type ProfilePasswordPageProps = {
 export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const modal = useModal();
-
-  const { message, status, buildMessage } = useFormMessages();
+  const validationSchema = useMemo(() => validationSchemaConstructor(t), [t]);
 
   const changePassAsyncBounded = useBoundAction(changePasswordAsync);
   const clearRequestBounded = useBoundAction(userActions.clearRequestState);
 
   const { isLoading, isUpdatedSuccessful, error } = useSelector(getUserState);
 
-  const submitHandler: SubmitFormMethod<PasswordFormFields> = async (data) => {
+  const submitHandler: TSubmitFormMethod<TPasswordFormFields> = async (data) => {
     const requestData: ChangePasswordRequest = {
       oldPassword: data.oldPassword,
       newPassword: data.newPassword,
@@ -49,19 +47,9 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
     } else {
       modal.hide();
     }
-  }, [isUpdatedSuccessful, error, isLoading, buildMessage, t]);
+  }, [isUpdatedSuccessful, error, isLoading, t]);
 
   useEffect(() => () => { clearRequestBounded(); }, [clearRequestBounded]);
-
-  const formComponent = (
-    <Form
-      fields={editProfilePasswordFields}
-      textSubmitButton={t('boom !')}
-      onSubmit={submitHandler}
-      message={message}
-      messageClass={status}
-    />
-  );
 
   return (
     <div className={classnames(['page', className])}>
@@ -70,7 +58,12 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
       <h1 className="page__title">{t('password_edit')}</h1>
 
       <div className="page__content">
-        {formComponent}
+        <GDFormikForm
+          fields={Object.values(editProfilePasswordFields)}
+          validationSchema={validationSchema}
+          textSubmitButton={t('submit')}
+          onSubmit={submitHandler}
+        />
       </div>
 
       <div className="page__footer-buttons">
