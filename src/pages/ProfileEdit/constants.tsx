@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import { TFunction } from 'react-i18next';
 import { TProfileFormFields } from 'pages/ProfileEdit/types';
 
-export const editProfileFields: TProfileFormFields = {
+export const editProfileFormFields: TProfileFormFields = {
   first_name: { id: 'first_name', title: 'name' },
   second_name: { id: 'second_name', title: 'last_name' },
   display_name: { id: 'display_name', title: 'nickname' },

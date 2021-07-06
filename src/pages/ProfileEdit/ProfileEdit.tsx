@@ -13,7 +13,7 @@ import { getUserState, userActions } from 'redux/user/userSlice';
 import { useModal } from 'components/molecules/Modal/useModal';
 import { Modal } from 'components/molecules/Modal/Modal';
 import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
-import { editProfileFields, validationSchemaConstructor } from 'pages/ProfileEdit/constants';
+import { editProfileFormFields, validationSchemaConstructor } from 'pages/ProfileEdit/constants';
 import { TSubmitFormMethod } from 'components/molecules/GDFormikForm/types';
 import { TProfileFormFields } from 'pages/ProfileEdit/types';
 
@@ -56,7 +56,7 @@ export const ProfileEdit: FC = () => {
       <Modal {...modal.bind} />
       <h1 className="page__title">{t('userInfo')}</h1>
       <GDFormikForm
-        fields={Object.values(editProfileFields)}
+        fields={Object.values(editProfileFormFields)}
         initialValues={userInfo}
         validationSchema={validationSchema}
         textSubmitButton={t('submit')}
