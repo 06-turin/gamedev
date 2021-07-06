@@ -1,12 +1,12 @@
 import './styles.css';
-import React, { FC } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import classNames from 'classnames';
 import { GDButtonStyleOption, GDSizeOption } from 'components/organisms/App/types';
 
 export type GDButtonProps = {
   title: string
   styleOption?: GDButtonStyleOption
-  onClick?: () => void
+  onClick?: MouseEventHandler<HTMLButtonElement>
   className?: string
   size?: GDSizeOption
   type?: 'submit' | 'reset' | 'button'
