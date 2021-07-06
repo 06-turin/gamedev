@@ -3,30 +3,28 @@ import React, { FC, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
-import { Form } from 'components/molecules/Form/Form';
 import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
-import { SubmitFormMethod } from 'components/molecules/Form/types';
 import { loginAsync } from 'redux/user/userActions';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { useSelector } from 'react-redux';
 import { getUserState } from 'redux/user/userSlice';
-import { useFormMessages } from 'hooks/useFormMessages';
 import { Modal } from 'components/molecules/Modal/Modal';
 import { useModal } from 'components/molecules/Modal/useModal';
-import { LoginFormFields } from './types';
-import { loginFormFields } from './constants';
+import { TSubmitFormMethod } from 'components/molecules/GDFormikForm/types';
+import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
+import { TLoginFormFields } from './types';
+import { loginFormFields, validationSchemaConstructor } from './constants';
 
 export const Login: FC = () => {
   const { t } = useTranslation();
   const modal = useModal();
+  const validationSchema = useMemo(() => validationSchemaConstructor(t), [t]);
 
   const { error, isLoading } = useSelector(getUserState);
   const loginAsyncBounded = useBoundAction(loginAsync);
 
-  const { message, status } = useFormMessages();
-
-  const submitHandler: SubmitFormMethod<LoginFormFields> = async (data) => {
+  const submitHandler: TSubmitFormMethod<TLoginFormFields> = async (data) => {
     loginAsyncBounded(data);
   };
 
@@ -40,16 +38,6 @@ export const Login: FC = () => {
       modal.hide();
     }
   }, [error, isLoading, t]);
-
-  const formComponent = (
-    <Form
-      fields={loginFormFields}
-      textSubmitButton={t('boom !')}
-      onSubmit={submitHandler}
-      message={message}
-      messageClass={status}
-    />
-  );
 
   const textNoAccount = t('no_account_?');
   const textRegister = t('register_!');
@@ -84,7 +72,12 @@ export const Login: FC = () => {
     <div className="page login-page">
       <Modal {...modal.bind} />
       <GDLogo logoImage={logoImage} />
-      {formComponent}
+      <GDFormikForm
+        fields={Object.values(loginFormFields)}
+        validationSchema={validationSchema}
+        textSubmitButton={t('submit')}
+        onSubmit={submitHandler}
+      />
       {actionComponent}
     </div>
   );
