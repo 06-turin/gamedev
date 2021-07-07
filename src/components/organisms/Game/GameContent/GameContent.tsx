@@ -61,7 +61,8 @@ export const GameContent: FC<GameContentProps> = ({ gameStatus, stage, fullScree
           />
         );
     }
-  }, [gameStatus, stageText, t, fullScreenHandle]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameStatus, stageText, t]);
 
   return (
     <div className="game-content">
