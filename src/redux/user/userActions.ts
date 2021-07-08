@@ -20,9 +20,12 @@ export const getUserInfoAsync = createAsyncThunk(
   UserActionType.info,
   async (nodata, thunkAPI) => {
     thunkAPI.dispatch(setIsLoadingShown(true));
-    const userInfo = await authAPI.getUserInfo();
-    thunkAPI.dispatch(setIsLoadingShown(false));
-    return userInfo;
+    try {
+      const userInfo = await authAPI.getUserInfo();
+      return userInfo;
+    } finally {
+      thunkAPI.dispatch(setIsLoadingShown(false));
+    }
   },
 );
 
