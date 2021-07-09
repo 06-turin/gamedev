@@ -15,7 +15,7 @@ export const PATHS = {
     uploadAvatar: `${API_BASE_URL}/user/profile/avatar`,
   },
   leaderboard: {
-    addNewLeader: `${API_BASE_URL}/leaderboard`,
+    addLeader: `${API_BASE_URL}/leaderboard`,
     getLeaderboard: `${API_BASE_URL}/leaderboard/all`,
   },
   resources: {

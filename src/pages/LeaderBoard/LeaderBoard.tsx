@@ -30,7 +30,7 @@ export const LeaderBoard: FC = () => {
       <div className="page__content">
         <ul className="leaderboard-page__list">
           {leaderboard.map(({ displayName, score }, index) => (
-            <li className="leaderboard-page__list-item">
+            <li className="leaderboard-page__list-item" key={displayName}>
               <span className="leaderboard-page__list-nickname">{`${index + 1}. ${displayName}`}</span>
               <span className="leaderboard-page__list-dots">{dots}</span>
               <span className="leaderboard-page__list-score">{digitsSplitter(score)}</span>

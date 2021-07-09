@@ -14,7 +14,7 @@ export const leaderboardAPI = {
     try {
       const response = await callApi({
         method: 'post',
-        url: PATHS.leaderboard.addNewLeader,
+        url: PATHS.leaderboard.addLeader,
         data,
         authRequired: true,
       });
@@ -38,7 +38,6 @@ export const leaderboardAPI = {
       });
 
       if (response.data && is<GetLeaderboardResponse>(response.data)) {
-        // localStorage.setItem(AUTH_TOKEN_NAME, 'OK');
         return response.data;
       }
       throw new Error(ERROR_RESPONSE_DATA);
