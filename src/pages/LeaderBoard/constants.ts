@@ -1,2 +1,2 @@
-export const dotCharacter = '. ';
-export const dotCount = 30;
+export const DOT_CHARACTER = '. ';
+export const DOT_COUNT = 30;
