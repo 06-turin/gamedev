@@ -28,9 +28,7 @@ export const Registration: FC = () => {
   };
 
   useMemo(() => {
-    if (isLoading) {
-      modal.show(t('loading...'), 'banner');
-    } else if (error) {
+    if (error) {
       modal.show(error.message ?? '');
     } else {
       modal.hide();

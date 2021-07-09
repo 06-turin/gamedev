@@ -40,8 +40,6 @@ export const ProfileEdit: FC = () => {
   useMemo(() => {
     if (isUpdatedSuccessful) {
       modal.show(t('updated_successfully'));
-    } else if (isLoading) {
-      modal.show(t('loading...'), 'banner');
     } else if (error) {
       modal.show(error.message ?? '');
     } else {
