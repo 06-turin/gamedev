@@ -75,3 +75,19 @@ export type ChangePasswordResponse = 'OK'
 export type ChangeAvatarRequest = {
   avatar: File
 }
+
+export type AddLeaderRequest = {
+  data: {}
+  ratingFieldName: string
+}
+
+export type AddLeaderResponse = 'OK'
+
+export type GetLeaderboardRequest = {
+  ratingFieldName: string
+  cursor: number
+  limit: number
+}
+
+// TODO: fix response type
+export type GetLeaderboardResponse = []
