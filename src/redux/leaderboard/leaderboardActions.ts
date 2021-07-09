@@ -3,12 +3,12 @@ import { leaderboardAPI } from 'api/leaderboard';
 import { AddLeaderRequest, GetLeaderboardRequest } from 'api/types';
 
 export enum LeaderboardActionType {
-  getLeaderboard = 'leaderboard/getLeaderboardAsync',
-  addLeader = 'leaderboard/addLeaderAsync'
+  GET_LEADERBOARD = 'leaderboard/getLeaderboardAsync',
+  ADD_LEADER = 'leaderboard/addLeaderAsync'
 }
 
 export const addLeaderAsync = createAsyncThunk(
-  LeaderboardActionType.addLeader,
+  LeaderboardActionType.ADD_LEADER,
   async (data: AddLeaderRequest) => {
     const leaderboard = await leaderboardAPI.addLeader(data);
     return leaderboard;
@@ -16,7 +16,7 @@ export const addLeaderAsync = createAsyncThunk(
 );
 
 export const getLeaderboardAsync = createAsyncThunk(
-  LeaderboardActionType.getLeaderboard,
+  LeaderboardActionType.GET_LEADERBOARD,
   async (data: GetLeaderboardRequest) => {
     const leaderboard = await leaderboardAPI.getLeaderboard(data);
     return leaderboard;
