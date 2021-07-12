@@ -76,8 +76,13 @@ export type ChangeAvatarRequest = {
   avatar: File
 }
 
+export type Leader = {
+  user: string
+  scoreFieldGD: number
+}
+
 export type AddLeaderRequest = {
-  data: {}
+  data: Leader
   ratingFieldName: string
 }
 
@@ -89,5 +94,6 @@ export type GetLeaderboardRequest = {
   limit: number
 }
 
-// TODO: fix response type
-export type GetLeaderboardResponse = []
+export type GetLeaderboardResponse = {
+  data: Leader
+}[]

@@ -3,37 +3,41 @@ import React, { FC, useMemo } from 'react';
 import classnames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
-import { DOT_CHARACTER, DOT_COUNT } from 'pages/LeaderBoard/constants';
-// import { useBoundAction } from 'hooks/useBoundAction';
-// import { getLeaderboardAsync } from 'redux/leaderboard/leaderboardActions';
-// import { useMountEffect } from 'hooks/useMountEffect';
+import { SEPARATOR, SEPARATOR_LENGTH, RECORDS_PER_PAGE } from 'pages/LeaderBoard/constants';
+import { useBoundAction } from 'hooks/useBoundAction';
+import { getLeaderboardAsync } from 'redux/leaderboard/leaderboardActions';
+import { useMountEffect } from 'hooks/useMountEffect';
 import { useSelector } from 'react-redux';
 import { selectLeaderboard } from 'redux/leaderboard/leaderboardSelectors';
 
 export const LeaderBoard: FC = () => {
   const { t } = useTranslation();
-  const dots = useMemo(() => new Array(DOT_COUNT + 1).join(DOT_CHARACTER), []);
-  // const getLeaderboardAsyncBounded = useBoundAction(getLeaderboardAsync);
+  const dots = useMemo(() => new Array(SEPARATOR_LENGTH + 1).join(SEPARATOR), []);
+  const getLeaderboardAsyncBounded = useBoundAction(getLeaderboardAsync);
   const { leaderboard } = useSelector(selectLeaderboard);
 
-  const digitsSplitter = (value: number): string => (
+  const splitDigits = (value: number): string => (
     value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
   );
 
-  // TODO:
-  // useMountEffect(() => getLeaderboardAsyncBounded());
+  useMountEffect(() => getLeaderboardAsyncBounded({
+    ratingFieldName: 'scoreFieldGD',
+    cursor: 0,
+    limit: RECORDS_PER_PAGE,
+  }));
 
   return (
     <div className={classnames(['page'])}>
       <h1 className="page__title">{t('leaderboard')}</h1>
 
       <div className="page__content">
+        {leaderboard.length === 0 && <p>{t('no_data')}</p>}
         <ul className="leaderboard-page__list">
-          {leaderboard.map(({ displayName, score }, index) => (
-            <li className="leaderboard-page__list-item" key={displayName}>
-              <span className="leaderboard-page__list-nickname">{`${index + 1}. ${displayName}`}</span>
+          {leaderboard.map(({ user, scoreFieldGD }, index) => (
+            <li className="leaderboard-page__list-item" key={user}>
+              <span className="leaderboard-page__list-nickname">{`${index + 1}. ${user}`}</span>
               <span className="leaderboard-page__list-dots">{dots}</span>
-              <span className="leaderboard-page__list-score">{digitsSplitter(score)}</span>
+              <span className="leaderboard-page__list-score">{splitDigits(scoreFieldGD)}</span>
             </li>
           ))}
         </ul>

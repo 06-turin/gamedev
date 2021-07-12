@@ -1,2 +1,3 @@
-export const DOT_CHARACTER = '. ';
-export const DOT_COUNT = 30;
+export const SEPARATOR = '. ';
+export const SEPARATOR_LENGTH = 30;
+export const RECORDS_PER_PAGE = 10;
