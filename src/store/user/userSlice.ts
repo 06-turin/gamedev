@@ -4,7 +4,7 @@ import {
 import { AUTH_TOKEN_NAME } from 'api/config';
 import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
-import { RootState } from 'redux/store';
+import { RootState } from 'store/store';
 import { UserResponse } from 'api/types';
 import {
   changeAvatarAsync,
@@ -38,7 +38,8 @@ const initialState: UserState = {
     avatarSrc: avatarDummy,
   },
   theme: 'dark',
-  isAuth: Boolean(localStorage.getItem(AUTH_TOKEN_NAME)),
+  // isAuth: Boolean(localStorage.getItem(AUTH_TOKEN_NAME)),
+  isAuth: false,
   isLoading: false,
   isUpdatedSuccessful: false,
   error: null,

@@ -1,3 +1,8 @@
+@font-face{
+  font-family: 'Pixeboy';
+  src: url('../assets/fonts/Pixeboy.ttf'), format('ttf');
+}
+
 .app-container {
   --activityColor: #ff6b00;
   --dangerColor: #d41f1f;

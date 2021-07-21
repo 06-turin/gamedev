@@ -15,7 +15,7 @@ export const Error: FC<ErrorProps> = ({ errNumber }) => {
   const history = useHistory();
 
   const backClickHandler = () => {
-    history.goBack();
+    history.back();
   };
 
   const errorCanShowBomb = `${errNumber}`[1] === '0' && `${errNumber}`.length > 2;

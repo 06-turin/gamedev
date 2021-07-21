@@ -1,13 +1,13 @@
-import './styles/styles.css';
+import 'styles/styles.css';
+import '../i18n';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { store } from 'redux/store';
-import { startServiceWorker } from 'serviceWorker';
-import { App } from './components/organisms/App/App';
-import './i18n';
+import { store } from 'store/store';
+import { App } from 'components/organisms/App/App';
+import { startServiceWorker } from './serviceWorker';
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <React.StrictMode>
     <Provider store={store}>
       <Suspense fallback={<div>Loading...</div>}>

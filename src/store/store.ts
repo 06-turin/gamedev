@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { leaderboardReducer } from 'store/leaderboard/leaderboardSlice';
 import { requestStatusReducer } from './requestStatus/requestStatusSlice';
-import { leaderboardReducer } from 'redux/leaderboard/leaderboardSlice';
 import { userReducer } from './user/userSlice';
 
 export const store = configureStore({

@@ -2,7 +2,7 @@ import './styles.css';
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import { useBoundAction } from 'hooks/useBoundAction';
-import { toggleTheme } from 'redux/user/userSlice';
+import { toggleTheme } from 'store/user/userSlice';
 
 export const ThemeSwitch: FC = () => {
   const toggleThemeBounded = useBoundAction(toggleTheme);

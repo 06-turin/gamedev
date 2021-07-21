@@ -4,9 +4,9 @@ import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getUserState } from 'redux/user/userSlice';
+import { getUserState } from 'store/user/userSlice';
 import { useBoundAction } from 'hooks/useBoundAction';
-import { registerAsync } from 'redux/user/userActions';
+import { registerAsync } from 'store/user/userActions';
 import { Modal } from 'components/molecules/Modal/Modal';
 import { useModal } from 'components/molecules/Modal/useModal';
 import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
@@ -33,10 +33,11 @@ export const Registration: FC = () => {
     } else {
       modal.hide();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, isLoading, history, t]);
 
   const backHandler = () => {
-    history.goBack();
+    history.back();
   };
   return (
     <div className="page">

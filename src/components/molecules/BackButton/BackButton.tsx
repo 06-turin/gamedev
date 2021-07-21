@@ -12,7 +12,7 @@ export const BackButton: FC = () => {
       title={t('back')}
       styleOption="secondary"
       size="l"
-      onClick={() => history.goBack()}
+      onClick={() => history.back()}
     />
   );
 };
