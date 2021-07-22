@@ -1,7 +1,7 @@
 import {
   AnyAction, AsyncThunk, SerializedError, createSlice,
 } from '@reduxjs/toolkit';
-import { AUTH_TOKEN_NAME } from 'api/config';
+// import { AUTH_TOKEN_NAME } from 'api/config';
 import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { RootState } from 'redux/store';
@@ -38,7 +38,8 @@ const initialState: UserState = {
     avatarSrc: avatarDummy,
   },
   theme: 'dark',
-  isAuth: Boolean(localStorage.getItem(AUTH_TOKEN_NAME)),
+  // isAuth: Boolean(localStorage.getItem(AUTH_TOKEN_NAME)),
+  isAuth: true,
   isLoading: false,
   isUpdatedSuccessful: false,
   error: null,
@@ -62,9 +63,9 @@ function isFulfilledAction(action: AnyAction): action is FulfilledAction {
 
 const setAuth = (state: UserState, auth: boolean): void => {
   if (auth) {
-    localStorage.setItem(AUTH_TOKEN_NAME, '1');
+    // localStorage.setItem(AUTH_TOKEN_NAME, '1');
   } else {
-    localStorage.removeItem(AUTH_TOKEN_NAME);
+    // localStorage.removeItem(AUTH_TOKEN_NAME);
   }
   state.isAuth = auth;
 };
