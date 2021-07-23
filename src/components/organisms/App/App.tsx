@@ -1,4 +1,5 @@
 import './App.css';
+import { hot } from 'react-hot-loader/root';
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Forum } from 'pages/Forum/Forum';
@@ -17,11 +18,11 @@ import { NavHeader } from 'components/organisms/NavHeader/NavHeader';
 import classNames from 'classnames';
 import { ErrorBoundary } from 'components/organisms/ErrorBoundary/ErrorBoundary';
 import { useSelector } from 'react-redux';
-import { selectTheme } from 'redux/user/userSelectors';
+import { selectTheme } from 'store/user/userSelectors';
 import { PrivateRoute } from 'components/organisms/PrivateRoute/PrivateRoute';
 import { LoadingIndicator } from 'components/atoms/LoadingIndicator/LoadingIndicator';
 
-export const App: FC = () => {
+export const App: FC = hot(() => {
   const theme = useSelector(selectTheme);
 
   return (
@@ -109,4 +110,4 @@ export const App: FC = () => {
       <LoadingIndicator />
     </div>
   );
-};
+});

@@ -2,7 +2,7 @@ import { renderToString } from 'react-dom/server';
 import React from 'react';
 import { App } from 'components/organisms/App/App';
 import { StaticRouterContext } from 'react-router';
-import { store } from 'redux/store';
+import { store } from 'store/store';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { Request, Response } from 'express';
@@ -19,7 +19,7 @@ function makeHTMLPage(content: string) {
           </head>
           <body>
               <div id="root">${content}</div>
-              <script src="/bundle.js"></script>
+              <script src="/main.js"></script>
           </body>
           </html>
       `;
@@ -29,7 +29,7 @@ export const serverRenderMiddleware = (req: Request, res: Response) => {
   const location = req.url;
   const context: StaticRouterContext = {};
 
-  console.log('rendering on server');
+  console.log('rendering on server', location, context);
 
   const jsx = (
     <Provider store={store}>
@@ -39,6 +39,12 @@ export const serverRenderMiddleware = (req: Request, res: Response) => {
     </Provider>
   );
 
+  if (context.url) {
+    res.redirect(context.url);
+    return;
+  }
+
   const appContentHTML = renderToString(jsx);
+
   res.send(makeHTMLPage(appContentHTML));
 };

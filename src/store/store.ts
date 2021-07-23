@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { leaderboardReducer } from 'redux/leaderboard/leaderboardSlice';
+import { leaderboardReducer } from 'store/leaderboard/leaderboardSlice';
 import { connectRouter } from 'connected-react-router';
 import { History, createBrowserHistory, createMemoryHistory } from 'history';
 import { requestStatusReducer } from './requestStatus/requestStatusSlice';

@@ -1,15 +1,15 @@
 import path from 'path';
 import { Configuration } from 'webpack';
-// import nodeExternals from 'webpack-node-externals';
 import { TsconfigPathsPlugin } from 'tsconfig-paths-webpack-plugin';
+import nodeExternals from 'webpack-node-externals';
 import fileLoader from './loaders/file';
 import cssLoader from './loaders/css';
 import jsLoader from './loaders/js';
-import { DIST_DIR, SRC_DIR, IS_DEV } from './env';
+import { SERVER_OUT_DIR, SRC_DIR, IS_DEV } from './env';
 
 const config: Configuration = {
   name: 'server',
-  target: 'node',
+  externalsPresets: { node: true },
   node: { __dirname: false },
   entry: path.join(SRC_DIR, 'server/server'),
   module: {
@@ -22,13 +22,15 @@ const config: Configuration = {
   output: {
     filename: 'server.js',
     libraryTarget: 'commonjs2',
-    path: DIST_DIR,
+    path: SERVER_OUT_DIR,
     publicPath: '/static/',
   },
   resolve: {
-    modules: ['src', 'node_modules'],
+    modules: [SRC_DIR, 'node_modules'],
     extensions: ['*', '.js', '.jsx', '.json', '.ts', '.tsx'],
-    plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
+    plugins: [
+      new TsconfigPathsPlugin({ configFile: './tsconfig.json' }),
+    ],
   },
 
   devtool: 'source-map',
@@ -37,7 +39,7 @@ const config: Configuration = {
     hints: IS_DEV ? false : 'warning',
   },
 
-  // externals: [nodeExternals({ allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i] })],
+  externals: [nodeExternals({ allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i] })],
 
   optimization: { nodeEnv: false },
 };
