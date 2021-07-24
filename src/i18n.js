@@ -4,11 +4,11 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
 i18n
-  // Подключение бэкенда i18next
+// Подключение бэкенда i18next
   .use(Backend)
-  // Автоматическое определение языка
+// Автоматическое определение языка
   .use(LanguageDetector)
-  // модуль инициализации
+// модуль инициализации
   .use(initReactI18next)
   .init({
     // Стандартный язык
@@ -21,6 +21,9 @@ i18n
     },
     interpolation: {
       escapeValue: false,
+    },
+    react: {
+      useSuspense: false,
     },
   });
 

@@ -1,8 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { ApiRequestProps, ApiResponse, ResponseStatus } from 'api/types';
-import { AUTH_TOKEN_NAME } from 'api/config';
-// import { store } from 'client';
-// import { userActions } from 'store/user/userSlice';
 
 const axiosInstance = axios.create({});
 
@@ -14,7 +11,8 @@ export const callApi: (params: ApiRequestProps) => Promise<ApiResponse> = async 
   authRequired = false,
   formData = false,
 }) => {
-  const authToken = localStorage.getItem(AUTH_TOKEN_NAME) || '';
+  // const authToken = localStorage.getItem(AUTH_TOKEN_NAME) || '';
+  const authToken = '';
 
   const response: ApiResponse = {
     status: ResponseStatus.SUCCESS,

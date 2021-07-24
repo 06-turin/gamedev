@@ -36,11 +36,11 @@ export const validationSchemaConstructor = (t: TFunction) => Yup.object().shape(
     .matches(phoneRegExp, t('invalid_format')),
   password: Yup.string()
     .required(t('required'))
-    .min(8, t('too_short'))
+    .min(3, t('too_short'))
     .max(25, t('too_long')),
   verify_password: Yup.string()
     .required(t('required'))
     .oneOf([Yup.ref('password')], t('passwords_not_matches'))
-    .min(8, t('too_short'))
+    .min(3, t('too_short'))
     .max(25, t('too_long')),
 });

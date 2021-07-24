@@ -43,7 +43,6 @@ export const serverStoreMiddleware = (req: Request, res: Response, next: NextFun
   // dispatch action END to close saga
   return Promise.all(dataRequirements)
     .then(() => {
-      console.log('dispatches are done!');
       next();
     })
     .catch((err) => {

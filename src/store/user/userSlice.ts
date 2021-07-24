@@ -1,11 +1,12 @@
 import {
   AnyAction, AsyncThunk, SerializedError, createSlice,
 } from '@reduxjs/toolkit';
-import { AUTH_TOKEN_NAME } from 'api/config';
 import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
 import { UserResponse } from 'api/types';
 import { RootState } from 'client';
+import isServer from 'utils/server/isServerEnvCheker';
+import { AUTH_TOKEN_NAME } from 'api/config';
 import {
   changeAvatarAsync,
   changePasswordAsync,
@@ -38,7 +39,6 @@ const initialState: UserState = {
     avatarSrc: avatarDummy,
   },
   theme: 'dark',
-  // isAuth: Boolean(localStorage.getItem(AUTH_TOKEN_NAME)),
   isAuth: false,
   isLoading: false,
   isUpdatedSuccessful: false,
@@ -62,10 +62,12 @@ function isFulfilledAction(action: AnyAction): action is FulfilledAction {
 }
 
 const setAuth = (state: UserState, auth: boolean): void => {
-  if (auth) {
-    localStorage.setItem(AUTH_TOKEN_NAME, '1');
-  } else {
-    localStorage.removeItem(AUTH_TOKEN_NAME);
+  if (!isServer) {
+    if (auth) {
+      document.cookie = `${AUTH_TOKEN_NAME}=1`;
+    } else {
+      document.cookie = `${AUTH_TOKEN_NAME}=0`;
+    }
   }
   state.isAuth = auth;
 };
@@ -79,6 +81,8 @@ const saveUserData = (state: UserState, payload: UserResponse) => {
     ...payload,
     avatarSrc,
   };
+
+  setAuth(state, true);
 };
 
 export const userSlice = createSlice({
@@ -86,10 +90,10 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     toggleTheme: (state) => {
-      console.log('trying toggle theme...');
-      console.log('~ state.theme', state.theme);
       state.theme = state.theme === 'dark' ? 'light' : 'dark';
-      console.log('~ state.theme', state.theme);
+    },
+    login(state) {
+      setAuth(state, true);
     },
     logout(state) {
       setAuth(state, false);
@@ -107,6 +111,9 @@ export const userSlice = createSlice({
     // auth cases
     builder.addCase(getUserInfoAsync.fulfilled, (state, action) => {
       saveUserData(state, action.payload);
+    });
+    builder.addCase(getUserInfoAsync.rejected, (state) => {
+      setAuth(state, false);
     });
     builder.addCase(loginAsync.fulfilled, (state) => setAuth(state, true));
     builder.addCase(logoutAsync.fulfilled, (state) => setAuth(state, false));
@@ -146,7 +153,7 @@ export const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer;
 
-export const { toggleTheme } = userSlice.actions;
+export const { toggleTheme, login, logout } = userSlice.actions;
 export const userActions = userSlice.actions;
 
 export const selectUserInfo = (state: RootState) => state.user.userInfo;

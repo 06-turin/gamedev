@@ -65,8 +65,6 @@ export const routes: RoutesType = [
     path: '/game',
     component: Game,
     fetchData({ dispatch }: RouterFetchDataArgs) {
-      console.log('trying dispatch theme ....');
-
       dispatch(toggleTheme());
     },
   },
