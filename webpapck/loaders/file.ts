@@ -7,6 +7,6 @@ export default {
   },
   server: {
     test: fileRegex,
-    loader: 'null-loader',
+    type: 'asset/resource',
   },
 };

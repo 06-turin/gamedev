@@ -23,7 +23,7 @@ const config: Configuration = {
     filename: 'server.js',
     libraryTarget: 'commonjs2',
     path: SERVER_OUT_DIR,
-    publicPath: '/static/',
+    publicPath: '/',
   },
   resolve: {
     modules: [SRC_DIR, 'node_modules'],

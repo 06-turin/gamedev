@@ -4,10 +4,12 @@ export default {
   client: {
     test: /\.css$/,
     use: [
+      // ADD IS_DEV
+      'css-hot-loader',
       MiniCssExtractPlugin.loader,
-      // 'style-loader',
       'css-loader',
-      'postcss-loader'],
+      'postcss-loader',
+    ].filter(Boolean),
   },
   server: {
     test: /\.css$/,

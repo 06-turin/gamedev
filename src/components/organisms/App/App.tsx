@@ -1,4 +1,5 @@
 import './App.css';
+import { hot } from 'react-hot-loader/root';
 import React, { FC, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Forum } from 'pages/Forum/Forum';
@@ -23,7 +24,7 @@ import { LoadingIndicator } from 'components/atoms/LoadingIndicator/LoadingIndic
 import { userActions } from 'store/user/userSlice';
 import { useBoundAction } from 'hooks/useBoundAction';
 
-export const App: FC = () => {
+export const App: FC = hot(() => {
   const theme = useSelector(selectTheme);
 
   const setAuthOnLoadTMPBounded = useBoundAction(userActions.setAuthOnLoadTMP);
@@ -117,4 +118,4 @@ export const App: FC = () => {
       <LoadingIndicator />
     </div>
   );
-};
+});
