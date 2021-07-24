@@ -3,10 +3,15 @@ import express, { RequestHandler } from 'express';
 import devMiddleware from 'webpack-dev-middleware';
 import hotMiddleware from 'webpack-hot-middleware';
 import webpack, { Configuration } from 'webpack';
-import config from '../../webpapck/client.config';
+import { IS_DEV } from '../../webpackConfigs/env';
+import config from '../../webpackConfigs/client.config';
 import { serverRenderMiddleware } from './serverRenderMiddleware';
 
 function getWebpackMiddlewares(conf: Configuration): RequestHandler[] {
+  if (!IS_DEV) {
+    return [];
+  }
+
   const compiler = webpack({ ...conf, mode: 'development' });
 
   return [

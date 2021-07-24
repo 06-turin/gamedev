@@ -41,7 +41,9 @@ const config: Configuration = {
 
   externals: [nodeExternals({ allowlist: [/\.(?!(?:tsx?|json)$).{1,5}$/i] })],
 
-  optimization: { nodeEnv: false },
+  optimization: {
+    nodeEnv: false,
+  },
 };
 
 export default config;

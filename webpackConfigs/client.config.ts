@@ -3,6 +3,7 @@ import path from 'path';
 import CopyPlugin from 'copy-webpack-plugin';
 // import WorkboxPlugin from 'workbox-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import { DIST_DIR, SRC_DIR, IS_DEV } from './env';
 import fileLoader from './loaders/file';
 import cssLoader from './loaders/css';
@@ -13,7 +14,6 @@ const config: Configuration = {
   target: 'web',
   entry: ([
     IS_DEV && 'react-hot-loader/patch',
-    // Entry для работы HMR
     IS_DEV && 'webpack-hot-middleware/client',
     IS_DEV && 'css-hot-loader/hotModuleReplacement',
     path.join(SRC_DIR, 'index'),
@@ -48,6 +48,12 @@ const config: Configuration = {
     // }),
   ],
   devtool: 'source-map',
+  optimization: {
+    minimizer: !IS_DEV ? [
+      '...',
+      new CssMinimizerPlugin(),
+    ] : [],
+  },
 };
 
 export default config;

@@ -1,6 +1,6 @@
-import clientConfig from './webpapck/client.config';
-import serverConfig from './webpapck/server.config';
-import { IS_DEV } from './webpapck/env';
+import clientConfig from './webpackConfigs/client.config';
+import serverConfig from './webpackConfigs/server.config';
+import { IS_DEV } from './webpackConfigs/env';
 
 const configs = [serverConfig];
 if (!IS_DEV) {
