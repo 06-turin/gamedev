@@ -26,6 +26,7 @@ export const Profile: FC<ProfilePageProps> = ({ className }) => {
 
   useMountEffect(() => getUserInfoAsyncBounded());
 
+  console.log(avatarSrc);
   return (
     <div className={classnames(['page', className])}>
       <h1 className="page__title">{t('profile')}</h1>

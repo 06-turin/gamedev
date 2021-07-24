@@ -2,20 +2,24 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { leaderboardReducer } from 'store/leaderboard/leaderboardSlice';
 import { connectRouter } from 'connected-react-router';
 import { History, createBrowserHistory, createMemoryHistory } from 'history';
+import { isServer } from 'utils/ssrUtils';
 import { requestStatusReducer } from './requestStatus/requestStatusSlice';
 import { userReducer } from './user/userSlice';
 
-export const isServer = !(
-  typeof window !== 'undefined'
-  && window.document
-  && window.document.createElement
-);
+declare global {
+  interface Window {
+      __INITIAL_STATE__: any;
+  }
+}
 
-export const history = isServer
+// eslint-disable-next-line no-underscore-dangle
+const initialState = isServer ? undefined : window.__INITIAL_STATE__;
+
+const history = isServer
   ? createMemoryHistory({ initialEntries: ['/'] })
   : createBrowserHistory();
 
-const createRootReducer = (hist: History) => combineReducers({
+export const createRootReducer = (hist: History) => combineReducers({
   router: connectRouter(hist),
   user: userReducer,
   requestStatus: requestStatusReducer,
@@ -24,6 +28,8 @@ const createRootReducer = (hist: History) => combineReducers({
 
 export const store = configureStore({
   reducer: createRootReducer(history),
+  // eslint-disable-next-line no-underscore-dangle
+  preloadedState: initialState,
 });
 
 export type RootState = ReturnType<typeof store.getState>

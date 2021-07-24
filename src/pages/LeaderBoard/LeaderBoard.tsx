@@ -28,6 +28,7 @@ export const LeaderBoard: FC = () => {
 
   return (
     <div className={classnames(['page'])}>
+
       <h1 className="page__title">{t('leaderboard')}</h1>
 
       <div className="page__content">

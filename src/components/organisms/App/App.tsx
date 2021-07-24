@@ -1,6 +1,5 @@
 import './App.css';
-import { hot } from 'react-hot-loader/root';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Forum } from 'pages/Forum/Forum';
 import { Game } from 'pages/Game/Game';
@@ -21,9 +20,17 @@ import { useSelector } from 'react-redux';
 import { selectTheme } from 'store/user/userSelectors';
 import { PrivateRoute } from 'components/organisms/PrivateRoute/PrivateRoute';
 import { LoadingIndicator } from 'components/atoms/LoadingIndicator/LoadingIndicator';
+import { userActions } from 'store/user/userSlice';
+import { useBoundAction } from 'hooks/useBoundAction';
 
-export const App: FC = hot(() => {
+export const App: FC = () => {
   const theme = useSelector(selectTheme);
+
+  const setAuthOnLoadTMPBounded = useBoundAction(userActions.setAuthOnLoadTMP);
+  useEffect(() => {
+    setAuthOnLoadTMPBounded();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={classNames(['app-container', `theme_${theme}`])}>
@@ -110,4 +117,4 @@ export const App: FC = hot(() => {
       <LoadingIndicator />
     </div>
   );
-});
+};
