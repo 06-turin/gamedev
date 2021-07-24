@@ -1,8 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { ApiRequestProps, ApiResponse, ResponseStatus } from 'api/types';
 import { AUTH_TOKEN_NAME } from 'api/config';
-import { store } from 'store/store';
-import { userActions } from 'store/user/userSlice';
+// import { store } from 'client';
+// import { userActions } from 'store/user/userSlice';
 
 const axiosInstance = axios.create({});
 
@@ -31,7 +31,7 @@ export const callApi: (params: ApiRequestProps) => Promise<ApiResponse> = async 
         return true;
       }
       if (status === 401) {
-        store.dispatch(userActions.logout());
+        // store.dispatch(userActions.logout());
       }
       return false;
     },

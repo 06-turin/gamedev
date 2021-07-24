@@ -5,13 +5,11 @@ import { App } from 'components/organisms/App/App';
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import { Provider } from 'react-redux';
-import { RootState, store } from 'store/store';
+import { RootState } from 'client';
 import { renderObject } from 'utils/renderObject';
 
 interface PageHtmlParams {
-  // bundleName: string;
   bundleHtml: string;
-  // data: {};
   reduxState: RootState;
 }
 
@@ -45,31 +43,34 @@ function getPageHtml(params: PageHtmlParams) {
   return ` <!DOCTYPE html>${html}`;
 }
 
-export const ServerRenderMiddleware = (req: Request, res: Response) => {
-  const location = req.url;
-  const context: StaticRouterContext = {};
+export default {
 
-  const bundleHtml = renderToString(
-    (
-      <Provider store={store}>
-        <StaticRouter context={context} location={location}>
-          <App />
-        </StaticRouter>
-      </Provider>
-    ),
-  );
+  renderApp: (req: Request, res: Response) => {
+    const location = req.url;
+    const context: StaticRouterContext = {};
 
-  const pageHtml = getPageHtml({
-    bundleHtml,
-    reduxState: store.getState(),
-  });
+    const bundleHtml = renderToString(
+      (
+        <Provider store={res.store}>
+          <StaticRouter context={context} location={location}>
+            <App />
+          </StaticRouter>
+        </Provider>),
 
-  if (context.url) {
-    res.redirect(context.url);
-    return;
-  }
+    );
 
-  res
-    .status(context.statusCode || 200)
-    .send(pageHtml);
+    const pageHtml = getPageHtml({
+      bundleHtml,
+      reduxState: res.store.getState(),
+    });
+
+    if (context.url) {
+      res.redirect(context.url);
+      return;
+    }
+
+    res
+      .status(context.statusCode || 200)
+      .send(pageHtml);
+  },
 };

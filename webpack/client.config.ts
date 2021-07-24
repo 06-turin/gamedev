@@ -1,7 +1,7 @@
 import { Configuration as WebpackConfiguration } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+// import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import WorkboxPlugin from 'workbox-webpack-plugin';
@@ -35,9 +35,9 @@ const config: Configuration = {
   devtool: 'source-map',
   plugins: [
     new MiniCssExtractPlugin({ filename: '[name].css' }),
-    new HtmlWebpackPlugin({
-      template: './www/index.html',
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: './www/index.html',
+    // }),
     new CopyPlugin({
       patterns: [
         { from: './src/locales', to: 'locales' },

@@ -1,4 +1,4 @@
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const { IS_DEV } = require('../env');
 
@@ -8,12 +8,12 @@ export const cssLoader = {
     use: [
       IS_DEV && 'css-hot-loader',
       'style-loader',
-      // {
-      //   loader: MiniCssExtractPlugin.loader,
-      //   options: {
-      //     esModule: false,
-      //   },
-      // },
+      {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          esModule: false,
+        },
+      },
       'css-loader',
       'postcss-loader',
     ],

@@ -1,13 +1,12 @@
-const fileRegex = /^(?!.*\.inline).*\.(svg|jpe?g|png|gif|eot|woff2?|ttf|otf)$/;
+const fileRegex = /^(?!.*\.inline).*\.(svg|jpe?g|png|gif|eot|woff2?|ttf)$/;
 
 export const fileLoader = {
   client: {
     test: fileRegex,
-    type: 'asset/resource',
+    use: ['file-loader?name=[hash].[ext]'],
   },
-  server:
-    {
-      test: fileRegex,
-      loader: 'null-loader',
-    },
+  server: {
+    loader: 'null-loader',
+    test: fileRegex,
+  },
 };

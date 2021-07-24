@@ -4,8 +4,8 @@ import {
 import { AUTH_TOKEN_NAME } from 'api/config';
 import { resourcesAPI } from 'api/resources';
 import avatarDummy from 'assets/images/logo_img_base.png';
-import { RootState } from 'store/store';
 import { UserResponse } from 'api/types';
+import { RootState } from 'client';
 import {
   changeAvatarAsync,
   changePasswordAsync,
@@ -86,7 +86,10 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     toggleTheme: (state) => {
+      console.log('trying toggle theme...');
+      console.log('~ state.theme', state.theme);
       state.theme = state.theme === 'dark' ? 'light' : 'dark';
+      console.log('~ state.theme', state.theme);
     },
     logout(state) {
       setAuth(state, false);
@@ -149,3 +152,5 @@ export const userActions = userSlice.actions;
 export const selectUserInfo = (state: RootState) => state.user.userInfo;
 
 export const getUserState = (state: RootState): UserState => state.user;
+
+export const userInitialState = initialState;

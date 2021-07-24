@@ -16,7 +16,7 @@ import { jsLoader } from './loaders/js';
 
 const config: Configuration = {
   name: 'server',
-  entry: path.join(SRC_DIR, 'server/server.ts'),
+  entry: path.join(SRC_DIR, 'server/index.ts'),
   target: 'node',
   output: {
     filename: 'server.js',

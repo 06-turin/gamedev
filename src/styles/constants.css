@@ -1,15 +1,14 @@
 @font-face{
-  font-family: 'Pixeboy';
+  font-family: 'Pixeboy123';
   src: url('../assets/fonts/Pixeboy.ttf'), format('ttf');
 }
-
 .app-container {
   --activityColor: #ff6b00;
   --dangerColor: #d41f1f;
   --warningColor: #ff0;
   --successColor: #1fd41f;
   --mainTextColor: #fff;
-  --mainTextFontFamily: 'Pixeboy', 'Russo One', sans-serif;
+  --mainTextFontFamily: 'Pixeboy123', 'Russo One', sans-serif;
   --notActiveColor: #b0b0b0;
   --appBackgroundColor: #000;
   --mainTextWeight: 700;

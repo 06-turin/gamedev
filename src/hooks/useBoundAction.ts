@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from 'store/store';
+import { AppDispatch } from 'client';
 
 type ActionCreator = (...args: any[]) => any;
 type UseBoundAction = (actionCreator: ActionCreator) => any
