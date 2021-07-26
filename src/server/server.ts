@@ -1,31 +1,18 @@
 import path from 'path';
-import express, { RequestHandler } from 'express';
-import devMiddleware from 'webpack-dev-middleware';
-import hotMiddleware from 'webpack-hot-middleware';
-import webpack, { Configuration } from 'webpack';
-import { IS_DEV } from '../../webpackConfigs/env';
+import express from 'express';
 import config from '../../webpackConfigs/client.config';
-import { serverRenderMiddleware } from './serverRenderMiddleware';
-
-function getWebpackMiddlewares(conf: Configuration): RequestHandler[] {
-  if (!IS_DEV) {
-    return [];
-  }
-
-  const compiler = webpack({ ...conf, mode: 'development' });
-
-  return [
-    devMiddleware(compiler, {
-      publicPath: '/',
-    }),
-    hotMiddleware(compiler, { path: '/__webpack_hmr' }),
-  ];
-}
+import { storeMiddleware } from './middlewares/storeMiddleware';
+import { testDispatchMiddleware } from './middlewares/testDispatchMiddleware';
+import { IndexController } from './controllers/IndexController';
+import { webpackMiddlewares } from './middlewares/webpackMiddleware';
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '../dist')));
+app
+  .use(storeMiddleware)
+  .use(testDispatchMiddleware)
+  .use(express.static(path.join(__dirname, '../dist')));
 
-app.get(['/*'], getWebpackMiddlewares(config), serverRenderMiddleware);
+app.get(['/*'], webpackMiddlewares(config), IndexController.renderApp);
 
 export { app };
