@@ -26,6 +26,6 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '../dist')));
 
-app.get(['/*'], [...getWebpackMiddlewares(config)], serverRenderMiddleware);
+app.get(['/*'], getWebpackMiddlewares(config), serverRenderMiddleware);
 
 export { app };

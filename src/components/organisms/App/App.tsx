@@ -1,6 +1,6 @@
 import './App.css';
 import { hot } from 'react-hot-loader/root';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Forum } from 'pages/Forum/Forum';
 import { Game } from 'pages/Game/Game';
@@ -23,15 +23,15 @@ import { PrivateRoute } from 'components/organisms/PrivateRoute/PrivateRoute';
 import { LoadingIndicator } from 'components/atoms/LoadingIndicator/LoadingIndicator';
 import { userActions } from 'store/user/userSlice';
 import { useBoundAction } from 'hooks/useBoundAction';
+import { useMountEffect } from 'hooks/useMountEffect';
 
 export const App: FC = hot(() => {
   const theme = useSelector(selectTheme);
 
   const setAuthOnLoadTMPBounded = useBoundAction(userActions.setAuthOnLoadTMP);
-  useEffect(() => {
+  useMountEffect(() => {
     setAuthOnLoadTMPBounded();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div className={classNames(['app-container', `theme_${theme}`])}>

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { leaderboardReducer } from 'store/leaderboard/leaderboardSlice';
 import { connectRouter } from 'connected-react-router';
@@ -12,8 +13,10 @@ declare global {
   }
 }
 
-// eslint-disable-next-line no-underscore-dangle
 const initialState = isServer ? undefined : window.__INITIAL_STATE__;
+if (!isServer && window.__INITIAL_STATE__) {
+  delete window.__INITIAL_STATE__;
+}
 
 const history = isServer
   ? createMemoryHistory({ initialEntries: ['/'] })
@@ -26,6 +29,8 @@ export const createRootReducer = (hist: History) => combineReducers({
   leaderboard: leaderboardReducer,
 });
 
+// Используется только на клиенте с preloadedState, на сервере стор конфигурируется в serverRenderMiddleware
+// тк его нужно создавать заново для каждого запроса
 export const store = configureStore({
   reducer: createRootReducer(history),
   // eslint-disable-next-line no-underscore-dangle
