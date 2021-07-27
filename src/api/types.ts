@@ -97,3 +97,18 @@ export type GetLeaderboardRequest = {
 export type GetLeaderboardResponse = {
   data: Leader
 }[]
+
+export type OAuthServiceIdRequest = {
+  redirect_uri: string
+}
+
+export type OAuthServiceIdResponse = {
+  srvice_id: string
+}
+
+export type OauthSignInRequest = {
+  code: string
+  redirect_uri: string
+}
+
+export type OauthSignInResponse = 'OK'
