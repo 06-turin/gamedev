@@ -1,12 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Leader } from 'api/types';
+import { GetLeaderboardResponse, Leader } from 'api/types';
+import { getLeaderboardAsync } from 'store/leaderboard/leaderboardActions';
 
 type LeaderboardState = {
-  leaderboard: Leader[]
+  leaderboard: {
+    data: Leader
+  }[]
 };
 
 const initialState: LeaderboardState = {
   leaderboard: [],
+};
+
+const updateLeaderboard = (state: LeaderboardState, payload: GetLeaderboardResponse) => {
+  state.leaderboard = payload;
 };
 
 export const leaderboardSlice = createSlice({
@@ -16,6 +23,11 @@ export const leaderboardSlice = createSlice({
     update(state, action) {
       state.leaderboard = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getLeaderboardAsync.fulfilled, (state, action) => {
+      updateLeaderboard(state, action.payload);
+    });
   },
 });
 

@@ -34,11 +34,11 @@ export const LeaderBoard: FC = () => {
       <div className="page__content">
         {leaderboard.length === 0 && <p>{t('no_data')}</p>}
         <ul className="leaderboard-page__list">
-          {leaderboard.map(({ user, scoreFieldGD }, index) => (
-            <li className="leaderboard-page__list-item" key={user}>
-              <span className="leaderboard-page__list-nickname">{`${index + 1}. ${user}`}</span>
+          {leaderboard.map(({ data }, index) => (
+            <li className="leaderboard-page__list-item" key={data.displayName}>
+              <span className="leaderboard-page__list-nickname">{`${index + 1}. ${data.displayName}`}</span>
               <span className="leaderboard-page__list-dots">{dots}</span>
-              <span className="leaderboard-page__list-score">{splitDigits(scoreFieldGD)}</span>
+              <span className="leaderboard-page__list-score">{splitDigits(data.scoreFieldGD)}</span>
             </li>
           ))}
         </ul>
