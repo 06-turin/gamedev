@@ -1,4 +1,4 @@
-import { Configuration, Entry, HotModuleReplacementPlugin } from 'webpack';
+import webpack, { Configuration, Entry, HotModuleReplacementPlugin } from 'webpack';
 import path from 'path';
 import CopyPlugin from 'copy-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -44,6 +44,13 @@ const config: Configuration = {
     }),
     new HotModuleReplacementPlugin(),
     new MiniCssExtractPlugin({ filename: '[name].css' }),
+    // new WorkboxPlugin.GenerateSW({
+    //   clientsClaim: true,
+    //   skipWaiting: true,
+    // }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
   ],
   devtool: 'source-map',
   optimization: {

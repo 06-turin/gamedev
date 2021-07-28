@@ -4,15 +4,15 @@ import { REDIRECT_URI_OAUTH } from './config';
 const getServiceId = async (): Promise<string> => {
   try {
     const response = await oauthAPI.getServiceId({ redirect_uri: REDIRECT_URI_OAUTH });
-    return response.srvice_id;
+    return response.service_id;
   } catch (error) {
     throw new Error(error);
   }
 };
 
-export const OAuthContriller = {
+export const OAuthController = {
 
-  async getOAuthLink() {
+  async getOAuthLink(): Promise<string> {
     try {
       const serciceId = await getServiceId();
       return 'https://oauth.yandex.ru/authorize'

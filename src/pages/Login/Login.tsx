@@ -1,5 +1,7 @@
 import './styles.css';
-import React, { FC, useMemo } from 'react';
+import React, {
+  FC, useMemo, useState,
+} from 'react';
 import { Link } from 'react-router-dom';
 import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
@@ -13,6 +15,8 @@ import { Modal } from 'components/molecules/Modal/Modal';
 import { useModal } from 'components/molecules/Modal/useModal';
 import { TSubmitFormMethod } from 'components/molecules/GDFormikForm/types';
 import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
+import { useMountEffect } from 'hooks/useMountEffect';
+import { OAuthController } from 'services/oauth';
 import { TLoginFormFields } from './types';
 import { loginFormFields, validationSchemaConstructor } from './constants';
 
@@ -34,7 +38,20 @@ export const Login: FC = () => {
     } else {
       modal.hide();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, isLoading, t]);
+
+  const [yandexOAuthUrl, setYandexOauthUrl] = useState('');
+  const yandexOAuthText = t('login_with_yandex');
+  useMountEffect(() => {
+    OAuthController
+      .getOAuthLink()
+      .then(setYandexOauthUrl);
+  });
+
+  const openNewWindow = (): void => {
+    window.location.href = yandexOAuthUrl;
+  };
 
   const textNoAccount = t('no_account_?');
   const textRegister = t('register_!');
@@ -52,6 +69,16 @@ export const Login: FC = () => {
             size="l"
           />
         </Link>
+        <span className="login-page__text-label">{t('or')}</span>
+        {yandexOAuthUrl && (
+        <GDButton
+          className="login-page__link"
+          title={yandexOAuthText}
+          styleOption="secondary"
+          size="l"
+          onClick={openNewWindow}
+        />
+        )}
         <span className="login-page__text-label">{t('or')}</span>
         <Link to="/game">
           <GDButton
