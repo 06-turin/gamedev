@@ -35,7 +35,9 @@ export const App: FC = hot(() => {
         <NavHeader />
       </ErrorBoundary>
       <Switch>
-        {// eslint-disable-next-line @typescript-eslint/no-unused-vars
+        {// Метод fetchData используется только в посреднике хранилища, в основном чтобы диспатчить перед рендером.
+        // В компоненте роутов этот метод не нужен, поэтому я его убираю из routeProps.
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
           routes.map(({ fetchData, ...routeProps }) => <AppRoute key={routeProps.path} {...routeProps} />)
         }
       </Switch>
