@@ -1,11 +1,16 @@
+import url from 'url';
 import { renderToStaticMarkup } from 'react-dom/server';
 import React from 'react';
 import { App } from 'components/organisms/App/App';
-import { StaticRouterContext } from 'react-router';
-import { RootState } from 'store/store';
+import { StaticRouterContext, matchPath } from 'react-router';
+import { RootState, createRootReducer } from 'store/store';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { Request, Response } from 'express';
+import { configureStore } from '@reduxjs/toolkit';
+import { createMemoryHistory } from 'history';
+
+import { routes } from 'routes';
 
 function makeHTMLPage(content: string, reduxState: RootState) {
   return `
@@ -29,31 +34,84 @@ function makeHTMLPage(content: string, reduxState: RootState) {
       `;
 }
 
+const createStore = (initialState = {}) => {
+  const history = createMemoryHistory({ initialEntries: ['/'] });
+
+  // Не импортируем стор из store напрямую тк нам надо создавать его заново для каждого рендера на сервере
+  // чтобы при перезагрузке страницы корректно перезагружался стор
+  return configureStore({
+    reducer: createRootReducer(history),
+    preloadedState: initialState,
+  });
+};
+
 export const IndexController = {
 
-  renderApp: (req: Request, res: Response) => {
+  index: (req: Request, res: Response) => {
     const location = req.url;
     const context: StaticRouterContext = {};
 
-    const jsx = (
-      <Provider store={res.store}>
-        <StaticRouter context={context} location={location}>
-          <App />
-        </StaticRouter>
-      </Provider>
-    );
+    const store = createStore();
 
-    const reduxState = res.store.getState();
+    const renderApp = () => {
+      const jsx = (
+        <Provider store={store}>
+          <StaticRouter context={context} location={location}>
+            <App />
+          </StaticRouter>
+        </Provider>
+      );
 
-    if (context.url) {
-      res.redirect(context.url);
-      return;
-    }
+      const reduxState = store.getState();
 
-    const appContentHTML = renderToStaticMarkup(jsx);
+      if (context.url) {
+        res.redirect(context.url);
+        return;
+      }
 
-    res
-      .status(context.statusCode || 200)
-      .send(makeHTMLPage(appContentHTML, reduxState));
+      const appContentHTML = renderToStaticMarkup(jsx);
+
+      res
+        .status(context.statusCode || 200)
+        .send(makeHTMLPage(appContentHTML, reduxState));
+    };
+
+    const dataRequirements: (Promise<void> | void)[] = [];
+
+    /**
+     * Call the fetchData method on the component-page
+     * that corresponds to the current url (by router).
+     *
+     * We use `some` method to simulate working of the routes in react-router-dom
+     * inside the Switch — selects the first found route.
+     */
+    routes.some((route) => {
+      const { fetchData: fetchMethod } = route;
+      const match = matchPath<{ slug: string }>(
+        url.parse(location).pathname as string,
+        route,
+      );
+
+      if (match && fetchMethod) {
+        dataRequirements.push(
+          fetchMethod({
+            dispatch: store.dispatch,
+            match,
+          }),
+        );
+      }
+
+      return Boolean(match);
+    });
+
+    // When all async actions will be finished,
+    // dispatch action END to close saga
+    return Promise.all(dataRequirements)
+      .then(() => {
+        renderApp();
+      })
+      .catch((err) => {
+        throw err;
+      });
   },
 };
