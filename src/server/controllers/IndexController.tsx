@@ -104,8 +104,7 @@ export const IndexController = {
       return Boolean(match);
     });
 
-    // When all async actions will be finished,
-    // dispatch action END to close saga
+    // When all async actions will be finished
     return Promise.all(dataRequirements)
       .then(() => {
         renderApp();

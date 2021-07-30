@@ -41,7 +41,6 @@ export const routes: RoutesType = [
       redirectTo: '/login',
     },
     // для примера переключим темку только на главной странице
-    // темка будет темная - т.к. еще есть глобальный тестовый переключатель - testDispatchMiddleware.ts
     fetchData({ dispatch }: RouterFetchDataArgs) {
       dispatch(toggleTheme());
     },
