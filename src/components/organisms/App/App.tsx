@@ -12,7 +12,7 @@ import { userActions } from 'store/user/userSlice';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { useMountEffect } from 'hooks/useMountEffect';
 import { routes } from 'routes';
-import { AppRoute } from '../routes/AppRoute';
+import { RouteBuilder } from '../RouteBuilder/RouteBuilder';
 
 export const App: FC = hot(() => {
   const theme = useSelector(selectTheme);
@@ -38,7 +38,7 @@ export const App: FC = hot(() => {
         {// Метод fetchData используется только в посреднике хранилища, в основном чтобы диспатчить перед рендером.
         // В компоненте роутов этот метод не нужен, поэтому я его убираю из routeProps.
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          routes.map(({ fetchData, ...routeProps }) => <AppRoute key={routeProps.path} {...routeProps} />)
+          routes.map(({ fetchData, ...routeProps }) => <RouteBuilder key={routeProps.path} {...routeProps} />)
         }
       </Switch>
       <LoadingIndicator />
