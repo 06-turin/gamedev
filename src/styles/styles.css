@@ -1,8 +1,5 @@
 @import url('http://fonts.cdnfonts.com/css/pixeboy');
-@font-face {
-  font-family: "MicroN55";
-  src: url("../assets/fonts/MicroN55.ttf") format("ttf");
-}
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 @import "./constants.css";
 @import 'normalize.css';
 
