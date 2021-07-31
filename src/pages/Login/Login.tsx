@@ -1,6 +1,6 @@
 import './styles.css';
 import React, {
-  FC, useMemo, useState,
+  FC, useEffect, useMemo, useState,
 } from 'react';
 import { Link } from 'react-router-dom';
 import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
@@ -17,6 +17,8 @@ import { TSubmitFormMethod } from 'components/molecules/GDFormikForm/types';
 import { GDFormikForm } from 'components/molecules/GDFormikForm/GDFormikForm';
 import { useMountEffect } from 'hooks/useMountEffect';
 import { OAuthController } from 'services/oauth';
+import { useApiRequestFactory } from 'hooks/useApiRequestFactory';
+import { setIsLoadingShown } from 'store/requestStatus/requestStatusActions';
 import { TLoginFormFields } from './types';
 import { loginFormFields, validationSchemaConstructor } from './constants';
 
@@ -27,6 +29,7 @@ export const Login: FC = () => {
 
   const { error, isLoading } = useSelector(getUserState);
   const loginAsyncBounded = useBoundAction(loginAsync);
+  const setIsLoadingBounded = useBoundAction(setIsLoadingShown);
 
   const submitHandler: TSubmitFormMethod<TLoginFormFields> = async (data) => {
     loginAsyncBounded(data);
@@ -43,11 +46,20 @@ export const Login: FC = () => {
 
   const [yandexOAuthUrl, setYandexOauthUrl] = useState('');
   const yandexOAuthText = t('login_with_yandex');
+
+  const {
+    request: getOAuthLinkRequest,
+    isLoading: isOAuthLoading,
+  } = useApiRequestFactory(OAuthController.getOAuthLink);
+
   useMountEffect(() => {
-    OAuthController
-      .getOAuthLink()
+    getOAuthLinkRequest()
       .then(setYandexOauthUrl);
   });
+
+  useEffect(() => {
+    setIsLoadingBounded(isOAuthLoading);
+  }, [isOAuthLoading, setIsLoadingBounded]);
 
   const openNewWindow = (): void => {
     window.location.href = yandexOAuthUrl;
@@ -57,7 +69,7 @@ export const Login: FC = () => {
   const textRegister = t('register_!');
   const textJustPlay = t('just_play_!');
 
-  const actionComponent = (
+  const actionComponent = !isOAuthLoading && (
     <div className="login-page__signup-container">
       <span className="login-page__text-label">{textNoAccount}</span>
       <div className="login-page__link-container">

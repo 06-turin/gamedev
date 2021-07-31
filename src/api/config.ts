@@ -22,7 +22,7 @@ export const PATHS = {
     getUrl: `${API_BASE_URL}/resources`,
   },
   oauth: {
-    setServiceId: `${API_BASE_URL}/oauth/yandex/service-id`,
+    getServiceId: `${API_BASE_URL}/oauth/yandex/service-id`,
     signIn: `${API_BASE_URL}/oauth/yandex`,
   },
 };

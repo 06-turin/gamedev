@@ -10,7 +10,7 @@ export const oauthAPI = {
     try {
       const response = await callApi({
         method: 'get',
-        url: PATHS.oauth.setServiceId,
+        url: PATHS.oauth.getServiceId,
         data,
         authRequired: true,
       });

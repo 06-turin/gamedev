@@ -1,4 +1,6 @@
-import webpack, { Configuration, Entry, HotModuleReplacementPlugin } from 'webpack';
+import {
+  ProvidePlugin, Configuration, Entry, HotModuleReplacementPlugin,
+} from 'webpack';
 import path from 'path';
 import CopyPlugin from 'copy-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -48,7 +50,7 @@ const config: Configuration = {
     //   clientsClaim: true,
     //   skipWaiting: true,
     // }),
-    new webpack.ProvidePlugin({
+    new ProvidePlugin({
       process: 'process/browser',
     }),
   ],
