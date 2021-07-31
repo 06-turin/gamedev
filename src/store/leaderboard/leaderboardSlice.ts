@@ -3,9 +3,7 @@ import { GetLeaderboardResponse, Leader } from 'api/types';
 import { getLeaderboardAsync } from 'store/leaderboard/leaderboardActions';
 
 type LeaderboardState = {
-  leaderboard: {
-    data: Leader
-  }[]
+  leaderboard: Leader[]
 };
 
 const initialState: LeaderboardState = {
@@ -13,7 +11,7 @@ const initialState: LeaderboardState = {
 };
 
 const updateLeaderboard = (state: LeaderboardState, payload: GetLeaderboardResponse) => {
-  state.leaderboard = payload;
+  state.leaderboard = payload.map((leader) => leader.data);
 };
 
 export const leaderboardSlice = createSlice({
