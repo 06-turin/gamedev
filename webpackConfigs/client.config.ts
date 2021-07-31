@@ -21,7 +21,6 @@ const config: Configuration = {
       IS_DEV && 'css-hot-loader/hotModuleReplacement',
       path.join(SRC_DIR, 'index'),
     ].filter(Boolean) as unknown,
-    worker: [path.join(SRC_DIR, 'worker')],
   } as Entry,
   output: {
     path: DIST_DIR,
