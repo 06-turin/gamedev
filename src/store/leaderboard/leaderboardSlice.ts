@@ -21,11 +21,9 @@ export const leaderboardSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    if (getLeaderboardAsync) {
-      builder.addCase(getLeaderboardAsync.fulfilled, (state, action) => {
-        updateLeaderboard(state, action.payload);
-      });
-    }
+    builder.addCase(getLeaderboardAsync.fulfilled, (state, action) => {
+      updateLeaderboard(state, action.payload);
+    });
   },
 });
 
