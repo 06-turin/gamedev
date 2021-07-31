@@ -19,15 +19,13 @@ const updateLeaderboard = (state: LeaderboardState, payload: GetLeaderboardRespo
 export const leaderboardSlice = createSlice({
   name: 'leaderboard',
   initialState,
-  reducers: {
-    update(state, action) {
-      state.leaderboard = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getLeaderboardAsync.fulfilled, (state, action) => {
-      updateLeaderboard(state, action.payload);
-    });
+    if (getLeaderboardAsync) {
+      builder.addCase(getLeaderboardAsync.fulfilled, (state, action) => {
+        updateLeaderboard(state, action.payload);
+      });
+    }
   },
 });
 
