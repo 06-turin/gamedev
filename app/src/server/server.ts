@@ -4,6 +4,12 @@ import { IS_DEV } from '../../webpackConfigs/env';
 import config from '../../webpackConfigs/client.config';
 import { IndexController } from './controllers/IndexController';
 import { webpackMiddlewares } from './middlewares/webpackMiddleware';
+import { db } from './db';
+
+require('dotenv').config();
+
+// Вот тут пока непонятно - не создает таблицу пользователя в базе
+db.sync();
 
 const app = express();
 
