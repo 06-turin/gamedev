@@ -2,14 +2,13 @@ import path from 'path';
 import express from 'express';
 import { IS_DEV } from '../../webpackConfigs/env';
 import config from '../../webpackConfigs/client.config';
-import { IndexController } from './controllers/IndexController';
 import { webpackMiddlewares } from './middlewares/webpackMiddleware';
 import { sequelize } from './models';
 import { ThemesController } from './controllers/ThemesController';
 import { ThemesService } from './services/ThemesService';
 import { UsersController } from './controllers/UsersController';
 import { UsersService } from './services/UsersService';
-import { TopicsController } from './controllers/TopicsController';
+import router from './routes';
 
 const port = 5000;
 
@@ -50,9 +49,7 @@ export const startServer = async () => {
   app.get('/api/themes/:themeId', ThemesController.findOne);
   app.post('/api/themes/create', ThemesController.create);
 
-  app.post('/api/topics', TopicsController.create)
-
-  app.get(['/*'], IndexController.index);
+  app.use(router);
 
   app.listen(port, () => {
     // eslint-disable-next-line no-console
