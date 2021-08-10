@@ -1,0 +1,27 @@
+import { AutoIncrement, Column, DataType, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+
+import { Comment } from './Comment'
+
+@Table({
+  tableName: 'topics',
+  timestamps: true
+ })
+export class Topic extends Model {
+  @AutoIncrement
+  @PrimaryKey
+  @Column(DataType.INTEGER)
+  id!: number;
+
+  @Column(DataType.STRING)
+  title!: string;
+
+  @Column(DataType.STRING)
+  owner!: string
+
+  @Column(DataType.INTEGER)
+  views!: number
+
+  @HasMany(() => Comment)
+  comments!: Comment[];
+
+}
