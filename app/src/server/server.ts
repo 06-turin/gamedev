@@ -14,7 +14,8 @@ const port = 5000;
 
 export const startServer = async () => {
   // Форс дропает все таблицы каждый раз при запуске сервера, пока мы вносим много изменений в базы это удобно
-  await sequelize.sync({ force: true });
+  // await sequelize.sync({ force: true });
+  await sequelize.sync();
 
   // Создаем юзера после подключения к базе, чтобы нам было что отдать с ручки
   UsersService.create({
