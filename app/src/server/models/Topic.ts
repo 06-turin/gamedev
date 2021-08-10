@@ -21,7 +21,12 @@ export class Topic extends Model {
   @Column(DataType.INTEGER)
   views!: number
 
-  @HasMany(() => Comment)
+  @HasMany(() => Comment, { onDelete: 'cascade' })
   comments!: Comment[];
+
+  touch(): void {
+    this.changed('updatedAt', true);
+    this.save()
+  }
 
 }

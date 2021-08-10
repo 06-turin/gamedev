@@ -1,5 +1,6 @@
 import { TOPICS_PER_PAGE } from "server/config";
 import { getOffset, PagingData } from "server/helpers/pagination";
+import { Comment } from "server/models/Comment";
 import { Topic } from "server/models/Topic";
 import { BaseRESTService } from "./BaseRESTService";
 
@@ -9,7 +10,7 @@ export type CreateTopicRequest = {
 }
 
 export type ReadTopicsRequest = {
-  page?: number
+  page?: string | number
 }
 
 export type ReadTopicsResponse = PagingData<Topic>
@@ -21,7 +22,6 @@ export type FindTopicRequest =  {
 export type FindTopicResponse = Topic
 
 export type DeleteTopicRequest = FindTopicRequest
-
 
 export class TopicsService implements BaseRESTService {
   public static create = (data: CreateTopicRequest) => {
@@ -37,9 +37,8 @@ export class TopicsService implements BaseRESTService {
         order: [
             ['updatedAt', 'DESC']
         ],
-        offset: getOffset(data.page, TOPICS_PER_PAGE),
-        limit: TOPICS_PER_PAGE,
-        attributes: {exclude: ['comments']}
+        offset: getOffset(Number(data.page), TOPICS_PER_PAGE),
+        limit: TOPICS_PER_PAGE
     });
   }
 
@@ -47,6 +46,10 @@ export class TopicsService implements BaseRESTService {
     return Topic.findOne({
       where: {
         id: Number(data.id)
+      },
+      include: {
+        model: Comment,
+        required: true
       }
     })
   }

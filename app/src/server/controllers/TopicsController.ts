@@ -77,7 +77,7 @@ export class TopicsController {
 
   public static async getAll (req: Request, res: Response ) {
 
-    if (!req.body || !is<ReadTopicsRequest>(req.params)) {
+    if (!req.query || !is<ReadTopicsRequest>(req.query)) {
       res
         .status(400)
         .send({error: RESPONSE_WRONG_REQUEST_DATA_TEXT});
