@@ -14,3 +14,7 @@ export const PLAYER_BOMB_BLOWS_SIZE = 3;
 export const PLAYER_START_SPEED = 300;
 
 export const SCORE_WIN_PER_STAGE = 20;
+
+export const ANIMATION_FRAMES_BOMB = 3;
+
+export const ANIMATION_INTERVAL_BOMB = 250;

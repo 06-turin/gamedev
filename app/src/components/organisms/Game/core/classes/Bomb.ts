@@ -1,4 +1,6 @@
-import { DEGREE_360, GRID, SCORE_WIN_PER_STAGE } from '../config';
+import {
+  ANIMATION_FRAMES_BOMB, ANIMATION_INTERVAL_BOMB, GRID, SCORE_WIN_PER_STAGE,
+} from '../config';
 import { EntitiesTypes } from '../types/EntitiesTypes';
 import { DIRECTIONS, DirectionType } from '../types/DirectionsType';
 import { IEntity } from '../interfaces/IEntity';
@@ -7,6 +9,7 @@ import { getBattleField } from './BattleField';
 import { Player } from './Player';
 import { Position } from '../types/PositionType';
 import { gameService } from '../../services/gameService';
+import { FrameActions, FrameEntities, getSpritesInstance } from './Sprites';
 
 export class Bomb implements IEntity {
   type = EntitiesTypes.BOMB;
@@ -16,6 +19,14 @@ export class Bomb implements IEntity {
   alive: boolean = true;
 
   timer: number = 3000;
+
+  private frames: number = ANIMATION_FRAMES_BOMB;
+
+  private currentFrame: number = 0;
+
+  private animationInterval: number = ANIMATION_INTERVAL_BOMB;
+
+  private interval: number = ANIMATION_INTERVAL_BOMB;
 
   constructor(
     private canvasCtx: CanvasRenderingContext2D,
@@ -28,10 +39,14 @@ export class Bomb implements IEntity {
     const x = (this.pos.x + 0.5) * GRID;
     const y = (this.pos.y + 0.5) * GRID;
 
-    this.canvasCtx.fillStyle = 'black';
-    this.canvasCtx.beginPath();
-    this.canvasCtx.arc(x, y, this.radius, 0, DEGREE_360);
-    this.canvasCtx.fill();
+    getSpritesInstance()
+      .draw(
+        this.canvasCtx,
+        { x, y },
+        FrameEntities.BOMB,
+        FrameActions.PERMANENT,
+        this.currentFrame,
+      );
   }
 
   refresh(dt: number): void {
@@ -44,12 +59,14 @@ export class Bomb implements IEntity {
     }
 
     // bomb animation
-    // change every 0.5s
-    const interval = Math.ceil(this.timer / 500);
-    if (interval % 2 === 0) {
-      this.radius = GRID * 0.4;
-    } else {
-      this.radius = GRID * 0.45;
+    this.interval -= dt;
+    if (this.interval < 0) {
+      this.interval = this.animationInterval;
+      if (this.currentFrame === this.frames) {
+        this.currentFrame = 0;
+      } else {
+        this.currentFrame += 1;
+      }
     }
   }
 
