@@ -2,9 +2,9 @@ import {
   ANIMATION_FRAMES_BOMB, ANIMATION_INTERVAL_BOMB, GRID, SCORE_WIN_PER_STAGE,
 } from '../config';
 import { EntitiesTypes } from '../types/EntitiesTypes';
-import { DIRECTIONS, DirectionType } from '../types/DirectionsType';
+import { defineDirection, DIRECTIONS, Movements } from '../types/DirectionsType';
 import { IEntity } from '../interfaces/IEntity';
-import { Explosion } from './Explosion';
+import { Explosion, ExplosionFrameDirection } from './Explosion';
 import { getBattleField } from './BattleField';
 import { Player } from './Player';
 import { Position } from '../types/PositionType';
@@ -91,7 +91,7 @@ export class Bomb implements IEntity {
     const scoreToWin = SCORE_WIN_PER_STAGE * gameService.stage.get();
 
     // create Explosions per each directions
-    Object.values(DIRECTIONS).forEach((dir: DirectionType) => {
+    Object.values(DIRECTIONS).forEach((dir) => {
       for (let i = 0; i < this.blownSize; i++) {
         // calculate position
         const pos: Position = {
@@ -103,7 +103,17 @@ export class Bomb implements IEntity {
 
         // create Explosion in cell
         const isCenter = i === 0;
-        BF.addEntity(new Explosion(this.canvasCtx, pos, dir, isCenter));
+        const isEnd = i === this.blownSize - 1;
+        let direction: ExplosionFrameDirection;
+        switch (defineDirection(dir)) {
+          default:
+          case Movements.UP: direction = FrameActions.UP; break;
+          case Movements.RIGHT: direction = FrameActions.RIGHT; break;
+          case Movements.DOWN: direction = FrameActions.DOWN; break;
+          case Movements.LEFT: direction = FrameActions.LEFT; break;
+        }
+
+        BF.addEntity(new Explosion(this.canvasCtx, pos, direction, isCenter, isEnd));
 
         // clear cell
         BF.clearCell(pos);
