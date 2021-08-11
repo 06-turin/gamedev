@@ -15,7 +15,8 @@ import { getBattleField } from './BattleField';
 import { gameService } from '../../services/gameService';
 import { MovingEntity } from './MovingEntity';
 import { Movements } from '../types/DirectionsType';
-import { FrameActions, FrameEntities, getSpritesInstance } from './Sprites';
+import { getSpritesInstance } from './Sprites';
+import { FrameActions, FrameEntities } from '../types/SpriteTypes';
 
 export class Player extends MovingEntity implements IEntity {
   type = EntitiesTypes.PLAYER;

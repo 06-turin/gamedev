@@ -9,7 +9,8 @@ import { getBattleField } from './BattleField';
 import { Player } from './Player';
 import { Position } from '../types/PositionType';
 import { gameService } from '../../services/gameService';
-import { FrameActions, FrameEntities, getSpritesInstance } from './Sprites';
+import { getSpritesInstance } from './Sprites';
+import { FrameActions, FrameEntities } from '../types/SpriteTypes';
 
 export class Bomb implements IEntity {
   type = EntitiesTypes.BOMB;
