@@ -115,10 +115,10 @@ export class Sprites {
 
     ctx.drawImage(
       this.image,
-      sprite.x * this.grid + 1,
-      sprite.y * this.grid + 1,
-      this.grid - 2,
-      this.grid - 1,
+      sprite.x * this.grid,
+      sprite.y * this.grid,
+      this.grid,
+      this.grid,
       x,
       y,
       GRID,
