@@ -1,9 +1,11 @@
-import { AutoIncrement, BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table } from "sequelize-typescript";
-import { Topic } from "./Topic";
+import {
+  AutoIncrement, BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table,
+} from 'sequelize-typescript';
+import { Topic } from './Topic';
 
 @Table({
   tableName: 'comments',
-  timestamps: true
+  timestamps: true,
 })
 export class Comment extends Model {
   @AutoIncrement
@@ -17,7 +19,7 @@ export class Comment extends Model {
   @ForeignKey(() => Topic)
   @Column({
     type: DataType.INTEGER,
-    field: 'topic_id'
+    field: 'topic_id',
   })
   topicId!: number
 
@@ -26,5 +28,4 @@ export class Comment extends Model {
 
   @Column(DataType.TEXT)
   text!: string;
-
 }

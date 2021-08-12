@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { IndexController } from "server/controllers/IndexController";
+import { Router } from 'express';
+import { IndexController } from 'server/controllers/IndexController';
 
 export const indexRoutes = (router: Router) => {
   const indexRouter: Router = Router();

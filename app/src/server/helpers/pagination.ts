@@ -15,11 +15,11 @@ export const getPagingData = <T>(data: TData<T>, page: number, limit: number): P
   const currentPage = page ? +page : 1;
   const totalPages = Math.ceil(totalItems / limit);
 
-  return { totalItems, results, totalPages, currentPage };
+  return {
+    totalItems, results, totalPages, currentPage,
+  };
 };
 
-export const getOffset = ( page: number | undefined, perPage: number ): number => {
-  return page && page > 0
-      ? ( page - 1 ) * perPage
-      : 0
-}
+export const getOffset = (page: number | undefined, perPage: number): number => (page && page > 0
+  ? (page - 1) * perPage
+  : 0);

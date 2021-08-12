@@ -1,11 +1,13 @@
-import { AutoIncrement, Column, DataType, HasMany, Model, PrimaryKey, Table } from "sequelize-typescript";
+import {
+  AutoIncrement, Column, DataType, HasMany, Model, PrimaryKey, Table,
+} from 'sequelize-typescript';
 
-import { Comment } from './Comment'
+import { Comment } from './Comment';
 
 @Table({
   tableName: 'topics',
-  timestamps: true
- })
+  timestamps: true,
+})
 export class Topic extends Model {
   @AutoIncrement
   @PrimaryKey
@@ -26,7 +28,6 @@ export class Topic extends Model {
 
   touch(): void {
     this.changed('updatedAt', true);
-    this.save()
+    this.save();
   }
-
 }

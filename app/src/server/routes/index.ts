@@ -1,11 +1,11 @@
-import { Router } from "express";
-import { apiRoutes } from "./api";
-import { indexRoutes } from "./indexRoutes";
+import { Router } from 'express';
+import { apiRoutes } from './api';
+import { indexRoutes } from './indexRoutes';
 
-const router: Router = Router()
+const router: Router = Router();
 
-apiRoutes(router)
+apiRoutes(router);
 
-indexRoutes(router)
+indexRoutes(router);
 
-export default router
+export default router;

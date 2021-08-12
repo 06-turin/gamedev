@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { TopicsController } from "server/controllers/TopicsController";
+import { Router } from 'express';
+import { TopicsController } from 'server/controllers/TopicsController';
 
 export const topicsRoutes = (router: Router) => {
   const topicsRouter: Router = Router();

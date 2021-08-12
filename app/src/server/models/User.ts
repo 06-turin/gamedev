@@ -4,7 +4,7 @@ import {
 
 @Table({
   tableName: 'users',
-  timestamps: false
+  timestamps: false,
 })
 export class User extends Model {
     @AutoIncrement
