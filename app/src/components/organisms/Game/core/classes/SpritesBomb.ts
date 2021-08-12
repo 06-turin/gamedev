@@ -1,26 +1,27 @@
-import ImageSRC from '../assets/sprites.png';
+import ImageSRC from '../assets/bomb-sprite.png';
 import { GRID } from '../config';
 import { Position } from '../types/PositionType';
-import { FrameActions, FrameEntities, FRAMES } from '../types/SpriteTypes';
+import { BOMB_FRAMES } from '../types/SpriteBombTypes';
+import { FrameActions, FrameEntities } from '../types/SpriteTypes';
 
-export class Sprites {
-  static instance: Sprites | null = null;
+export class SpritesBomb {
+  static instance: SpritesBomb | null = null;
 
   private image: HTMLImageElement | undefined;
 
-  private gridX: number = 16;
+  private gridX: number = 20;
 
-  private gridY: number = 16;
+  private gridY: number = 20;
 
   constructor() {
-    if (Sprites.instance) {
-      return Sprites.instance;
+    if (SpritesBomb.instance) {
+      return SpritesBomb.instance;
     }
     this.image = new Image();
 
     this.image.src = ImageSRC;
 
-    Sprites.instance = this;
+    SpritesBomb.instance = this;
   }
 
   draw(
@@ -38,7 +39,7 @@ export class Sprites {
 
     const sprite = { x: 10, y: 0 };
 
-    const entityFrames = FRAMES[entity];
+    const entityFrames = BOMB_FRAMES[entity];
     if (entityFrames && entityFrames[action]) {
       const targetAction = entityFrames[action];
       if (targetAction) {
@@ -62,9 +63,9 @@ export class Sprites {
   }
 }
 
-export function getSpritesInstance(): Sprites {
-  if (!Sprites.instance) {
-    Sprites.instance = new Sprites();
+export function getSpritesBombInstance(): SpritesBomb {
+  if (!SpritesBomb.instance) {
+    SpritesBomb.instance = new SpritesBomb();
   }
-  return Sprites.instance as Sprites;
+  return SpritesBomb.instance as SpritesBomb;
 }

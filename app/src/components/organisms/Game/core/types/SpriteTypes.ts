@@ -4,7 +4,7 @@ type Sprite = {
   [frame: number]: SpriteCoord
 }
 
-type Frames = Partial<Record<FrameActions, Sprite>>
+export type Frames = Partial<Record<FrameActions, Sprite>>
 
 export enum FrameEntities {
   BOMB,

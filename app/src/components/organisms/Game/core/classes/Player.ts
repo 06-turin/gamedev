@@ -15,8 +15,8 @@ import { getBattleField } from './BattleField';
 import { gameService } from '../../services/gameService';
 import { MovingEntity } from './MovingEntity';
 import { Movements } from '../types/DirectionsType';
-import { getSpritesInstance } from './Sprites';
 import { FrameActions, FrameEntities } from '../types/SpriteTypes';
+import { getSpritesPlayerInstance } from './SpritesPlayer';
 
 export class Player extends MovingEntity implements IEntity {
   type = EntitiesTypes.PLAYER;
@@ -33,7 +33,7 @@ export class Player extends MovingEntity implements IEntity {
 
   private frames: number = ANIMATION_FRAMES_PLAYER;
 
-  private currentFrame: number = 1;
+  private currentFrame: number = 0;
 
   private animationInterval: number = ANIMATION_INTERVAL_PLAYER;
 
@@ -81,7 +81,7 @@ export class Player extends MovingEntity implements IEntity {
 
   animationRefresh = (dt: number) => {
     if (this.direction === Movements.NONE) {
-      this.currentFrame = 1;
+      this.currentFrame = 0;
       return;
     }
     this.interval -= dt;
@@ -114,7 +114,7 @@ export class Player extends MovingEntity implements IEntity {
       default:
         break;
     }
-    getSpritesInstance()
+    getSpritesPlayerInstance()
       .draw(
         this.canvasCtx,
         this.coords,

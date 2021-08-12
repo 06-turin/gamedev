@@ -9,8 +9,8 @@ import { getBattleField } from './BattleField';
 import { Player } from './Player';
 import { Position } from '../types/PositionType';
 import { gameService } from '../../services/gameService';
-import { getSpritesInstance } from './Sprites';
 import { FrameActions, FrameEntities } from '../types/SpriteTypes';
+import { getSpritesBombInstance } from './SpritesBomb';
 
 export class Bomb implements IEntity {
   type = EntitiesTypes.BOMB;
@@ -40,7 +40,7 @@ export class Bomb implements IEntity {
     const x = (this.pos.x + 0.5) * GRID;
     const y = (this.pos.y + 0.5) * GRID;
 
-    getSpritesInstance()
+    getSpritesBombInstance()
       .draw(
         this.canvasCtx,
         { x, y },

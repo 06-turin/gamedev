@@ -1,26 +1,27 @@
-import ImageSRC from '../assets/sprites.png';
+import ImageSRC from '../assets/player-sprite.png';
 import { GRID } from '../config';
 import { Position } from '../types/PositionType';
-import { FrameActions, FrameEntities, FRAMES } from '../types/SpriteTypes';
+import { PLAYER_FRAMES } from '../types/SpritePlayerTypes';
+import { FrameActions, FrameEntities } from '../types/SpriteTypes';
 
-export class Sprites {
-  static instance: Sprites | null = null;
+export class SpritesPlayer {
+  static instance: SpritesPlayer | null = null;
 
   private image: HTMLImageElement | undefined;
 
-  private gridX: number = 16;
+  private gridX: number = 24;
 
-  private gridY: number = 16;
+  private gridY: number = 32;
 
   constructor() {
-    if (Sprites.instance) {
-      return Sprites.instance;
+    if (SpritesPlayer.instance) {
+      return SpritesPlayer.instance;
     }
     this.image = new Image();
 
     this.image.src = ImageSRC;
 
-    Sprites.instance = this;
+    SpritesPlayer.instance = this;
   }
 
   draw(
@@ -38,7 +39,7 @@ export class Sprites {
 
     const sprite = { x: 10, y: 0 };
 
-    const entityFrames = FRAMES[entity];
+    const entityFrames = PLAYER_FRAMES[entity];
     if (entityFrames && entityFrames[action]) {
       const targetAction = entityFrames[action];
       if (targetAction) {
@@ -55,16 +56,16 @@ export class Sprites {
       this.gridX,
       this.gridY,
       x,
-      y,
+      y - 18,
       GRID,
-      GRID,
+      GRID + 18,
     );
   }
 }
 
-export function getSpritesInstance(): Sprites {
-  if (!Sprites.instance) {
-    Sprites.instance = new Sprites();
+export function getSpritesPlayerInstance(): SpritesPlayer {
+  if (!SpritesPlayer.instance) {
+    SpritesPlayer.instance = new SpritesPlayer();
   }
-  return Sprites.instance as Sprites;
+  return SpritesPlayer.instance as SpritesPlayer;
 }
