@@ -1,5 +1,6 @@
 import { TOPICS_PER_PAGE } from 'server/config';
 import { getOffset, PagingData } from 'server/helpers/pagination';
+import { sequelize } from 'server/models';
 import { Comment } from 'server/models/Comment';
 import { Topic } from 'server/models/Topic';
 import { BaseRESTService } from './BaseRESTService';
@@ -30,13 +31,31 @@ export class TopicsService implements BaseRESTService {
     views: 0,
   })
 
-  public static request = (data: ReadTopicsRequest) => Topic.findAndCountAll({
-    order: [
-      ['updatedAt', 'DESC'],
-    ],
-    offset: getOffset(Number(data.page), TOPICS_PER_PAGE),
-    limit: TOPICS_PER_PAGE,
-  })
+  public static request = (data: ReadTopicsRequest): Promise<{rows: any[], count: number}> => {
+    const offset = getOffset(Number(data.page), TOPICS_PER_PAGE);
+    const limit = TOPICS_PER_PAGE;
+    const query = `select "Topic" .*, COUNT("comments"."id") as "commentsCount"
+                    from
+                      "topics" as "Topic"
+                    left join "comments" as "comments" on
+                      "Topic"."id" = "comments"."topic_id"
+                    group by "Topic"."id"
+                    order by "Topic"."updatedAt" desc
+                    limit ${limit} offset ${offset}`;
+
+    const promiseRows = sequelize.query(query);
+    const promiseTotalCountRows = Topic.count();
+
+    return new Promise((resolve) => {
+      Promise.all([promiseRows, promiseTotalCountRows])
+        .then(([[results], totalCountRows]) => {
+          resolve({
+            rows: results,
+            count: totalCountRows,
+          });
+        });
+    });
+  }
 
   public static find = (data: FindTopicRequest) => Topic.findOne({
     where: {
