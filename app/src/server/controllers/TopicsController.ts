@@ -96,4 +96,31 @@ export class TopicsController {
         .send(error);
     }
   }
+
+  public static async watch(req: Request, res: Response) {
+    if (!req.params || !is<FindTopicRequest>(req.params)) {
+      res
+        .status(400)
+        .send({ error: RESPONSE_WRONG_REQUEST_DATA_TEXT });
+      return;
+    }
+
+    try {
+      const topic = await Topic.findByPk(req.params.id);
+      if (topic) {
+        topic?.increaseViews();
+        res
+          .status(200)
+          .send('OK');
+      } else {
+        res
+          .status(404)
+          .send('Not found');
+      }
+    } catch (error) {
+      res
+        .status(500)
+        .send(error);
+    }
+  }
 }

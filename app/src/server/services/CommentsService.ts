@@ -1,5 +1,5 @@
 import { COMMENTS_PER_PAGE } from 'server/config';
-import { getOffset, PagingData } from 'server/helpers/pagination';
+import { getOffset, ResponseWithPagination } from 'server/helpers/pagination';
 import { Comment } from 'server/models/Comment';
 import { Topic } from 'server/models/Topic';
 import { BaseRESTService } from './BaseRESTService';
@@ -15,7 +15,7 @@ export type ReadCommentsRequest = {
   page?: string | number
 }
 
-export type ReadCommentsResponse = PagingData<Comment>
+export type ReadCommentsResponse = ResponseWithPagination<Comment>
 
 export type DeleteCommentRequest = {
   id: number | string

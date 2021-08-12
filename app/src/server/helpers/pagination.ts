@@ -3,14 +3,18 @@ type TData<T> = {
   rows: T[]
 }
 
-export type PagingData<T> = {
+export type RequestWithPage = {
+  page?: string | number
+}
+
+export type ResponseWithPagination<T> = {
   results: T[],
   totalItems: number,
   totalPages: number,
-  currentPage: number
+  currentPage: number,
 }
 
-export const getPagingData = <T>(data: TData<T>, page: number, limit: number): PagingData<T> => {
+export const getPagingData = <T>(data: TData<T>, page: number, limit: number): ResponseWithPagination<T> => {
   const { count: totalItems, rows: results } = data;
   const currentPage = page ? +page : 1;
   const totalPages = Math.ceil(totalItems / limit);

@@ -1,5 +1,5 @@
 import { TOPICS_PER_PAGE } from 'server/config';
-import { getOffset, PagingData } from 'server/helpers/pagination';
+import { getOffset, RequestWithPage, ResponseWithPagination } from 'server/helpers/pagination';
 import { sequelize } from 'server/models';
 import { Comment } from 'server/models/Comment';
 import { Topic } from 'server/models/Topic';
@@ -10,11 +10,17 @@ export type CreateTopicRequest = {
   title: string
 }
 
-export type ReadTopicsRequest = {
-  page?: string | number
-}
+export type ReadTopicsRequest = RequestWithPage
 
-export type ReadTopicsResponse = PagingData<Topic>
+export type ReadTopicsResponse = ResponseWithPagination<{
+  id: number,
+  title: string,
+  owner: string,
+  views: number,
+  createdAt: string,
+  updatedAt: string,
+  commentsCount: number,
+}>
 
 export type FindTopicRequest = {
   id: number | string
@@ -51,7 +57,7 @@ export class TopicsService implements BaseRESTService {
         .then(([[results], totalCountRows]) => {
           resolve({
             rows: results,
-            count: totalCountRows,
+            count: Number(totalCountRows),
           });
         });
     });
@@ -63,7 +69,6 @@ export class TopicsService implements BaseRESTService {
     },
     include: {
       model: Comment,
-      required: true,
     },
   })
 

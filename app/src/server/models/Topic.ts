@@ -30,4 +30,9 @@ export class Topic extends Model {
     this.changed('updatedAt', true);
     this.save();
   }
+
+  increaseViews(): void {
+    this.views += 1;
+    this.save();
+  }
 }

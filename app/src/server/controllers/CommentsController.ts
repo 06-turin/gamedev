@@ -21,7 +21,7 @@ export class CommentsController {
       const response = await CommentsService.create(req.body);
       if (response.topicId) {
         // update topic's `updatedAt`
-        const topic = await Topic.findOne({ where: { id: response.topicId } });
+        const topic = await Topic.findByPk(response.topicId);
         topic?.touch();
       }
       res

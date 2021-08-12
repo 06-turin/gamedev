@@ -8,6 +8,7 @@ export const topicsRoutes = (router: Router) => {
   topicsRouter.get('/:id', TopicsController.get);
   topicsRouter.post('/', TopicsController.create);
   topicsRouter.delete('/:id', TopicsController.delete);
+  topicsRouter.get('/watch/:id', TopicsController.watch);
 
   router.use('/topics', topicsRouter);
 };
