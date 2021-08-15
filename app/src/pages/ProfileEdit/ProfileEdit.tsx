@@ -20,7 +20,8 @@ import { TProfileFormFields } from 'pages/ProfileEdit/types';
 export const ProfileEdit: FC = () => {
   const { t } = useTranslation();
   const modal = useModal();
-  const validationSchema = useMemo(() => validationSchemaConstructor(t), [t]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const validationSchema = useMemo(() => validationSchemaConstructor(t), []);
 
   const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
   const clearRequestBounded = useBoundAction(userActions.clearRequestState);
@@ -45,7 +46,8 @@ export const ProfileEdit: FC = () => {
     } else {
       modal.hide();
     }
-  }, [isUpdatedSuccessful, isLoading, error, t]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUpdatedSuccessful, isLoading, error]);
 
   useEffect(() => () => { clearRequestBounded(); }, [clearRequestBounded]);
 

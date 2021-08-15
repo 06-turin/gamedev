@@ -21,7 +21,8 @@ export type ProfilePasswordPageProps = {
 export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const modal = useModal();
-  const validationSchema = useMemo(() => validationSchemaConstructor(t), [t]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const validationSchema = useMemo(() => validationSchemaConstructor(t), []);
 
   const changePassAsyncBounded = useBoundAction(changePasswordAsync);
   const clearRequestBounded = useBoundAction(userActions.clearRequestState);
@@ -45,7 +46,8 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
     } else {
       modal.hide();
     }
-  }, [isUpdatedSuccessful, error, isLoading, t]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isUpdatedSuccessful, error, isLoading]);
 
   useEffect(() => () => { clearRequestBounded(); }, [clearRequestBounded]);
 

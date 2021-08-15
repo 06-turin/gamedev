@@ -18,7 +18,8 @@ export const Registration: FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
   const modal = useModal();
-  const validationSchema = useMemo(() => validationSchemaConstructor(t), [t]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const validationSchema = useMemo(() => validationSchemaConstructor(t), []);
 
   const { error, isLoading } = useSelector(getUserState);
   const registerAsyncBounded = useBoundAction(registerAsync);
@@ -33,7 +34,8 @@ export const Registration: FC = () => {
     } else {
       modal.hide();
     }
-  }, [error, isLoading, history, t]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error, isLoading, history]);
 
   const backHandler = () => {
     history.goBack();
