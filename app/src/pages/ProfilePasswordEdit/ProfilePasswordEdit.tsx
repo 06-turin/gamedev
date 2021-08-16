@@ -21,6 +21,7 @@ export type ProfilePasswordPageProps = {
 export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const modal = useModal();
+  // 't' в useMemo влияет на правильную работу ssr
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const validationSchema = useMemo(() => validationSchemaConstructor(t), []);
 
@@ -46,6 +47,7 @@ export const ProfilePasswordEdit: FC<ProfilePasswordPageProps> = ({ className })
     } else {
       modal.hide();
     }
+  // 't' в useMemo влияет на правильную работу ssr
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUpdatedSuccessful, error, isLoading]);
 

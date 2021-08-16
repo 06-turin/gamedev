@@ -61,6 +61,7 @@ export const GameContent: FC<GameContentProps> = ({ gameStatus, stage, fullScree
           />
         );
     }
+  // 't' в useMemo влияет на правильную работу ssr
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameStatus, stageText, fullScreenHandle.active]);
 

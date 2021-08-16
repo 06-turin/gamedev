@@ -25,6 +25,7 @@ import { loginFormFields, validationSchemaConstructor } from './constants';
 export const Login: FC = () => {
   const { t } = useTranslation();
   const modal = useModal();
+  // 't' в useMemo влияет на правильную работу ssr
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const validationSchema = useMemo(() => validationSchemaConstructor(t), []);
 
