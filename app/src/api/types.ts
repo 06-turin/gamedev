@@ -162,7 +162,11 @@ export type GetCommentsResponse = {
   currentPage: number
 }
 
-export type AddCommentRequest = any
+export type AddCommentRequest = {
+  topicId: number | string,
+  username: string,
+  text: string
+}
 
 export type AddCommentResponse = any
 
