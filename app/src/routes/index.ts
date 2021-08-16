@@ -11,6 +11,7 @@ import { ProfilePasswordEdit } from 'pages/ProfilePasswordEdit/ProfilePasswordEd
 import { Topic } from 'pages/Topic/Topic';
 import { NewPost } from 'pages/NewPost/NewPost';
 import { Error } from 'pages/Error/Error';
+import { NewTopic } from 'pages/NewTopic/NewTopic';
 
 export type RouteType = {
   path: string,
@@ -89,6 +90,10 @@ export const routes: RoutesType = [
   {
     path: '/new-post',
     component: NewPost,
+  },
+  {
+    path: '/new-topic',
+    component: NewTopic,
   },
   {
     path: '*',
