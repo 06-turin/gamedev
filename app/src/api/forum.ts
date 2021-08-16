@@ -19,7 +19,6 @@ export const forumAPI = {
         method: 'post',
         url: PATHS.forum.addTopic,
         data,
-        authRequired: true,
       });
 
       if (response.data && is<AddTopicResponse>(response.data)) {
@@ -36,7 +35,6 @@ export const forumAPI = {
       const response = await callApi({
         method: 'get',
         url: `${PATHS.forum.getTopics}?page=${page}`,
-        authRequired: false,
       });
       if (response.data && is<GetTopicsResponse>(response.data)) {
         return response.data;
@@ -53,7 +51,6 @@ export const forumAPI = {
         method: 'post',
         url: PATHS.forum.addComment,
         data,
-        authRequired: false,
       });
 
       if (response.data && is<AddCommentResponse>(response.data)) {
@@ -71,7 +68,6 @@ export const forumAPI = {
         method: 'get',
         data: {},
         url: `${PATHS.forum.getComments}/${data.topicId}?page=${data.page || 1}`,
-        authRequired: true,
       });
 
       if (response.data && is<GetCommentsResponse>(response.data)) {
