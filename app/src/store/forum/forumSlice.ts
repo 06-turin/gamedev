@@ -3,7 +3,7 @@ import {
 } from 'api/types';
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  getCommentsAsync, getTopicsAsync, setActiveTopicId, setActiveTopicPage, setActiveTopicTitle,
+  getCommentsAsync, getTopicsAsync, setActiveCommentsPage, setActiveTopicId, setActiveTopicsPage, setActiveTopicTitle,
 } from 'store/forum/forumActions';
 
 type ForumState = {
@@ -12,10 +12,11 @@ type ForumState = {
   topicsCount: number
   topicsPagesCount: number
   commentsCount: number
+  commentsPagesCount: number
   activeTopicId: number | undefined
   activeTopicTitle: string
   activeTopicsPage: number
-  activeCommentPage: number
+  activeCommentsPage: number
 }
 
 const initialState: ForumState = {
@@ -24,22 +25,23 @@ const initialState: ForumState = {
   topicsCount: 0,
   topicsPagesCount: 0,
   commentsCount: 0,
-  activeCommentPage: 0,
+  commentsPagesCount: 0,
+  activeCommentsPage: 0,
   activeTopicId: undefined,
   activeTopicTitle: 'undefined title',
-  activeTopicsPage: 0,
+  activeTopicsPage: 1,
 };
 
 const updateTopicsList = (state: ForumState, payload: GetTopicsResponse) => {
   state.topicsList = payload.results;
   state.topicsCount = payload.totalItems;
   state.topicsPagesCount = payload.totalPages;
-  state.activeTopicsPage = payload.currentPage;
 };
 
 const updateCommentsList = (state: ForumState, payload: GetCommentsResponse) => {
   state.commentsList = payload.results;
   state.commentsCount = payload.totalItems;
+  state.commentsPagesCount = payload.totalPages;
 };
 
 const updateActiveTopicId = (state: ForumState, payload: number) => {
@@ -52,6 +54,10 @@ const updateActiveTopicTitle = (state: ForumState, payload: string) => {
 
 const updateActiveTopicPage = (state: ForumState, payload: number) => {
   state.activeTopicsPage = payload;
+};
+
+const updateActiveCommentsPage = (state: ForumState, payload: number) => {
+  state.activeCommentsPage = payload;
 };
 
 export const forumSlice = createSlice({
@@ -71,8 +77,11 @@ export const forumSlice = createSlice({
     builder.addCase(setActiveTopicTitle, (state, action) => {
       updateActiveTopicTitle(state, action.payload);
     });
-    builder.addCase(setActiveTopicPage, (state, action) => {
+    builder.addCase(setActiveTopicsPage, (state, action) => {
       updateActiveTopicPage(state, action.payload);
+    });
+    builder.addCase(setActiveCommentsPage, (state, action) => {
+      updateActiveCommentsPage(state, action.payload);
     });
   },
 });

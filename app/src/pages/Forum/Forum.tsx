@@ -7,7 +7,7 @@ import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory } from 'react-router-dom';
 import { topicsListHeader } from 'pages/Forum/constants';
 import { useBoundAction } from 'hooks/useBoundAction';
-import {getTopicsAsync, setActiveTopicId, setActiveTopicPage} from 'store/forum/forumActions';
+import {getTopicsAsync, setActiveTopicId, setActiveTopicsPage} from 'store/forum/forumActions';
 import { useSelector } from 'react-redux';
 import {selectActiveTopicsPage, selectTopicsList, selectTopicsPagesCount} from 'store/forum/forumSelectors';
 import { useMountEffect } from 'hooks/useMountEffect';
@@ -26,7 +26,7 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
   const topics = useSelector(selectTopicsList);
   const topicsPagesCount = useSelector(selectTopicsPagesCount);
   const activePage = useSelector(selectActiveTopicsPage);
-  const setActivePageBounded = useBoundAction(setActiveTopicPage);
+  const setActivePageBounded = useBoundAction(setActiveTopicsPage);
 
   useMountEffect(() => getTopicsAsyncBounded(activePage));
   useEffect(() => getTopicsAsyncBounded(activePage), [activePage, getTopicsAsyncBounded]);

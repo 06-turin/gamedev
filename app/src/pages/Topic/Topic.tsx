@@ -1,15 +1,25 @@
 import './styles.css';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectActiveTopicId, selectCommentsList, selectTopicsList } from 'store/forum/forumSelectors';
+import {
+  selectActiveCommentsPage,
+  selectActiveTopicId,
+  selectCommentsList, selectCommentsPagesCount,
+  selectTopicsList,
+} from 'store/forum/forumSelectors';
 import { useMountEffect } from 'hooks/useMountEffect';
-import { getCommentsAsync, setActiveTopicTitle } from 'store/forum/forumActions';
+import {
+  getCommentsAsync,
+  setActiveCommentsPage,
+  setActiveTopicTitle,
+} from 'store/forum/forumActions';
 import { useBoundAction } from 'hooks/useBoundAction';
+import { Paginator } from 'components/molecules/Paginator/Paginator';
 
 export type TopicPageProps = {
   className?: string
@@ -24,10 +34,17 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
   const topicsList = useSelector(selectTopicsList);
   const activeTopic = topicsList.find((topic) => topic.id === activeTopicId);
   const comments = useSelector(selectCommentsList);
+  const commentsPagesCount = useSelector(selectCommentsPagesCount);
+  const activePage = useSelector(selectActiveCommentsPage);
+  const setActivePageBounded = useBoundAction(setActiveCommentsPage);
 
   setActiveTopicTitleBounded(activeTopic?.title);
 
-  useMountEffect(() => getCommentsAsyncBounded({ topicId: activeTopicId, page: 1 }));
+  useMountEffect(() => getCommentsAsyncBounded({ topicId: activeTopicId, page: activePage }));
+  useEffect(() => getCommentsAsyncBounded(
+    { topicId: activeTopicId, page: activePage },
+  ),
+  [activePage, activeTopicId, getCommentsAsyncBounded]);
 
   return (
     <div className={classNames(['page', className])}>
@@ -52,6 +69,7 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
             </span>
           ))}
         </div>
+        <Paginator pagesCount={commentsPagesCount} currentPage={activePage} pageChanger={setActivePageBounded} />
       </div>
       <div className="page__footer-buttons">
         <BackButton />
