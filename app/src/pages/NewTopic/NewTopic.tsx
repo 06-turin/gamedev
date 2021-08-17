@@ -37,14 +37,14 @@ export const NewTopic: FC<NewPostPageProps> = ({ className }) => {
         <div className="post__input-container">
           <input
             className="post__text"
-            placeholder={`${t('topic title')}...`}
+            placeholder={`${t('enter_topic_title')}...`}
             onChange={(event) => (setTitle(event.target.value))}
           />
         </div>
       </div>
       <div className="page__footer-buttons">
         <BackButton />
-        <GDButton title={`${t('start')} !`} styleOption="secondary" size="l" onClick={startButtonHandler} />
+        <GDButton title={`${t('start_new_topic')} !`} styleOption="secondary" size="l" onClick={startButtonHandler} />
       </div>
     </div>
   );

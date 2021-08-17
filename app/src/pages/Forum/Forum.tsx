@@ -1,5 +1,7 @@
 import './styles.css';
-import React, {FC, MouseEventHandler, useEffect, useMemo} from 'react';
+import React, {
+  FC, MouseEventHandler, useEffect, useMemo,
+} from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -7,9 +9,9 @@ import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory } from 'react-router-dom';
 import { topicsListHeader } from 'pages/Forum/constants';
 import { useBoundAction } from 'hooks/useBoundAction';
-import {getTopicsAsync, setActiveTopicId, setActiveTopicsPage} from 'store/forum/forumActions';
+import { getTopicsAsync, setActiveTopicId, setActiveTopicsPage } from 'store/forum/forumActions';
 import { useSelector } from 'react-redux';
-import {selectActiveTopicsPage, selectTopicsList, selectTopicsPagesCount} from 'store/forum/forumSelectors';
+import { selectActiveTopicsPage, selectTopicsList, selectTopicsPagesCount } from 'store/forum/forumSelectors';
 import { useMountEffect } from 'hooks/useMountEffect';
 import { Paginator } from 'components/molecules/Paginator/Paginator';
 
