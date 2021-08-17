@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getActiveTopicId, getActiveTopicTitle } from 'store/forum/forumSelectors';
+import { selectActiveTopicId, selectActiveTopicTitle } from 'store/forum/forumSelectors';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { addCommentAsync } from 'store/forum/forumActions';
 import { getUserState } from 'store/user/userSlice';
@@ -19,8 +19,8 @@ export const NewPost: FC<NewPostPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const [comment, setComment] = useState('');
-  const topicTitle = useSelector(getActiveTopicTitle);
-  const topicId = useSelector(getActiveTopicId);
+  const topicTitle = useSelector(selectActiveTopicTitle);
+  const topicId = useSelector(selectActiveTopicId);
   const user = useSelector(getUserState);
   const addCommentAsyncBounded = useBoundAction(addCommentAsync);
 

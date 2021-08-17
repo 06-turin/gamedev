@@ -3,17 +3,18 @@ import {
 } from 'api/types';
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  getCommentsAsync, getTopicsAsync, setActiveTopicId, setActiveTopicTitle,
+  getCommentsAsync, getTopicsAsync, setActiveTopicId, setActiveTopicPage, setActiveTopicTitle,
 } from 'store/forum/forumActions';
 
 type ForumState = {
   topicsList: Topic[]
   commentsList: Comment[]
   topicsCount: number
+  topicsPagesCount: number
   commentsCount: number
   activeTopicId: number | undefined
   activeTopicTitle: string
-  activeTopicPage: number
+  activeTopicsPage: number
   activeCommentPage: number
 }
 
@@ -21,23 +22,24 @@ const initialState: ForumState = {
   topicsList: [],
   commentsList: [],
   topicsCount: 0,
+  topicsPagesCount: 0,
   commentsCount: 0,
   activeCommentPage: 0,
   activeTopicId: undefined,
   activeTopicTitle: 'undefined title',
-  activeTopicPage: 0,
+  activeTopicsPage: 0,
 };
 
 const updateTopicsList = (state: ForumState, payload: GetTopicsResponse) => {
   state.topicsList = payload.results;
   state.topicsCount = payload.totalItems;
-  state.activeTopicPage = payload.currentPage;
+  state.topicsPagesCount = payload.totalPages;
+  state.activeTopicsPage = payload.currentPage;
 };
 
 const updateCommentsList = (state: ForumState, payload: GetCommentsResponse) => {
   state.commentsList = payload.results;
   state.commentsCount = payload.totalItems;
-  state.activeCommentPage = payload.currentPage;
 };
 
 const updateActiveTopicId = (state: ForumState, payload: number) => {
@@ -46,6 +48,10 @@ const updateActiveTopicId = (state: ForumState, payload: number) => {
 
 const updateActiveTopicTitle = (state: ForumState, payload: string) => {
   state.activeTopicTitle = payload;
+};
+
+const updateActiveTopicPage = (state: ForumState, payload: number) => {
+  state.activeTopicsPage = payload;
 };
 
 export const forumSlice = createSlice({
@@ -64,6 +70,9 @@ export const forumSlice = createSlice({
     });
     builder.addCase(setActiveTopicTitle, (state, action) => {
       updateActiveTopicTitle(state, action.payload);
+    });
+    builder.addCase(setActiveTopicPage, (state, action) => {
+      updateActiveTopicPage(state, action.payload);
     });
   },
 });

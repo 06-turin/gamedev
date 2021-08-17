@@ -1,5 +1,5 @@
 import './styles.css';
-import React, { FC, MouseEventHandler, useMemo } from 'react';
+import React, {FC, MouseEventHandler, useEffect, useMemo} from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -7,10 +7,11 @@ import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory } from 'react-router-dom';
 import { topicsListHeader } from 'pages/Forum/constants';
 import { useBoundAction } from 'hooks/useBoundAction';
-import { getTopicsAsync, setActiveTopicId } from 'store/forum/forumActions';
+import {getTopicsAsync, setActiveTopicId, setActiveTopicPage} from 'store/forum/forumActions';
 import { useSelector } from 'react-redux';
-import { selectTopicsList } from 'store/forum/forumSelectors';
+import {selectActiveTopicsPage, selectTopicsList, selectTopicsPagesCount} from 'store/forum/forumSelectors';
 import { useMountEffect } from 'hooks/useMountEffect';
+import { Paginator } from 'components/molecules/Paginator/Paginator';
 
 export type ForumPageProps = {
   className?: string
@@ -23,8 +24,12 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
   const getTopicsAsyncBounded = useBoundAction(getTopicsAsync);
   const setActiveTopicIdBounded = useBoundAction(setActiveTopicId);
   const topics = useSelector(selectTopicsList);
+  const topicsPagesCount = useSelector(selectTopicsPagesCount);
+  const activePage = useSelector(selectActiveTopicsPage);
+  const setActivePageBounded = useBoundAction(setActiveTopicPage);
 
-  useMountEffect(() => getTopicsAsyncBounded(1));
+  useMountEffect(() => getTopicsAsyncBounded(activePage));
+  useEffect(() => getTopicsAsyncBounded(activePage), [activePage, getTopicsAsyncBounded]);
 
   const topicListClickHandler: MouseEventHandler = (event) => {
     event.preventDefault();
@@ -66,6 +71,7 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
             </li>
           ))}
         </ul>
+        <Paginator pagesCount={topicsPagesCount} currentPage={activePage} pageChanger={setActivePageBounded} />
       </div>
 
       <div className="page__footer-buttons">

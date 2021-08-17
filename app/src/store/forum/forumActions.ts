@@ -66,3 +66,4 @@ export const addCommentAsync = createAsyncThunk(
 
 export const setActiveTopicId = createAction<number>('setActiveTopicId');
 export const setActiveTopicTitle = createAction<string>('setActiveTopicTitle');
+export const setActiveTopicPage = createAction<number>('setActiveTopicPage');
