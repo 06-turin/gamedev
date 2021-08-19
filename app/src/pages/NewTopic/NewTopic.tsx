@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { addTopicAsync } from 'store/forum/forumActions';
 import { getUserState } from 'store/user/userSlice';
+import { getUserInfoAsync } from 'store/user/userActions';
+import { useMountEffect } from 'hooks/useMountEffect';
 
 export type NewPostPageProps = {
   className?: string
@@ -20,6 +22,9 @@ export const NewTopic: FC<NewPostPageProps> = ({ className }) => {
   const [title, setTitle] = useState('');
   const user = useSelector(getUserState);
   const addTopicAsyncBounded = useBoundAction(addTopicAsync);
+  const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
+
+  useMountEffect(() => getUserInfoAsyncBounded());
 
   const startButtonHandler: MouseEventHandler = (event) => {
     event.preventDefault();

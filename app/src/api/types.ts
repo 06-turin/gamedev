@@ -148,6 +148,7 @@ export type Comment = {
   createdAt: string
   updatedAt: string
   topic: CommentsResponseTopic
+  avatar: string | null
 }
 
 export type GetCommentsRequest = {
@@ -166,6 +167,7 @@ export type AddCommentRequest = {
   topicId: number | string,
   username: string,
   text: string
+  avatar: string | null
 }
 
 export type AddCommentResponse = any

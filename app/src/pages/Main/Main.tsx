@@ -1,6 +1,6 @@
 import './styles.css';
 import React, { FC } from 'react';
-import logoImage from 'assets/images/logo_img_base.png';
+import logoImage from 'assets/images/bomb.png';
 import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { Menu } from 'components/molecules/Menu/Menu';
@@ -25,10 +25,9 @@ export const Main: FC<MainPageProps> = ({ className }) => {
   const logoutHandler = () => logoutAsyncBounded();
 
   const items = [
-    { title: 'settings', onClick: () => history.push('/') },
     { title: 'profile', onClick: () => history.push('/profile') },
     { title: 'leaderboard', onClick: () => history.push('/leaderboard') },
-    { title: 'forum', onClick: () => history.push('/') },
+    { title: 'forum', onClick: () => history.push('/forum') },
   ];
 
   items.forEach((item) => {

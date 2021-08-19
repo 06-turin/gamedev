@@ -10,6 +10,8 @@ import { selectActiveTopicId, selectActiveTopicTitle } from 'store/forum/forumSe
 import { useBoundAction } from 'hooks/useBoundAction';
 import { addCommentAsync } from 'store/forum/forumActions';
 import { getUserState } from 'store/user/userSlice';
+import { useMountEffect } from 'hooks/useMountEffect';
+import { getUserInfoAsync } from 'store/user/userActions';
 
 export type NewPostPageProps = {
   className?: string
@@ -23,6 +25,9 @@ export const NewPost: FC<NewPostPageProps> = ({ className }) => {
   const topicId = useSelector(selectActiveTopicId);
   const user = useSelector(getUserState);
   const addCommentAsyncBounded = useBoundAction(addCommentAsync);
+  const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
+
+  useMountEffect(() => getUserInfoAsyncBounded());
 
   const postButtonHandler: MouseEventHandler = (event) => {
     event.preventDefault();
@@ -30,8 +35,9 @@ export const NewPost: FC<NewPostPageProps> = ({ className }) => {
       topicId,
       username: `${user.userInfo.first_name} ${user.userInfo.second_name}`,
       text: comment,
+      avatar: user.userInfo.avatar,
     });
-    history.push('/topic');
+    history.push(`/topic/${topicId}`);
   };
 
   return (
@@ -52,7 +58,6 @@ export const NewPost: FC<NewPostPageProps> = ({ className }) => {
       </div>
       <div className="page__footer-buttons">
         <BackButton />
-        <GDButton title=":)" styleOption="secondary" size="l" />
         <GDButton title={`${t('post')} !`} styleOption="secondary" size="l" onClick={postButtonHandler} />
       </div>
     </div>

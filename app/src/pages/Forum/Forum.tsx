@@ -14,6 +14,9 @@ import { useSelector } from 'react-redux';
 import { selectActiveTopicsPage, selectTopicsList, selectTopicsPagesCount } from 'store/forum/forumSelectors';
 import { useMountEffect } from 'hooks/useMountEffect';
 import { Paginator } from 'components/molecules/Paginator/Paginator';
+import { getUserState } from 'store/user/userSlice';
+import { Topic } from 'api/types';
+import { getUserInfoAsync } from 'store/user/userActions';
 
 export type ForumPageProps = {
   className?: string
@@ -21,7 +24,9 @@ export type ForumPageProps = {
 
 export const Forum: FC<ForumPageProps> = ({ className }) => {
   const { t } = useTranslation();
-  const listHeader = useMemo(() => topicsListHeader.map((item) => t(item)), [t]);
+  // 't' в useMemo влияет на правильную работу ssr
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const listHeader = useMemo(() => topicsListHeader.map((item) => t(item)), []);
   const history = useHistory();
   const getTopicsAsyncBounded = useBoundAction(getTopicsAsync);
   const setActiveTopicIdBounded = useBoundAction(setActiveTopicId);
@@ -29,21 +34,53 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
   const topicsPagesCount = useSelector(selectTopicsPagesCount);
   const activePage = useSelector(selectActiveTopicsPage);
   const setActivePageBounded = useBoundAction(setActiveTopicsPage);
+  const { isAuth } = useSelector(getUserState);
+  const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
 
   useMountEffect(() => getTopicsAsyncBounded(activePage));
+  useMountEffect(() => getUserInfoAsyncBounded());
   useEffect(() => getTopicsAsyncBounded(activePage), [activePage, getTopicsAsyncBounded]);
 
-  const topicListClickHandler: MouseEventHandler = (event) => {
+  const topicClickHandler: MouseEventHandler = (event) => {
     event.preventDefault();
-    const target = event.target as HTMLElement;
-    const topicListElement = target.closest('.forum__topic-list-item');
+    const topicListElement = event.currentTarget as HTMLElement;
     const topicId = topicListElement?.getAttribute('topic-id');
     if (!topicId) {
       return;
     }
     setActiveTopicIdBounded(parseInt(topicId, 10));
-    history.push('/topic');
+    history.push(`/topic/${topicId}`);
   };
+
+  const renderTopics = (topicsList: Topic[]) => topicsList.map(({
+    id,
+    title,
+    owner,
+    views,
+    updatedAt,
+    commentsCount,
+  }) => {
+    const parsedDate = new Date(updatedAt).toLocaleDateString();
+
+    return (
+      <button className="forum__topic-list-item" topic-id={id} onClick={topicClickHandler}>
+        <span className="forum__topic-list-item_align-left">{title}</span>
+        <span>{owner}</span>
+        <span>{commentsCount}</span>
+        <span>{views}</span>
+        <time>{parsedDate}</time>
+      </button>
+    );
+  });
+
+  const startTopicOption = isAuth && (
+    <GDButton
+      title={t('start_new_topic')}
+      styleOption="secondary"
+      size="l"
+      onClick={() => history.push('/new-topic')}
+    />
+  );
 
   return (
     <div className={classNames(['page', className])}>
@@ -52,38 +89,15 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
         <span className="forum__header">
           {listHeader.map((item) => <GDButton key={item} title={item} styleOption="secondary" size="l" />)}
         </span>
-        {/* eslint-disable-next-line max-len */}
-        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions,jsx-a11y/click-events-have-key-events */}
-        <ul className="forum__topics-list" onClick={topicListClickHandler}>
-          {topics.map(({
-            id,
-            title,
-            owner,
-            views,
-            updatedAt,
-            commentsCount,
-          }, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <li key={index} className="forum__topic-list-item" topic-id={id}>
-              <span className="forum__topic-list-item_align-left">{title}</span>
-              <span>{owner}</span>
-              <span>{commentsCount}</span>
-              <span>{views}</span>
-              <time>{new Date(updatedAt).toLocaleDateString()}</time>
-            </li>
-          ))}
-        </ul>
+        <span className="forum__topics-list">
+          {renderTopics(topics)}
+        </span>
         <Paginator pagesCount={topicsPagesCount} currentPage={activePage} pageChanger={setActivePageBounded} />
       </div>
 
       <div className="page__footer-buttons">
         <BackButton />
-        <GDButton
-          title={t('start_new_topic')}
-          styleOption="secondary"
-          size="l"
-          onClick={() => history.push('/new-topic')}
-        />
+        {startTopicOption}
       </div>
     </div>
   );

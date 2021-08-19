@@ -23,6 +23,10 @@ export type RouteType = {
   },
 }
 
+export type TopicRouteParamsType = {
+  topicId?: string | undefined
+}
+
 type RoutesType = RouteType[]
 
 export const routes: RoutesType = [
@@ -84,7 +88,7 @@ export const routes: RoutesType = [
     },
   },
   {
-    path: '/topic',
+    path: '/topic/:topicId',
     component: Topic,
   },
   {

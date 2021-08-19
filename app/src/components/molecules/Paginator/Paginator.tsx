@@ -26,11 +26,8 @@ export const Paginator: FC<TPaginatorProps> = ({ pagesCount, currentPage, pageCh
   return (
     <nav className={classNames(['paginator'])}>
       <div className={classNames(['paginator__list'])}>
-        {items.map((number, index) => (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-          <span
-            role="button"
-            tabIndex={index}
+        {items.map((number) => (
+          <button
             className={classNames([
               'paginator__item',
               number === page && 'paginator__item_active',
@@ -38,7 +35,7 @@ export const Paginator: FC<TPaginatorProps> = ({ pagesCount, currentPage, pageCh
             onClick={clickHandler}
           >
             {number}
-          </span>
+          </button>
         ))}
       </div>
     </nav>
