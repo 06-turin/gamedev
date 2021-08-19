@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectActiveTopicId, selectActiveTopicTitle } from 'store/forum/forumSelectors';
+import { selectTopics } from 'store/forum/forumSelectors';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { addCommentAsync } from 'store/forum/forumActions';
 import { getUserState } from 'store/user/userSlice';
@@ -21,8 +21,7 @@ export const NewPost: FC<NewPostPageProps> = ({ className }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const [comment, setComment] = useState('');
-  const topicTitle = useSelector(selectActiveTopicTitle);
-  const topicId = useSelector(selectActiveTopicId);
+  const { activeTopicTitle, activeTopicId } = useSelector(selectTopics);
   const user = useSelector(getUserState);
   const addCommentAsyncBounded = useBoundAction(addCommentAsync);
   const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
@@ -32,12 +31,12 @@ export const NewPost: FC<NewPostPageProps> = ({ className }) => {
   const postButtonHandler: MouseEventHandler = (event) => {
     event.preventDefault();
     addCommentAsyncBounded({
-      topicId,
+      activeTopicId,
       username: `${user.userInfo.first_name} ${user.userInfo.second_name}`,
       text: comment,
       avatar: user.userInfo.avatar,
     });
-    history.push(`/topic/${topicId}`);
+    history.push(`/topic/${activeTopicId}`);
   };
 
   return (
@@ -45,7 +44,7 @@ export const NewPost: FC<NewPostPageProps> = ({ className }) => {
       <h1 className="page__title">{t('topic')}</h1>
       <div className="post">
         <div className="post__title-container">
-          <span className="post__title">{topicTitle}</span>
+          <span className="post__title">{activeTopicTitle}</span>
           <span className="post__title">{t('new_post')}</span>
         </div>
         <div className="post__input-container">

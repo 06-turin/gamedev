@@ -7,57 +7,65 @@ import {
 } from 'store/forum/forumActions';
 
 type ForumState = {
-  topicsList: Topic[]
-  commentsList: Comment[]
-  topicsCount: number
-  topicsPagesCount: number
-  commentsCount: number
-  commentsPagesCount: number
-  activeTopicId: number | undefined
-  activeTopicTitle: string
-  activeTopicsPage: number
-  activeCommentsPage: number
+  topics: {
+    topicsList: Topic[]
+    topicsCount: number
+    topicsPagesCount: number
+    activeTopicId: number | undefined
+    activeTopicTitle: string
+    activeTopicsPage: number
+  }
+  comments: {
+    commentsList: Comment[]
+    commentsCount: number
+    commentsPagesCount: number
+    activeCommentsPage: number
+  }
 }
 
 const initialState: ForumState = {
-  topicsList: [],
-  commentsList: [],
-  topicsCount: 0,
-  topicsPagesCount: 0,
-  commentsCount: 0,
-  commentsPagesCount: 0,
-  activeCommentsPage: 0,
-  activeTopicId: undefined,
-  activeTopicTitle: 'undefined title',
-  activeTopicsPage: 1,
+  topics: {
+    topicsList: [],
+    topicsCount: 0,
+    topicsPagesCount: 0,
+    activeTopicId: undefined,
+    activeTopicTitle: 'undefined title',
+    activeTopicsPage: 1,
+  },
+  comments: {
+    commentsList: [],
+    commentsCount: 0,
+    commentsPagesCount: 0,
+    activeCommentsPage: 1,
+  },
 };
 
 const updateTopicsList = (state: ForumState, payload: GetTopicsResponse) => {
-  state.topicsList = payload.results;
-  state.topicsCount = payload.totalItems;
-  state.topicsPagesCount = payload.totalPages;
+  state.topics.topicsList = payload.results;
+  state.topics.topicsCount = payload.totalItems;
+  state.topics.topicsPagesCount = payload.totalPages;
 };
 
 const updateCommentsList = (state: ForumState, payload: GetCommentsResponse) => {
-  state.commentsList = payload.results;
-  state.commentsCount = payload.totalItems;
-  state.commentsPagesCount = payload.totalPages;
+  state.comments.commentsList = payload.results;
+  state.comments.commentsCount = payload.totalItems;
+  state.comments.commentsPagesCount = payload.totalPages;
 };
 
 const updateActiveTopicId = (state: ForumState, payload: number) => {
-  state.activeTopicId = payload;
+  state.topics.activeTopicId = payload;
 };
 
 const updateActiveTopicTitle = (state: ForumState, payload: string) => {
-  state.activeTopicTitle = payload;
+  state.topics.activeTopicTitle = payload;
 };
 
 const updateActiveTopicPage = (state: ForumState, payload: number) => {
-  state.activeTopicsPage = payload;
+  state.topics.activeTopicsPage = payload;
 };
 
 const updateActiveCommentsPage = (state: ForumState, payload: number) => {
-  state.activeCommentsPage = payload;
+  state.comments.activeCommentsPage = payload;
 };
 
 export const forumSlice = createSlice({

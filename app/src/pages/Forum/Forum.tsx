@@ -11,7 +11,7 @@ import { topicsListHeader } from 'pages/Forum/constants';
 import { useBoundAction } from 'hooks/useBoundAction';
 import { getTopicsAsync, setActiveTopicId, setActiveTopicsPage } from 'store/forum/forumActions';
 import { useSelector } from 'react-redux';
-import { selectActiveTopicsPage, selectTopicsList, selectTopicsPagesCount } from 'store/forum/forumSelectors';
+import { selectTopics } from 'store/forum/forumSelectors';
 import { useMountEffect } from 'hooks/useMountEffect';
 import { Paginator } from 'components/molecules/Paginator/Paginator';
 import { getUserState } from 'store/user/userSlice';
@@ -30,16 +30,14 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
   const history = useHistory();
   const getTopicsAsyncBounded = useBoundAction(getTopicsAsync);
   const setActiveTopicIdBounded = useBoundAction(setActiveTopicId);
-  const topics = useSelector(selectTopicsList);
-  const topicsPagesCount = useSelector(selectTopicsPagesCount);
-  const activePage = useSelector(selectActiveTopicsPage);
+  const { topicsList, topicsPagesCount, activeTopicsPage } = useSelector(selectTopics);
   const setActivePageBounded = useBoundAction(setActiveTopicsPage);
   const { isAuth } = useSelector(getUserState);
   const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
 
-  useMountEffect(() => getTopicsAsyncBounded(activePage));
+  useMountEffect(() => getTopicsAsyncBounded(activeTopicsPage));
   useMountEffect(() => getUserInfoAsyncBounded());
-  useEffect(() => getTopicsAsyncBounded(activePage), [activePage, getTopicsAsyncBounded]);
+  useEffect(() => getTopicsAsyncBounded(activeTopicsPage), [activeTopicsPage, getTopicsAsyncBounded]);
 
   const topicClickHandler: MouseEventHandler = (event) => {
     event.preventDefault();
@@ -52,7 +50,7 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
     history.push(`/topic/${topicId}`);
   };
 
-  const renderTopics = (topicsList: Topic[]) => topicsList.map(({
+  const renderTopics = (topics: Topic[]) => topics.map(({
     id,
     title,
     owner,
@@ -90,9 +88,9 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
           {listHeader.map((item) => <GDButton key={item} title={item} styleOption="secondary" size="l" />)}
         </span>
         <span className="forum__topics-list">
-          {renderTopics(topics)}
+          {renderTopics(topicsList)}
         </span>
-        <Paginator pagesCount={topicsPagesCount} currentPage={activePage} pageChanger={setActivePageBounded} />
+        <Paginator pagesCount={topicsPagesCount} currentPage={activeTopicsPage} pageChanger={setActivePageBounded} />
       </div>
 
       <div className="page__footer-buttons">

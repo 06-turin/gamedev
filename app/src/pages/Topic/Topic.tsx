@@ -7,12 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import {
-  selectActiveCommentsPage,
-  selectActiveTopicId,
-  selectCommentsList, selectCommentsPagesCount,
-  selectTopicsList,
-} from 'store/forum/forumSelectors';
+import { selectComments, selectTopics } from 'store/forum/forumSelectors';
 import { useMountEffect } from 'hooks/useMountEffect';
 import {
   getCommentsAsync,
@@ -33,26 +28,23 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
   const history = useHistory();
   const getCommentsAsyncBounded = useBoundAction(getCommentsAsync);
   const setActiveTopicTitleBounded = useBoundAction(setActiveTopicTitle);
-  const activeTopicId = useSelector(selectActiveTopicId);
-  const topicsList = useSelector(selectTopicsList);
+  const { activeTopicId, topicsList } = useSelector(selectTopics);
   const activeTopic = topicsList.find((topic) => topic.id === activeTopicId);
-  const comments = useSelector(selectCommentsList);
-  const commentsPagesCount = useSelector(selectCommentsPagesCount);
-  const activePage = useSelector(selectActiveCommentsPage);
+  const { commentsList, commentsPagesCount, activeCommentsPage } = useSelector(selectComments);
   const setActiveCommentsPageBounded = useBoundAction(setActiveCommentsPage);
 
   const { topicId } = useParams<TopicRouteParamsType>();
 
   setActiveTopicTitleBounded(activeTopic?.title);
 
-  useMountEffect(() => getCommentsAsyncBounded({ topicId: activeTopicId || topicId, page: activePage }));
+  useMountEffect(() => getCommentsAsyncBounded({ topicId: activeTopicId || topicId, page: activeCommentsPage }));
 
   useEffect(() => getCommentsAsyncBounded(
-    { topicId: activeTopicId, page: activePage },
+    { topicId: activeTopicId, page: activeCommentsPage },
   ),
-  [activePage, activeTopicId, getCommentsAsyncBounded]);
+  [activeCommentsPage, activeTopicId, getCommentsAsyncBounded]);
 
-  const renderComments = (commentsList: Comment[]) => commentsList.map(({
+  const renderComments = (comments: Comment[]) => comments.map(({
     username, updatedAt, text, avatar,
   }) => {
     const parsedDate = new Date(updatedAt).toLocaleDateString();
@@ -79,11 +71,11 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
       <div className="topic">
         <span className="topic__title">{activeTopic?.title}</span>
         <div className="topic__posts-list">
-          {renderComments(comments)}
+          {renderComments(commentsList)}
         </div>
         <Paginator
           pagesCount={commentsPagesCount}
-          currentPage={activePage}
+          currentPage={activeCommentsPage}
           pageChanger={setActiveCommentsPageBounded}
         />
       </div>

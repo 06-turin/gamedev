@@ -1,4 +1,4 @@
-import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { forumAPI } from 'api/forum';
 import { AddCommentRequest, AddTopicRequest, GetCommentsRequest } from 'api/types';
 import { setIsLoadingShown } from 'store/requestStatus/requestStatusActions';
@@ -17,8 +17,7 @@ export const getTopicsAsync = createAsyncThunk(
   async (page: number, thunkAPI) => {
     thunkAPI.dispatch(setIsLoadingShown(true));
     try {
-      const topics = await forumAPI.getTopics(page);
-      return topics;
+      return await forumAPI.getTopics(page);
     } finally {
       thunkAPI.dispatch(setIsLoadingShown(false));
     }
@@ -30,8 +29,7 @@ export const addTopicAsync = createAsyncThunk(
   async (data: AddTopicRequest, thunkAPI) => {
     thunkAPI.dispatch(setIsLoadingShown(true));
     try {
-      const response = await forumAPI.addTopic(data);
-      return response;
+      return await forumAPI.addTopic(data);
     } finally {
       thunkAPI.dispatch(setIsLoadingShown(false));
     }
@@ -43,8 +41,7 @@ export const getCommentsAsync = createAsyncThunk(
   async (data: GetCommentsRequest, thunkAPI) => {
     thunkAPI.dispatch(setIsLoadingShown(true));
     try {
-      const comments = await forumAPI.getComments(data);
-      return comments;
+      return await forumAPI.getComments(data);
     } finally {
       thunkAPI.dispatch(setIsLoadingShown(false));
     }
@@ -56,8 +53,7 @@ export const addCommentAsync = createAsyncThunk(
   async (data: AddCommentRequest, thunkAPI) => {
     thunkAPI.dispatch(setIsLoadingShown(true));
     try {
-      const response = await forumAPI.addComment(data);
-      return response;
+      return await forumAPI.addComment(data);
     } finally {
       thunkAPI.dispatch(setIsLoadingShown(false));
     }
