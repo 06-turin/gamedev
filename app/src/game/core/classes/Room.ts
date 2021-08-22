@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 import { Game } from './Game';
 
 export class Room {
@@ -11,7 +11,7 @@ export class Room {
   isClosed = false;
 
   constructor() {
-    this.id = randomUUID();
+    this.id = uuidv4();
     this.game = new Game();
   }
 

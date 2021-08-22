@@ -18,6 +18,7 @@ export const PlayerController = {
     } catch (error) {
       io.emit('player:connected-error', socket.id);
       console.log('~ player:connected-error', socket.id);
+      console.log('~ error', error);
     }
   },
 
