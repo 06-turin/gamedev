@@ -3,7 +3,13 @@ import {
 } from 'api/types';
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  getCommentsAsync, getTopicsAsync, setActiveCommentsPage, setActiveTopicId, setActiveTopicsPage, setActiveTopicTitle,
+  getCommentsAsync,
+  getTopicAsync,
+  getTopicsAsync,
+  setActiveCommentsPage,
+  setActiveTopicId,
+  setActiveTopicsPage,
+  setActiveTopicTitle,
 } from 'store/forum/forumActions';
 
 type ForumState = {
@@ -75,6 +81,9 @@ export const forumSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getTopicsAsync.fulfilled, (state, action) => {
       updateTopicsList(state, action.payload);
+    });
+    builder.addCase(getTopicAsync.fulfilled, (state, action) => {
+      updateActiveTopicTitle(state, action.payload.title);
     });
     builder.addCase(getCommentsAsync.fulfilled, (state, action) => {
       updateCommentsList(state, action.payload);

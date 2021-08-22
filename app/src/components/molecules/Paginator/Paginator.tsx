@@ -33,6 +33,7 @@ export const Paginator: FC<TPaginatorProps> = ({ pagesCount, currentPage, pageCh
               number === page && 'paginator__item_active',
             ])}
             onClick={clickHandler}
+            key={number}
           >
             {number}
           </button>

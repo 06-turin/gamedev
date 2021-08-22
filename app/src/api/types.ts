@@ -140,6 +140,16 @@ export type GetTopicsResponse = {
   currentPage: number
 }
 
+export type GetTopicResponse = {
+  id: number,
+  title: string,
+  owner: string,
+  views: number,
+  createdAt: string,
+  updatedAt: string,
+  comments: Omit<Comment, 'topic'>[],
+}
+
 export type Comment = {
   id: number
   username: string
@@ -169,6 +179,8 @@ export type AddCommentRequest = {
   text: string
   avatar: string | null
 }
+
+export type WatchTopicResponse = 'OK'
 
 export type AddCommentResponse = any
 

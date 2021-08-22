@@ -9,6 +9,7 @@ import {
   AddCommentResponse,
   GetCommentsRequest,
   GetCommentsResponse,
+  GetTopicResponse, WatchTopicResponse,
 } from 'api/types';
 import { PATHS } from './config';
 
@@ -37,6 +38,36 @@ export const forumAPI = {
         url: `${PATHS.forum.getTopics}?page=${page}`,
       });
       if (response.data && is<GetTopicsResponse>(response.data)) {
+        return response.data;
+      }
+      throw new Error(ERROR_RESPONSE_DATA);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  getTopic: async (id: number): Promise<GetTopicResponse> => {
+    try {
+      const response = await callApi({
+        method: 'get',
+        url: `${PATHS.forum.getTopics}/${id}`,
+      });
+      if (response.data && is<GetTopicResponse>(response.data)) {
+        return response.data;
+      }
+      throw new Error(ERROR_RESPONSE_DATA);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+
+  watchTopic: async (id: number): Promise<WatchTopicResponse> => {
+    try {
+      const response = await callApi({
+        method: 'get',
+        url: `${PATHS.forum.watchTopic}/${id}`,
+      });
+      if (response.data && is<WatchTopicResponse>(response.data)) {
         return response.data;
       }
       throw new Error(ERROR_RESPONSE_DATA);

@@ -29,7 +29,7 @@ export const PATHS = {
     getTopics: `${BASE_API_URL}/topics`,
     addTopic: `${BASE_API_URL}/topics`,
     deleteTopic: `${BASE_API_URL}/topics`,
-    watchTopic: `${BASE_API_URL}/watch`,
+    watchTopic: `${BASE_API_URL}/topics/watch`,
     getComments: `${BASE_API_URL}/comments`,
     addComment: `${BASE_API_URL}/comments`,
     deleteComment: `${BASE_API_URL}/comments`,

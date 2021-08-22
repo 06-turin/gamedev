@@ -61,7 +61,7 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
     const parsedDate = new Date(updatedAt).toLocaleDateString();
 
     return (
-      <button className="forum__topic-list-item" topic-id={id} onClick={topicClickHandler}>
+      <button className="forum__topic-list-item" topic-id={id} onClick={topicClickHandler} key={id}>
         <span className="forum__topic-list-item_align-left">{title}</span>
         <span>{owner}</span>
         <span>{commentsCount}</span>

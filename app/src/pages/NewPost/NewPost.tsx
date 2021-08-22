@@ -31,7 +31,7 @@ export const NewPost: FC<NewPostPageProps> = ({ className }) => {
   const postButtonHandler: MouseEventHandler = (event) => {
     event.preventDefault();
     addCommentAsyncBounded({
-      activeTopicId,
+      topicId: activeTopicId,
       username: `${user.userInfo.first_name} ${user.userInfo.second_name}`,
       text: comment,
       avatar: user.userInfo.avatar,
