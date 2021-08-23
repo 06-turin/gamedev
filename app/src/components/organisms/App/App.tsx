@@ -15,6 +15,7 @@ import { routes } from 'routes';
 import { OAuthController } from 'services/oauth';
 import { useHistory } from 'react-router';
 import { startAllWorkers } from 'webWorkers/startAllWorkers';
+import { getUserThemeAsync } from 'store/user/userActions';
 import { RouteBuilder } from '../RouteBuilder/RouteBuilder';
 
 export const App: FC = hot(() => {
@@ -23,15 +24,17 @@ export const App: FC = hot(() => {
   const history = useHistory();
   const { search } = useLocation();
 
-  const setAuthAfterOauth = useBoundAction(userActions.setAuth);
+  const setAuthAfterOauthBounded = useBoundAction(userActions.setAuth);
+  const getUserThemeBounded = useBoundAction(getUserThemeAsync);
 
   useMountEffect(() => {
+    getUserThemeBounded();
     startAllWorkers();
 
     const code = new URLSearchParams(search).get('code');
     if (code) {
       OAuthController.signIn(code).then(() => {
-        setAuthAfterOauth(true);
+        setAuthAfterOauthBounded(true);
         history.replace('/');
       });
     }
