@@ -87,7 +87,6 @@ export const getUserThemeAsync = createAsyncThunk<'light' | 'dark', null, {state
     try {
       const userTheme = await usersAPI.getTheme();
       const themeName = userTheme.themeId === '1' ? 'dark' : 'light';
-
       return themeName;
     } finally {
       thunkAPI.dispatch(setIsLoadingShown(false));
@@ -95,9 +94,11 @@ export const getUserThemeAsync = createAsyncThunk<'light' | 'dark', null, {state
   },
 );
 
-export const toggleUserThemeAsync = createAsyncThunk<Promise<void>, null, {state: RootState}>(
+export const toggleUserThemeAsync = createAsyncThunk<Promise<any>, null, {state: RootState}>(
   UserActionType.TOGGLE_THEME,
   async (nodata, thunkAPI) => {
+    if (!thunkAPI.getState().user.isAuth) return null;
+
     const state = thunkAPI.getState();
 
     // Тема сменилась локально в момент pending

@@ -1,12 +1,12 @@
 import './App.css';
 import { hot } from 'react-hot-loader/root';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Switch, useLocation } from 'react-router-dom';
 import { NavHeader } from 'components/organisms/NavHeader/NavHeader';
 import classNames from 'classnames';
 import { ErrorBoundary } from 'components/organisms/ErrorBoundary/ErrorBoundary';
 import { useSelector } from 'react-redux';
-import { selectTheme } from 'store/user/userSelectors';
+import { selectIsAuth, selectTheme } from 'store/user/userSelectors';
 import { LoadingIndicator } from 'components/atoms/LoadingIndicator/LoadingIndicator';
 import { userActions } from 'store/user/userSlice';
 import { useBoundAction } from 'hooks/useBoundAction';
@@ -20,6 +20,7 @@ import { RouteBuilder } from '../RouteBuilder/RouteBuilder';
 
 export const App: FC = hot(() => {
   const theme = useSelector(selectTheme);
+  const isAuth = useSelector(selectIsAuth);
 
   const history = useHistory();
   const { search } = useLocation();
@@ -28,7 +29,6 @@ export const App: FC = hot(() => {
   const getUserThemeBounded = useBoundAction(getUserThemeAsync);
 
   useMountEffect(() => {
-    getUserThemeBounded();
     startAllWorkers();
 
     const code = new URLSearchParams(search).get('code');
@@ -39,6 +39,12 @@ export const App: FC = hot(() => {
       });
     }
   });
+
+  useEffect(() => {
+    if (isAuth) {
+      getUserThemeBounded();
+    }
+  }, [isAuth, getUserThemeBounded]);
 
   return (
     <div className={classNames(['app-container', `theme_${theme}`])}>
