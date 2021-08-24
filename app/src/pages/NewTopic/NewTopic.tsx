@@ -52,10 +52,10 @@ export const NewTopic: FC<NewPostPageProps> = ({ className }) => {
   return (
     <div className={classNames(['page', className])}>
       <h1 className="page__title">{t('new_topic')}</h1>
-      <div className="post">
-        <div className="post__input-container">
+      <div className="new-topic">
+        <div className="new-topic__input-container">
           <input
-            className="post__text"
+            className="new-topic__text"
             placeholder={`${t('enter_topic_title')}...`}
             onChange={(event) => (setTitle(event.target.value))}
           />
