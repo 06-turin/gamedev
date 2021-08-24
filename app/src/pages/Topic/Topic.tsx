@@ -47,6 +47,7 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
     username, updatedAt, text, avatar, id,
   }) => {
     const parsedDate = new Date(updatedAt).toLocaleDateString();
+    const avatarSrc = avatar ? resourcesAPI.getResourceURL(avatar) : avatarPlaceholder;
 
     return (
       <span className="topic__post" key={id}>
@@ -54,7 +55,7 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
           <div className="topic__avatar-container">
             <img
               className="topic__avatar"
-              src={avatar ? isAuth && resourcesAPI.getResourceURL(avatar) : avatarPlaceholder}
+              src={isAuth ? avatarSrc : avatarPlaceholder}
               alt="avatar"
             />
           </div>
