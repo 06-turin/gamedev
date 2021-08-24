@@ -3,7 +3,6 @@ import React, { FC, MouseEventHandler, useState } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useBoundAction } from 'hooks/useBoundAction';
@@ -23,17 +22,32 @@ export const NewTopic: FC<NewPostPageProps> = ({ className }) => {
   const user = useSelector(getUserState);
   const addTopicAsyncBounded = useBoundAction(addTopicAsync);
   const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
+  const { isAuth } = useSelector(getUserState);
 
   useMountEffect(() => getUserInfoAsyncBounded());
 
   const startButtonHandler: MouseEventHandler = (event) => {
     event.preventDefault();
+
+    if (!title) {
+      return;
+    }
+
     addTopicAsyncBounded({
       username: `${user.userInfo.first_name} ${user.userInfo.second_name}`,
       title,
     });
     history.push('/forum');
   };
+
+  const startTopicOption = isAuth && (
+    <GDButton
+      title={`${t('start_new_topic')} !`}
+      styleOption="secondary"
+      size="l"
+      onClick={startButtonHandler}
+    />
+  );
 
   return (
     <div className={classNames(['page', className])}>
@@ -48,8 +62,8 @@ export const NewTopic: FC<NewPostPageProps> = ({ className }) => {
         </div>
       </div>
       <div className="page__footer-buttons">
-        <BackButton />
-        <GDButton title={`${t('start_new_topic')} !`} styleOption="secondary" size="l" onClick={startButtonHandler} />
+        <GDButton title={t('back')} styleOption="secondary" size="l" onClick={() => history.push('/forum')} />
+        {startTopicOption}
       </div>
     </div>
   );

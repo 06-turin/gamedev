@@ -1,6 +1,8 @@
 .forum {
   display: flex;
   flex-direction: column;
+  width: 80vw;
+  max-width: 1200px;
   height: 50vh;
 }
 

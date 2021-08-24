@@ -5,7 +5,6 @@ import React, {
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory } from 'react-router-dom';
 import { topicsListHeader } from 'pages/Forum/constants';
 import { useBoundAction } from 'hooks/useBoundAction';
@@ -35,7 +34,6 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
   const { isAuth } = useSelector(getUserState);
   const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
 
-  useMountEffect(() => getTopicsAsyncBounded(activeTopicsPage));
   useMountEffect(() => getUserInfoAsyncBounded());
   useEffect(() => getTopicsAsyncBounded(activeTopicsPage), [activeTopicsPage, getTopicsAsyncBounded]);
 
@@ -94,7 +92,7 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
       </div>
 
       <div className="page__footer-buttons">
-        <BackButton />
+        <GDButton title={t('back')} styleOption="secondary" size="l" onClick={() => history.push('/')} />
         {startTopicOption}
       </div>
     </div>

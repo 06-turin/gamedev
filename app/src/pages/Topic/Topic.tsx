@@ -1,10 +1,9 @@
 import './styles.css';
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
 import avatarPlaceholder from 'assets/images/bomb.png';
 import { useTranslation } from 'react-i18next';
-import { BackButton } from 'components/molecules/BackButton/BackButton';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectComments, selectTopics } from 'store/forum/forumSelectors';
@@ -18,6 +17,7 @@ import { Paginator } from 'components/molecules/Paginator/Paginator';
 import { Comment } from 'api/types';
 import { TopicRouteParamsType } from 'routes';
 import { resourcesAPI } from 'api/resources';
+import { getUserState } from 'store/user/userSlice';
 
 export type TopicPageProps = {
   className?: string
@@ -34,16 +34,14 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
   const { commentsList, commentsPagesCount, activeCommentsPage } = useSelector(selectComments);
   const setActiveCommentsPageBounded = useBoundAction(setActiveCommentsPage);
   const watchTopicBoundedAsync = useBoundAction(watchTopicAsync);
+  const { isAuth } = useSelector(getUserState);
 
   useMountEffect(() => {
     setActiveTopicIdBounded(topicId);
     getTopicAsyncBounded(topicId);
     watchTopicBoundedAsync(activeTopicId || topicId);
-  });
-
-  useEffect(() => {
     getCommentsAsyncBounded({ topicId: activeTopicId || topicId, page: activeCommentsPage });
-  }, [activeCommentsPage, activeTopicId, getCommentsAsyncBounded, topicId]);
+  });
 
   const renderComments = (comments: Comment[]) => comments.map(({
     username, updatedAt, text, avatar, id,
@@ -56,7 +54,7 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
           <div className="topic__avatar-container">
             <img
               className="topic__avatar"
-              src={avatar ? resourcesAPI.getResourceURL(avatar) : avatarPlaceholder}
+              src={avatar ? isAuth && resourcesAPI.getResourceURL(avatar) : avatarPlaceholder}
               alt="avatar"
             />
           </div>
@@ -69,6 +67,15 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
       </span>
     );
   });
+
+  const newPostOption = isAuth && (
+    <GDButton
+      title={t('new_post')}
+      styleOption="secondary"
+      size="l"
+      onClick={() => history.push('/new-post')}
+    />
+  );
 
   return (
     <div className={classNames(['page', className])}>
@@ -85,8 +92,8 @@ export const Topic: FC<TopicPageProps> = ({ className }) => {
         />
       </div>
       <div className="page__footer-buttons">
-        <BackButton />
-        <GDButton title={t('new_post')} styleOption="secondary" size="l" onClick={() => history.push('/new-post')} />
+        <GDButton title={t('back')} styleOption="secondary" size="l" onClick={() => history.push('/forum')} />
+        {newPostOption}
       </div>
     </div>
   );
