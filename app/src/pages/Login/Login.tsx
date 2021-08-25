@@ -5,7 +5,7 @@ import React, {
 import { Link } from 'react-router-dom';
 import { GDLogo } from 'components/atoms/GDLogo/GDLogo';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
-import logoImage from 'assets/images/bomb.png';
+import logoImage from 'assets/images/logo_img_base.png';
 import { useTranslation } from 'react-i18next';
 import { loginAsync } from 'store/user/userActions';
 import { useBoundAction } from 'hooks/useBoundAction';

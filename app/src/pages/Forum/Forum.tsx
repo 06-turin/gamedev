@@ -1,6 +1,6 @@
 import './styles.css';
 import React, {
-  FC, MouseEventHandler, useEffect, useMemo,
+  FC, useEffect, useMemo,
 } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import classNames from 'classnames';
@@ -37,14 +37,8 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
   useMountEffect(() => getUserInfoAsyncBounded());
   useEffect(() => getTopicsAsyncBounded(activeTopicsPage), [activeTopicsPage, getTopicsAsyncBounded]);
 
-  const topicClickHandler: MouseEventHandler = (event) => {
-    event.preventDefault();
-    const topicListElement = event.currentTarget as HTMLElement;
-    const topicId = topicListElement?.getAttribute('topic-id');
-    if (!topicId) {
-      return;
-    }
-    setActiveTopicIdBounded(parseInt(topicId, 10));
+  const topicClickHandler = (topicId: number) => {
+    setActiveTopicIdBounded(topicId);
     history.push(`/topic/${topicId}`);
   };
 
@@ -59,7 +53,7 @@ export const Forum: FC<ForumPageProps> = ({ className }) => {
     const parsedDate = new Date(updatedAt).toLocaleDateString();
 
     return (
-      <button className="forum__topic-list-item" topic-id={id} onClick={topicClickHandler} key={id}>
+      <button className="forum__topic-list-item" onClick={() => topicClickHandler(id)} key={id}>
         <span className="forum__topic-list-item_align-left">{title}</span>
         <span>{owner}</span>
         <span>{commentsCount}</span>
