@@ -42,7 +42,9 @@ export const { io } = createServerIo(server);
 
 const port = 5001;
 
-server.listen(port, () => {
+export const startServer = async () => {
+  server.listen(port, () => {
   // eslint-disable-next-line no-console
-  console.log('Sockets is started on localhost:', port);
-});
+    console.log('Sockets is started on localhost:', port);
+  });
+};
