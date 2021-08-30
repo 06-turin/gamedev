@@ -5,6 +5,8 @@
 
 Это говорит об отсутствии утечек памяти
 
-Снапшот:
+Снапшоты:
 
-<img src="./docpics/memory-leaks/memory-leaks.png" alt="Тайм-лайн выделения памяти" title="Тайм-лайн выделения памяти">
+<img src="./docpics/memory-leaks/memory-leaks-1.png" alt="Тайм-лайн выделения памяти" title="Тайм-лайн выделения памяти">
+
+<img src="./docpics/memory-leaks/memory-leaks-2.png" alt="Тайм-лайн выделения памяти" title="Тайм-лайн выделения памяти">
