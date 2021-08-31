@@ -1,5 +1,5 @@
 # Игра Bomberman
-
+test
 
 ## Где посмотреть:
 Задеплоили на Heroku: [**Клик**](https://gamedev-ypraktikum.herokuapp.com/)
