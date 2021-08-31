@@ -1,5 +1,5 @@
 import './Game.css';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import { useMountEffect } from 'hooks/useMountEffect';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
@@ -13,6 +13,11 @@ import { GameContent as MultiplayerGameContent } from './GameMultiplayer/GameCon
 import { GameFooter as MultiplayerGameFooter } from './GameMultiplayer/GameFooter/GameFooter';
 import { useObservable } from './GameSingle/core/hooks/useObservable';
 import { GameMode, gameService, GameStatus } from './services/gameService';
+import { useBoundAction } from 'hooks/useBoundAction';
+import { addLeaderAsync } from 'store/leaderboard/leaderboardActions';
+import { SCORE_FIELD_NAME } from 'api/types';
+import { getUserState } from 'store/user/userSlice';
+import { useSelector } from 'react-redux';
 
 export const Game: FC = () => {
   const stage = useObservable(gameService.stage);
@@ -22,6 +27,8 @@ export const Game: FC = () => {
   const bombs = useObservable(gameService.bombs);
   const fullScreenHandle = useFullScreenHandle();
   const { t } = useTranslation();
+  const addLeaderAsyncBounded = useBoundAction(addLeaderAsync);
+  const { isAuth, userInfo } = useSelector(getUserState);
 
   useMountEffect(() => () => {
     gameService.destroyMultiplayerGame();
@@ -37,6 +44,30 @@ export const Game: FC = () => {
     gameService.setMode(GameMode.MULTI_PLAYER);
     gameService.initMultiplayerGame();
   };
+
+  useEffect(() => {
+    if (!isAuth) {
+      return;
+    }
+
+    const isVictory = status === GameStatus.VICTORY;
+    const isDefeat = status === GameStatus.DEFEAT;
+    const isFinished = status === GameStatus.FINISHED;
+
+    if (isVictory || isDefeat || isFinished) {
+      console.log('status', status);
+
+      const requestData = {
+        data: {
+          displayName: `${userInfo.first_name} ${userInfo.second_name}`,
+          scoreFieldGD: score,
+        },
+        ratingFieldName: SCORE_FIELD_NAME,
+      }
+
+      addLeaderAsyncBounded(requestData);
+    }
+  }, [status]);
 
   const startScreen = (
     <div className="game-start_screen">
