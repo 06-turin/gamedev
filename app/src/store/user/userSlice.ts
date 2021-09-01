@@ -100,8 +100,8 @@ export const userSlice = createSlice({
     builder.addCase(logoutAsync.fulfilled, (state) => {
       state.isAuth = false;
     });
-    builder.addCase(registerAsync.fulfilled, (state) => {
-      state.isAuth = false;
+    builder.addCase(registerAsync.fulfilled, (state) => {      
+      state.isAuth = true;
     });
 
     // updated cases
