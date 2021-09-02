@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { GameMode, gameService, GameStatus } from '../../services/gameService';
+import { GameStatus } from '../../services/gameService';
 
 type GameFooterProps = {
   gameStatus?: GameStatus
@@ -34,7 +34,6 @@ export const GameFooter: FC<GameFooterProps> = ({ gameStatus }) => {
             size="l"
             onClick={playAgainClickHandler}
           />
-          <span>{t('or')}</span>
         </>
       )}
 
