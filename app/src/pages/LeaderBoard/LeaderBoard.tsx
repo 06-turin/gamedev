@@ -29,6 +29,7 @@ export const LeaderBoard: FC = () => {
     cursor: 0,
     limit: RECORDS_PER_PAGE,
   }));
+  console.log(leaderboard);
 
   return (
     <div className={classnames(['page'])}>
@@ -39,7 +40,7 @@ export const LeaderBoard: FC = () => {
         {leaderboard.length === 0 && <p>{t('no_data')}</p>}
         <ul className="leaderboard-page__list">
           {leaderboard.map(({ displayName, scoreFieldGD }, index) => (
-            <li className="leaderboard-page__list-item" key={displayName}>
+            <li className="leaderboard-page__list-item" key={`${displayName}${scoreFieldGD}`}>
               <span className="leaderboard-page__list-nickname">{`${index + 1}. ${displayName}`}</span>
               <span className="leaderboard-page__list-dots">{dots}</span>
               <span className="leaderboard-page__list-score">{splitDigits(scoreFieldGD)}</span>

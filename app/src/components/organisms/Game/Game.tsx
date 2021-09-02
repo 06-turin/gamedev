@@ -5,6 +5,11 @@ import { useMountEffect } from 'hooks/useMountEffect';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { GDButton } from 'components/atoms/GDButton/GDButton';
 import { useTranslation } from 'react-i18next';
+import { useBoundAction } from 'hooks/useBoundAction';
+import { addLeaderAsync } from 'store/leaderboard/leaderboardActions';
+import { SCORE_FIELD_NAME } from 'api/types';
+import { getUserState } from 'store/user/userSlice';
+import { useSelector } from 'react-redux';
 import { GameHeader as SingleGameHeader } from './GameSingle/GameHeader/GameHeader';
 import { GameContent as SingleGameContent } from './GameSingle/GameContent/GameContent';
 import { GameFooter as SingleGameFooter } from './GameSingle/GameFooter/GameFooter';
@@ -13,11 +18,6 @@ import { GameContent as MultiplayerGameContent } from './GameMultiplayer/GameCon
 import { GameFooter as MultiplayerGameFooter } from './GameMultiplayer/GameFooter/GameFooter';
 import { useObservable } from './GameSingle/core/hooks/useObservable';
 import { GameMode, gameService, GameStatus } from './services/gameService';
-import { useBoundAction } from 'hooks/useBoundAction';
-import { addLeaderAsync } from 'store/leaderboard/leaderboardActions';
-import { SCORE_FIELD_NAME } from 'api/types';
-import { getUserState } from 'store/user/userSlice';
-import { useSelector } from 'react-redux';
 
 export const Game: FC = () => {
   const stage = useObservable(gameService.stage);
@@ -63,11 +63,11 @@ export const Game: FC = () => {
           scoreFieldGD: score,
         },
         ratingFieldName: SCORE_FIELD_NAME,
-      }
+      };
 
       addLeaderAsyncBounded(requestData);
     }
-  }, [status]);
+  }, [status, userInfo, isAuth, score, addLeaderAsyncBounded]);
 
   const startScreen = (
     <div className="game-start_screen">

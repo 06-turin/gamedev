@@ -10,7 +10,7 @@ export const Game: FC = () => {
   const getUserInfoAsyncBounded = useBoundAction(getUserInfoAsync);
 
   useEffect(() => () => { clearRequestBounded(); }, [clearRequestBounded]);
-  useMountEffect(() => getUserInfoAsyncBounded());
+  useMountEffect(() => { getUserInfoAsyncBounded(); });
 
   return (
     <GameComponent />
