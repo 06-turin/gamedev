@@ -55,8 +55,6 @@ export const Game: FC = () => {
     const isFinished = status === GameStatus.FINISHED;
 
     if (isVictory || isDefeat || isFinished) {
-      console.log('status', status);
-
       const requestData = {
         data: {
           displayName: `${userInfo.first_name} ${userInfo.second_name}`,

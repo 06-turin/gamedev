@@ -29,7 +29,6 @@ export const LeaderBoard: FC = () => {
     cursor: 0,
     limit: RECORDS_PER_PAGE,
   }));
-  console.log(leaderboard);
 
   return (
     <div className={classnames(['page'])}>
