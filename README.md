@@ -1,5 +1,7 @@
 # Игра Bomberman
 
+![Logo](/logo.PNG)
+
 ## Где посмотреть:
 Задеплоили на [**YandexCloud**](https://turin-bomberman-6.ya-praktikum.tech/)
 
