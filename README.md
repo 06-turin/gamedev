@@ -1,4 +1,8 @@
 # Игра Bomberman
+<<<<<<< HEAD
+=======
+![Logo](/logo.PNG)
+>>>>>>> Sprint9 logo vicpril (#162)
 
 ## Где посмотреть:
 Задеплоили на [**YandexCloud**](https://turin-bomberman-6.ya-praktikum.tech/)
