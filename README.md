@@ -1,5 +1,5 @@
 # Игра Bomberman
-
+![Logo](/logo.PNG)
 
 ## Где посмотреть:
 Задеплоили на Heroku: [**Клик**](https://gamedev-ypraktikum.herokuapp.com/)
